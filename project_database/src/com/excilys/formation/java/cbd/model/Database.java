@@ -1,4 +1,4 @@
-package com.excilys.formation.java.cbd;
+package com.excilys.formation.java.cbd.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,4 +20,22 @@ public class Database {
 	public void deleteComputer(Computer pComputer) {
 		this.computerList.remove(pComputer);
 	}
+	
+	public void addCompanie(Companie pCompanie) {
+		this.companieList.add(pCompanie);
+	}
+	
+	public void showCompanies() {
+		for(Companie elem:companieList) {
+			System.out.println(elem);
+		}
+	}
+	
+	public void showComputers() {
+		for(Computer elem:computerList) {
+			System.out.println(elem);
+		}
+	}
+
+
 }

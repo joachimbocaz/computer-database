@@ -1,4 +1,4 @@
-package com.excilys.formation.java.cbd;
+package com.excilys.formation.java.cbd.model;
 
 import java.time.LocalDate;
 
@@ -65,4 +65,8 @@ public class Computer {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "Ordinateur : " + this.name + "\nCompanie : " + this.manufacturer + "\nDate in/Date out : " + this.dateIn.toString() + " " + this.dateOut.toString();
+	}
 }

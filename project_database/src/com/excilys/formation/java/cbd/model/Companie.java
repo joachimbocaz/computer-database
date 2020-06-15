@@ -1,4 +1,4 @@
-package com.excilys.formation.java.cbd;
+package com.excilys.formation.java.cbd.model;
 
 public class Companie {
 	private String name;
@@ -9,5 +9,10 @@ public class Companie {
 
 	public String getName() {
 		return name;
+	}
+	
+	@Override
+	public String toString() {
+		return "Companie : " + this.name;
 	}
 }
