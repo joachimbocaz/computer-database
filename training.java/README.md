@@ -19,6 +19,7 @@ Here is the macro-planning and timeline of all milestones:
 
 ## 1. Database
 Create a local **MySQL** server. -> [doc](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install)
+
 Execute scripts **1-SCHEMA.sql**, **2-PRIVILEGES.sql** and **3-ENTRIES.sql** in config/db.  
 Schema created: **computer-database-db**
 Tables created: **company, computer**  
