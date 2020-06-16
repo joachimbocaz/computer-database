@@ -1,21 +1,25 @@
 package com.excilys.formation.java.cbd.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Computer {
+	private int id;
 	private String name;
-	private Companie manufacturer;
-	private LocalDate dateIn, dateOut;
+	private int manufacturer;
+	private Date dateIn, dateOut;
 	
-	public Computer(String name) {
+	public Computer() {}
+	
+	public Computer(int id, String name) {
+		this.id = id;
 		this.name = name;
 	}
 	
-	public Computer(String name, Companie manufacturer, LocalDate dateIn, LocalDate dateOut) {
+	public Computer(int id, String name, int manufacturer, Date dateIn, Date dateOut) {
 		this.name = name;
 		this.manufacturer = manufacturer;
 		
-		if(dateIn.isBefore(dateOut)) {
+		if(dateIn.before(dateOut)) {
 			this.dateIn = dateIn;
 			this.dateOut = dateOut;
 		}
@@ -24,27 +28,30 @@ public class Computer {
 			this.dateOut = null;
 			throw new IllegalArgumentException("Date out need to be after Date in");
 		}
-		
 	}
-
+	
+	public int getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
 
-	public Companie getManufacturer() {
+	public int getManufacturer() {
 		return manufacturer;
 	}
 
-	public void setManufacturer(Companie manufacturer) {
+	public void setManufacturer(int manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
-	public LocalDate getDateIn() {
+	public Date getDateIn() {
 		return dateIn;
 	}
 
-	public void setDateIn(LocalDate dateIn) {
-		if(dateIn.isBefore(this.dateOut)) {
+	public void setDateIn(Date dateIn) {
+		if(dateIn.before(this.dateOut)) {
 			this.dateIn = dateIn;
 		}
 		else {
@@ -52,12 +59,12 @@ public class Computer {
 		}
 	}
 
-	public LocalDate getDateOut() {
+	public Date getDateOut() {
 		return dateOut;
 	}
 
-	public void setDateOut(LocalDate dateOut) {
-		if(dateOut.isAfter(this.dateIn)) {
+	public void setDateOut(Date dateOut) {
+		if(dateOut.after(this.dateIn)) {
 			this.dateOut = dateOut;
 		}
 		else {

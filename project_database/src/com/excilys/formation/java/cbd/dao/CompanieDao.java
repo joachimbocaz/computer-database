@@ -1,6 +1,9 @@
 package com.excilys.formation.java.cbd.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import com.excilys.formation.java.cbd.model.Companie;
 
@@ -31,7 +34,22 @@ public class CompanieDao extends Dao<Companie>{
 
 	@Override
 	public Companie find(int id) {
-		// TODO Auto-generated method stub
+		Companie companie = new Companie();
+		try {
+			ResultSet result = this.connect.createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM company WHERE id = " + id);
+		    if(result.first())
+		    	companie = new Companie(id, result.getString("name"));
+		    }catch (SQLException e) {
+		    	e.printStackTrace();
+		    }
+		return companie;
+	}
+
+	@Override
+	public List<Companie> findAll() {
+		
 		return null;
 	}
 

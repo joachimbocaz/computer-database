@@ -1,6 +1,9 @@
 package com.excilys.formation.java.cbd.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import com.excilys.formation.java.cbd.model.Computer;
 
@@ -31,8 +34,22 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public Computer find(int id) {
+		Computer computer = new Computer();      
+		try {
+			ResultSet result = this.connect.createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer WHERE id = " + id);
+		    if(result.first())
+		    	computer = new Computer(id, result.getString("name"), result.getInt("company_id"), result.getDate("introduced"), result.getDate("discontinued"));
+		    }catch (SQLException e) {
+		    	e.printStackTrace();
+		    }
+		return computer;
+	}
+
+	@Override
+	public List<Computer> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
