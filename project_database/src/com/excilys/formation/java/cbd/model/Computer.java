@@ -1,12 +1,12 @@
 package com.excilys.formation.java.cbd.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Computer {
 	private int id;
 	private String name;
 	private int manufacturer;
-	private Date dateIn, dateOut;
+	private LocalDate dateIn, dateOut;
 	
 	public Computer() {}
 	
@@ -15,11 +15,11 @@ public class Computer {
 		this.name = name;
 	}
 	
-	public Computer(int id, String name, int manufacturer, Date dateIn, Date dateOut) {
+	public Computer(int id, String name, int manufacturer, LocalDate dateIn, LocalDate dateOut) {
 		this.name = name;
 		this.manufacturer = manufacturer;
 		
-		if(dateIn.before(dateOut)) {
+		if(dateIn.isBefore(dateOut)) {
 			this.dateIn = dateIn;
 			this.dateOut = dateOut;
 		}
@@ -46,12 +46,12 @@ public class Computer {
 		this.manufacturer = manufacturer;
 	}
 
-	public Date getDateIn() {
+	public LocalDate getDateIn() {
 		return dateIn;
 	}
 
-	public void setDateIn(Date dateIn) {
-		if(dateIn.before(this.dateOut)) {
+	public void setDateIn(LocalDate dateIn) {
+		if(dateIn.isBefore(this.dateOut)) {
 			this.dateIn = dateIn;
 		}
 		else {
@@ -59,12 +59,12 @@ public class Computer {
 		}
 	}
 
-	public Date getDateOut() {
+	public LocalDate getDateOut() {
 		return dateOut;
 	}
 
-	public void setDateOut(Date dateOut) {
-		if(dateOut.after(this.dateIn)) {
+	public void setDateOut(LocalDate dateOut) {
+		if(dateOut.isAfter(this.dateIn)) {
 			this.dateOut = dateOut;
 		}
 		else {

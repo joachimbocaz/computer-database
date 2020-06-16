@@ -13,12 +13,21 @@ public class Database {
 		this.computerList = computerList;
 	}
 	
-	public void addComputer(Computer pComputer) {
-		this.computerList.add(pComputer);
+	public Computer findComputer(int idComputer) {
+		for(Computer elem:computerList) {
+			if(elem.getId() == idComputer) {
+				return elem;
+			}
+		}
+		return null;
 	}
 	
-	public void deleteComputer(Computer pComputer) {
-		this.computerList.remove(pComputer);
+	public boolean addComputer(Computer pComputer) {
+		return this.computerList.add(pComputer);
+	}
+	
+	public boolean deleteComputer(Computer pComputer) {
+		return this.computerList.remove(pComputer);
 	}
 	
 	public void addCompanie(Companie pCompanie) {
@@ -36,6 +45,5 @@ public class Database {
 			System.out.println(elem);
 		}
 	}
-
 
 }
