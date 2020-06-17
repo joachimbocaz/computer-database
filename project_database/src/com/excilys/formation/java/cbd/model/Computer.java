@@ -48,7 +48,7 @@ public class Computer {
 			}
 			else {
 				this.dateIn = null;
-				this.dateOut = null;
+				this.dateOut = dateOut;
 				//throw new IllegalArgumentException("Date out need to be after Date in");
 			}
 		}
@@ -112,7 +112,7 @@ public class Computer {
 	public String toString() {
 		return "[Ordinateur] : " + this.name +
 				" [ID] : " + this.id +
-				" [Companie] : " + this.manufacturer.toString() + 
+				" [Companie] : " + this.manufacturer + 
 				" [Date in / Date out] : " + this.dateIn + "/" + this.dateOut;
 	}
 }
