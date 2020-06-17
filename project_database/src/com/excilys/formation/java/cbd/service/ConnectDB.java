@@ -29,7 +29,7 @@ public class ConnectDB {
 			}
 		}
 		
-		private Connection getConnection() {
+		public Connection getConnection() {
 			
 			return connect;
 		}
@@ -61,9 +61,11 @@ public class ConnectDB {
 			}
 		}
 		
+		/*
 		public static void main(String[] args) throws SQLException {
 			ConnectDB con = new ConnectDB();
 			String requete = "SELECT * FROM company";
 			doRequest(con, requete);
 		}
+		*/
 }
