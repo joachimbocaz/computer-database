@@ -127,7 +127,20 @@ public class ComputerDao extends Dao<Computer>{
 		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer WHERE id = " + id);
 			
 		    if(result.first())
-		    	computer = new Computer(id, result.getString("name"), result.getInt("company_id"), result.getDate("introduced").toLocalDate(), result.getDate("discontinued").toLocalDate());
+		    	computer = new Computer(id, result.getString("name"));//, result.getInt("company_id"), result.getDate("introduced").toLocalDate(), result.getDate("discontinued").toLocalDate());
+		    	if(result.getDate("introduced") == null) {
+		    		computer.setDateIn(null);
+		    	}
+		    	else {
+		    		computer.setDateIn(result.getDate("introduced").toLocalDate());
+		    	}
+		    	if(result.getDate("discontinued") == null) {
+		    		computer.setDateOut(null);
+		    	}
+		    	else {
+		    		computer.setDateOut(result.getDate("discontinued").toLocalDate());
+		    	}
+		    	computer.setManufacturer(result.getInt("company_id"));
 		    }catch (SQLException e) {
 		    	e.printStackTrace();
 		    }
