@@ -1,12 +1,13 @@
 package com.excilys.formation.java.cbd.dao;
 
-import java.sql.Connection;
 import java.util.List;
 
+import com.excilys.formation.java.cbd.service.ConnectDB;
+
 public abstract class Dao<T> {
-	 protected Connection connect = null;
+	 protected ConnectDB connect = null;
 	   
-	  public Dao(Connection conn){
+	  public Dao(ConnectDB conn){
 	    this.connect = conn;
 	  }
 	  
@@ -14,7 +15,7 @@ public abstract class Dao<T> {
 
 	   public abstract boolean delete(T obj);
 
-	   public abstract boolean update(T obj);
+	   public abstract T update(T obj);
 
 	   public abstract T find(int id);
 	   
