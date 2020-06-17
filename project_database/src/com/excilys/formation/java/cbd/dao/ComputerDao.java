@@ -18,38 +18,29 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public boolean create(Computer obj) {
-		Integer tmp = null;
 		try {
 			Statement st = this.connect.getConnection().createStatement();
-			String sql2 = "INSERT INTO computer values (" + obj.getId() + ", '" +
-															obj.getName() + "', ";
-//			String sql = "INSERT INTO computer values (?,?,?,?,?)";
-//			PreparedStatement ps = this.connect.getConnection().prepareStatement(sql);
-//			ps.setInt(1, obj.getId());
-//		    ps.setString(2, obj.getName());
-//		    //cheakInDb(obj, ps);
-//		    
+			String sql = "INSERT INTO computer values (" + obj.getId() + ", '" +
+															obj.getName() + "', ";		    
 		    if(obj.getDateIn() == null) {
-		    	sql2 += null + ", ";;
+		    	sql += null + ", ";;
 		    }
 		    else {
-		    	sql2 += obj.getDateIn() + ", ";
+		    	sql += obj.getDateIn() + ", ";
 		    }
 		    if(obj.getDateIn() == null) {
-		    	sql2 += null + ", ";
+		    	sql += null + ", ";
 		    }
 		    else {
-		    	sql2 += obj.getDateIn() + ", ";
+		    	sql += obj.getDateIn() + ", ";
 		    }
 		    if(obj.getManufacturer() == null) {
-		    	sql2 += null + ");";
+		    	sql += null + ");";
 		    }
 		    else {
-		    	sql2 += obj.getManufacturer() + ");";
+		    	sql += obj.getManufacturer() + ");";
 		    }
-		    System.out.println(sql2);
- 			st.executeUpdate(sql2);
-//		    ps.executeUpdate();
+ 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	e.printStackTrace();
 		    	return false;
@@ -78,36 +69,18 @@ public class ComputerDao extends Dao<Computer>{
 	public Computer update(Computer obj) {
 		try {
 			String sql = "UPDATE computer SET id = " + obj.getId() + 
-											", name = '" + obj.getName() + "', ";//?, introduced = ?, discontinued = ?, company_id = ? WHERE id = " + obj.getId();
-//			PreparedStatement ps = this.connect.getConnection().prepareStatement(sql);
+											", name = '" + obj.getName() + "', ";
 			Statement st = this.connect.getConnection().createStatement();
-//			ps.setInt(1, obj.getId());
-//		    ps.setString(2, obj.getName());
-		    //cheakInDb(obj, ps);
-		    if(obj.getDateIn() == null) {
-		    	//ps.setDate(3, null);
-		    	sql += "introduced = " + null +  ", ";
-		    }
-		    else {
+		    if(!(obj.getDateIn() == null)) {
 		    	sql += "introduced = '" + Date.valueOf(obj.getDateIn()) + "', ";
 		    }
-		    if(obj.getDateOut() == null) {
-//		    	ps.setDate(4, null);
-		    	sql += "discontinued = " + null +  ", ";
-		    }
-		    else {
-//		    	ps.setDate(4, Date.valueOf(obj.getDateOut()));
+		    if(!(obj.getDateOut() == null)) {
 		    	sql += "discontinued = '" + Date.valueOf(obj.getDateOut()) + "', ";
 		    }
-		    if(obj.getManufacturer() == null) {
-		    	sql += "company_id = " + null +  ", ";
-		    }
-		    else {
+		    if(!(obj.getManufacturer() == null)) {
 		    	sql += "company_id = " + obj.getManufacturer();
 		    }
-//		    ps.setInt(5, obj.getManufacturer());
-		    sql += " WHERE id =  " + obj.getId();
-//		    ps.executeUpdate();
+		    sql += " WHERE id = " + obj.getId();
 		    System.out.println(sql);
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
@@ -127,7 +100,20 @@ public class ComputerDao extends Dao<Computer>{
 		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer WHERE id = " + id);
 			
 		    if(result.first())
-		    	computer = new Computer(id, result.getString("name"), result.getInt("company_id"), result.getDate("introduced").toLocalDate(), result.getDate("discontinued").toLocalDate());
+		    	computer = new Computer(id, result.getString("name"));
+		    	if(result.getDate("introduced") == null) {
+		    		computer.setDateIn(null);
+		    	}
+		    	else {
+		    		computer.setDateIn(result.getDate("introduced").toLocalDate());
+		    	}
+		    	if(result.getDate("discontinued") == null) {
+		    		computer.setDateOut(null);
+		    	}
+		    	else {
+		    		computer.setDateOut(result.getDate("discontinued").toLocalDate());
+		    	}
+		    	computer.setManufacturer(result.getInt("company_id"));
 		    }catch (SQLException e) {
 		    	e.printStackTrace();
 		    }
