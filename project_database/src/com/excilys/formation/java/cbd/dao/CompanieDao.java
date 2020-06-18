@@ -91,4 +91,16 @@ public class CompanieDao extends Dao<Companie>{
 		}
 		return companyList;
 	}
+
+	@Override
+	public List<Companie> findAllLimite() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int findNbElem() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

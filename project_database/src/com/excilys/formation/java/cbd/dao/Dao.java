@@ -20,4 +20,8 @@ public abstract class Dao<T> {
 	   public abstract T find(int id);
 	   
 	   public abstract List<T> findAll();
+	   
+	   public abstract List<T> findAllLimite();
+	   
+	   public abstract int findNbElem();
 }

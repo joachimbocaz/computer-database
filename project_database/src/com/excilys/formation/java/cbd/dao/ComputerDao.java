@@ -99,7 +99,7 @@ public class ComputerDao extends Dao<Computer>{
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer WHERE id = " + id);
 			
-		    if(result.first())
+		    if(result.first()) {
 		    	computer = new Computer(id, result.getString("name"));
 		    	if(result.getDate("introduced") == null) {
 		    		computer.setDateIn(null);
@@ -114,9 +114,10 @@ public class ComputerDao extends Dao<Computer>{
 		    		computer.setDateOut(result.getDate("discontinued").toLocalDate());
 		    	}
 		    	computer.setManufacturer(result.getInt("company_id"));
-		    }catch (SQLException e) {
-		    	e.printStackTrace();
 		    }
+	   	}catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
 		return computer;
 	}
 
@@ -149,5 +150,53 @@ public class ComputerDao extends Dao<Computer>{
 		    	e.printStackTrace();
 		}
 		return computerList;
+	}
+
+	@Override
+	public List<Computer> findAllLimite() {
+		List<Computer> computerList = new ArrayList<Computer>();
+		Computer computer = new Computer();
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+			ResultSet.TYPE_SCROLL_INSENSITIVE,
+			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer");
+			
+			while(result.next()) {
+				computer = new Computer(result.getInt("id"), result.getString("name"), result.getInt("company_id"));
+				if(result.getString("introduced") == null) {
+			    	computer.setDateIn(null);
+				}
+				else {
+					computer.setDateIn(result.getDate("introduced").toLocalDate());
+				}
+				if(result.getDate("discontinued") == null){
+					computer.setDateOut(null);
+				}
+				else {
+					computer.setDateIn(result.getDate("discontinued").toLocalDate());
+				}
+		    	computerList.add(computer);
+			}
+		}catch (SQLException e) {
+		    	e.printStackTrace();
+		}
+		return computerList;
+	}
+
+	@Override
+	public int findNbElem() {
+		Computer computer = new Computer();      
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT COUNT(*) AS total FROM computer");
+			
+		    if(result.first()) {
+		    	return result.getInt("total");
+		    }
+		}catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+		return 0;
 	}
 }
