@@ -39,7 +39,13 @@ public class CommandLine {
 		this.con = con;
 		this.companieDao = new CompanieDao(this.con);
 		this.computerDao = new ComputerDao(this.con);
+	}
+	
+	public void setCompanieL() {
 		this.companieL = this.companieDao.findAll();
+	}
+	
+	public void setComputerL() {
 		this.computerL = this.computerDao.findAll();
 	}
 	
@@ -218,12 +224,7 @@ public class CommandLine {
 	}
 	
 	public void updateComputer() {
-		for(String elem:optionList) {
-			System.out.println(elem);
-		}
 		Computer computerUpdate = createComputerCli();
-		System.out.println("Maj de l'ordinateur");
-		System.out.println(computerUpdate);
 		this.computerDao.update(computerUpdate);
 	}
 	

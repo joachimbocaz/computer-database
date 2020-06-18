@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.excilys.formation.java.cbd.mapper.CompanieMapper;
 import com.excilys.formation.java.cbd.model.Companie;
 import com.excilys.formation.java.cbd.service.ConnectDB;
 
@@ -65,27 +66,23 @@ public class CompanieDao extends Dao<Companie>{
 			ResultSet result = this.connect.getConnection().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM company WHERE id = " + id);
-		    if(result.first())
-		    	companie = new Companie(id, result.getString("name"));
-		    }catch (SQLException e) {
+			
+			companie = CompanieMapper.createEntity(result);
+		}catch (SQLException e) {
 		    	e.printStackTrace();
-		    }
+	    }
 		return companie;
 	}
 
 	@Override
 	public List<Companie> findAll() {
 		List<Companie> companyList = new ArrayList<Companie>();
-		Companie company = new Companie();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
 			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM company");
 			
-			while(result.next()) {
-				company = new Companie(result.getInt("id"), result.getString("name"));
-				companyList.add(company);
-			}
+			companyList = CompanieMapper.createListEntity(result);
 		}catch (SQLException e) {
 		    	e.printStackTrace();
 		}

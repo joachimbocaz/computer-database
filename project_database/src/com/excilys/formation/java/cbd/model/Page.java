@@ -1,29 +1,33 @@
-package com.excilys.formation.java.cbd.pages;
+package com.excilys.formation.java.cbd.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.excilys.formation.java.cbd.model.Companie;
-import com.excilys.formation.java.cbd.model.Computer;
-
 public class Page {
 	private static final int NBELEM = 25;
-	private int maxElem;
+	private int maxElem, numPage;
 	private List<Computer> computerL;
 	private List<Companie> companieL;
 	
-	public Page(int maxElem, ArrayList<Computer> computerL,  ArrayList<Companie> companieL) {
+	public Page(int maxElem, int numPage) {
 		this.maxElem = maxElem;
-		this.computerL = computerL;
-		this.companieL = companieL;
+		this.numPage = numPage;
 	}	
 		
 	public int getMaxElem() {
 		return this.maxElem;
 	}
 	
+	public int getNumPage() {
+		return this.numPage;
+	}
+	
 	public List<Computer> getComputerL(){
 		return this.computerL;
+	}
+	
+	public void setComputerL() {
+		
 	}
 	
 	public List<Companie> getCompanieL(){

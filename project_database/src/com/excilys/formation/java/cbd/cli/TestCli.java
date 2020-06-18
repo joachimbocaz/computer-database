@@ -10,7 +10,6 @@ public class TestCli {
 		ConnectDB con = new ConnectDB();
 		Scanner sc = new Scanner(System.in);
 		CommandLine command = new CommandLine(con);
-
 		command.home();
 
 		while(true) {

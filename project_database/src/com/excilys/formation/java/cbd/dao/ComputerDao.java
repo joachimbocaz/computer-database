@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.excilys.formation.java.cbd.mapper.ComputerMapper;
 import com.excilys.formation.java.cbd.model.Computer;
 import com.excilys.formation.java.cbd.service.ConnectDB;
 
@@ -93,28 +94,13 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public Computer find(int id) {
-		Computer computer = new Computer();      
+		Computer computer = new Computer();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer WHERE id = " + id);
+		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer WHERE id = " + id);
 			
-		    if(result.first()) {
-		    	computer = new Computer(id, result.getString("name"));
-		    	if(result.getDate("introduced") == null) {
-		    		computer.setDateIn(null);
-		    	}
-		    	else {
-		    		computer.setDateIn(result.getDate("introduced").toLocalDate());
-		    	}
-		    	if(result.getDate("discontinued") == null) {
-		    		computer.setDateOut(null);
-		    	}
-		    	else {
-		    		computer.setDateOut(result.getDate("discontinued").toLocalDate());
-		    	}
-		    	computer.setManufacturer(result.getInt("company_id"));
-		    }
+			computer = ComputerMapper.createEntity(result);
 	   	}catch (SQLException e) {
 	    	e.printStackTrace();
 	    }
@@ -124,28 +110,12 @@ public class ComputerDao extends Dao<Computer>{
 	@Override
 	public List<Computer> findAll() {
 		List<Computer> computerList = new ArrayList<Computer>();
-		Computer computer = new Computer();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer");
+			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer");
 			
-			while(result.next()) {
-				computer = new Computer(result.getInt("id"), result.getString("name"), result.getInt("company_id"));
-				if(result.getString("introduced") == null) {
-			    	computer.setDateIn(null);
-				}
-				else {
-					computer.setDateIn(result.getDate("introduced").toLocalDate());
-				}
-				if(result.getDate("discontinued") == null){
-					computer.setDateOut(null);
-				}
-				else {
-					computer.setDateIn(result.getDate("discontinued").toLocalDate());
-				}
-		    	computerList.add(computer);
-			}
+			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 		    	e.printStackTrace();
 		}
@@ -155,32 +125,16 @@ public class ComputerDao extends Dao<Computer>{
 	@Override
 	public List<Computer> findAllLimite(int limite, int offset) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		Computer computer = new Computer();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * "
+			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * "
 												   + "FROM computer "
 												   + "ORDER BY id ASC "
 												   + "LIMIT " + offset 
 												   + ", " + limite + ";");
 			
-			while(result.next()) {
-				computer = new Computer(result.getInt("id"), result.getString("name"), result.getInt("company_id"));
-				if(result.getString("introduced") == null) {
-			    	computer.setDateIn(null);
-				}
-				else {
-					computer.setDateIn(result.getDate("introduced").toLocalDate());
-				}
-				if(result.getDate("discontinued") == null){
-					computer.setDateOut(null);
-				}
-				else {
-					computer.setDateIn(result.getDate("discontinued").toLocalDate());
-				}
-		    	computerList.add(computer);
-			}
+			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 		    	e.printStackTrace();
 		}
@@ -192,7 +146,7 @@ public class ComputerDao extends Dao<Computer>{
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT COUNT(*) AS total FROM computer");
+		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT COUNT(*) AS total FROM computer");
 			
 		    if(result.first()) {
 		    	return result.getInt("total");
