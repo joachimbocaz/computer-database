@@ -153,13 +153,17 @@ public class ComputerDao extends Dao<Computer>{
 	}
 
 	@Override
-	public List<Computer> findAllLimite() {
+	public List<Computer> findAllLimite(int limite, int offset) {
 		List<Computer> computerList = new ArrayList<Computer>();
 		Computer computer = new Computer();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM computer");
+			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * "
+												   + "FROM computer "
+												   + "ORDER BY id ASC "
+												   + "LIMIT " + offset 
+												   + ", " + limite + ";");
 			
 			while(result.next()) {
 				computer = new Computer(result.getInt("id"), result.getString("name"), result.getInt("company_id"));
@@ -185,7 +189,6 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public int findNbElem() {
-		Computer computer = new Computer();      
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,

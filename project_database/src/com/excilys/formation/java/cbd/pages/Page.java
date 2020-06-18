@@ -12,11 +12,15 @@ public class Page {
 	private List<Computer> computerL;
 	private List<Companie> companieL;
 	
-	public Page(int maxElem, List<Computer> computerL,  List<Companie> companieL) {
+	public Page(int maxElem, ArrayList<Computer> computerL,  ArrayList<Companie> companieL) {
 		this.maxElem = maxElem;
-		this.computerL = new ArrayList<Computer>();
-		this.companieL = new ArrayList<Companie>();
+		this.computerL = computerL;
+		this.companieL = companieL;
 	}	
+		
+	public int getMaxElem() {
+		return this.maxElem;
+	}
 	
 	public List<Computer> getComputerL(){
 		return this.computerL;

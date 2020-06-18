@@ -93,14 +93,40 @@ public class CompanieDao extends Dao<Companie>{
 	}
 
 	@Override
-	public List<Companie> findAllLimite() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Companie> findAllLimite(int limite, int offset) {
+		List<Companie> companyList = new ArrayList<Companie>();
+		Companie company = new Companie();
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+			ResultSet.TYPE_SCROLL_INSENSITIVE,
+			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * "
+												   + "FROM company "
+												   + "ORDER BY id ASC "
+												   + "LIMIT " + offset 
+												   + ", " + limite + ";");;
+			while(result.next()) {
+				company = new Companie(result.getInt("id"), result.getString("name"));
+				companyList.add(company);
+			}
+		}catch (SQLException e) {
+		    	e.printStackTrace();
+		}
+		return companyList;
 	}
 
 	@Override
 	public int findNbElem() {
-		// TODO Auto-generated method stub
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT COUNT(*) AS total FROM computer");
+			
+		    if(result.first()) {
+		    	return result.getInt("total");
+		    }
+		}catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
 		return 0;
 	}
 }
