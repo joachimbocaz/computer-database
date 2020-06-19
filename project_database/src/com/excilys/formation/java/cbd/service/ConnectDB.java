@@ -23,8 +23,8 @@ public class ConnectDB {
 	           
 	        } catch (ClassNotFoundException ex) {
 	            System.out.println("Database Connection Creation Failed : " + ex.getMessage());
-	        }
-			catch(SQLException s) {
+	        } catch(SQLException s) {
+				System.out.println("toto");
 				s.printStackTrace();
 			}
 		}

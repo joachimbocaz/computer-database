@@ -6,8 +6,7 @@ public class Computer {
 	private int id;
 	private String name;
 	private Integer manufacturer = null;
-	private LocalDate dateIn;
-	private LocalDate dateOut;
+	private LocalDate dateIn, dateOut;
 	
 	public Computer() {}
 	

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.excilys.formation.java.cbd.mapper.CompanieMapper;
 import com.excilys.formation.java.cbd.model.Companie;
 import com.excilys.formation.java.cbd.service.ConnectDB;
 
@@ -65,23 +66,41 @@ public class CompanieDao extends Dao<Companie>{
 			ResultSet result = this.connect.getConnection().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM company WHERE id = " + id);
-		    if(result.first())
-		    	companie = new Companie(id, result.getString("name"));
-		    }catch (SQLException e) {
+			
+			companie = CompanieMapper.createEntity(result);
+		}catch (SQLException e) {
 		    	e.printStackTrace();
-		    }
+	    }
 		return companie;
 	}
 
 	@Override
 	public List<Companie> findAll() {
 		List<Companie> companyList = new ArrayList<Companie>();
-		Companie company = new Companie();
 		try {
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
 			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM company");
 			
+			companyList = CompanieMapper.createListEntity(result);
+		}catch (SQLException e) {
+		    	e.printStackTrace();
+		}
+		return companyList;
+	}
+
+	@Override
+	public List<Companie> findAllLimite(int limite, int offset) {
+		List<Companie> companyList = new ArrayList<Companie>();
+		Companie company = new Companie();
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+			ResultSet.TYPE_SCROLL_INSENSITIVE,
+			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * "
+												   + "FROM company "
+												   + "ORDER BY id ASC "
+												   + "LIMIT " + offset 
+												   + ", " + limite + ";");;
 			while(result.next()) {
 				company = new Companie(result.getInt("id"), result.getString("name"));
 				companyList.add(company);
@@ -90,5 +109,21 @@ public class CompanieDao extends Dao<Companie>{
 		    	e.printStackTrace();
 		}
 		return companyList;
+	}
+
+	@Override
+	public int findNbElem() {
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT COUNT(*) AS total FROM computer");
+			
+		    if(result.first()) {
+		    	return result.getInt("total");
+		    }
+		}catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+		return 0;
 	}
 }

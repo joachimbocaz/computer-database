@@ -9,11 +9,15 @@ import java.util.List;
 import com.excilys.formation.java.cbd.dao.CompanieDao;
 import com.excilys.formation.java.cbd.dao.ComputerDao;
 import com.excilys.formation.java.cbd.model.Companie;
+import com.excilys.formation.java.cbd.model.CompaniePage;
 import com.excilys.formation.java.cbd.model.Computer;
+import com.excilys.formation.java.cbd.model.ComputerPage;
+import com.excilys.formation.java.cbd.model.Page;
 import com.excilys.formation.java.cbd.service.ConnectDB;
 
 public class CommandLine {
 	private String commandIn;
+	private Page page;
 	private String[] optionList;
 	private enum Command{
 		Aide,
@@ -39,7 +43,13 @@ public class CommandLine {
 		this.con = con;
 		this.companieDao = new CompanieDao(this.con);
 		this.computerDao = new ComputerDao(this.con);
+	}
+	
+	public void setCompanieL() {
 		this.companieL = this.companieDao.findAll();
+	}
+	
+	public void setComputerL() {
 		this.computerL = this.computerDao.findAll();
 	}
 	
@@ -93,10 +103,12 @@ public class CommandLine {
 				this.help();
 				break;
 			case Liste_Comp:
-				this.listCompanies();
+				//this.listCompanies();
+				this.listPageComputer();
 				break;
 			case Liste_Ordi:
-				this.listComputer();
+				//this.listComputer();
+				this.listPageComputer();
 				break;
 			case Detail:
 				this.detailComputer();
@@ -124,12 +136,12 @@ public class CommandLine {
 		System.out.println("Liste des différent commande disponible :\n"
 				+ "'h' : Aide sur les instructions possible\n"
 				+ "'q' : Quitter l'interface de commande\n"
-				+ "'C' : Liste des différents ordi de la BDD\n"
-				+ "'Q' : Liste des différentes compagnie de la BDD\n"
-				+ "'c [id_ordi]' : Détaille sur un ordinateur en particulier\n"
-				+ "'cr ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Création d'un nouveau pc, les parametres avec -i -o -c sont optionnels\n"
-				+ "'cu ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Maj d'un pc, les parametres avec -i -o -c sont optionnels\n"
-				+ "'cd [id]' : Supression d'un ordinateur grace a son id\n"
+				+ "'C' 'numPage' : Liste des différents ordi de la BDD, indiquer le numéro de la page\n"
+				+ "'Q' 'numPage': Liste des différentes compagnie de la BDD, indiquer le numéro de la page\n"
+				+ "'c' ['id_ordi'] : Détaille sur un ordinateur en particulier\n"
+				+ "'cr' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Création d'un nouveau pc, les parametres avec -i -o -c sont optionnels\n"
+				+ "'cu' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Maj d'un pc, les parametres avec -i -o -c sont optionnels\n"
+				+ "'cd' ['id'] : Supression d'un ordinateur grace a son id\n"
 				+ "WARNING : les dates sont au formats 'yyy-MM-dd'");
 		
 	}
@@ -192,19 +204,49 @@ public class CommandLine {
 		
 		return compute;
 	}
+
+	private int getNumPage() {
+		System.out.println(this.optionList[1]);
+		
+		return Integer.valueOf(this.optionList[1]);
+	}
 	
-	public void listComputer() {
-		this.computerL = this.computerDao.findAll();
-		for(Computer elem:this.computerL) {
+	private void printListComputer(List<Computer> list) {
+		for(Computer elem:list) {
 			System.out.println(elem);
 		}
 	}
 	
-	public void listCompanies() {
-		this.companieL = this.companieDao.findAll();
-		for(Companie elem:this.companieL) {
+	private void printListCompanie(List<Companie> list) {
+		for(Companie elem:list) {
 			System.out.println(elem);
 		}
+	}
+	
+	public void listComputer() {
+		this.computerL = this.computerDao.findAll();
+		printListComputer(this.computerL);
+	}
+	
+	public void listPageComputer() {
+		this.page = new ComputerPage(getNumPage());
+		this.page.setOffset();
+		this.page.setEntity(this.computerDao);
+		this.computerL = this.page.getEntity();
+		printListComputer(this.computerL);
+	}
+	
+	public void listPageompagnie() {
+		this.page = new CompaniePage(getNumPage());
+		this.page.setOffset();
+		this.page.setEntity(this.companieDao);
+		this.companieL= this.page.getEntity();
+		printListCompanie(this.companieL);
+	}
+	
+	public void listCompanies() {
+		this.companieL = this.companieDao.findAll();
+		printListCompanie(this.companieL);
 	}
 	
 	public void detailComputer() {
@@ -218,12 +260,7 @@ public class CommandLine {
 	}
 	
 	public void updateComputer() {
-		for(String elem:optionList) {
-			System.out.println(elem);
-		}
 		Computer computerUpdate = createComputerCli();
-		System.out.println("Maj de l'ordinateur");
-		System.out.println(computerUpdate);
 		this.computerDao.update(computerUpdate);
 	}
 	
