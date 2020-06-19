@@ -24,4 +24,5 @@ public abstract class Dao<T> {
 	 public abstract List<T> findAllLimite(int limite, int offset);
 	
 	 public abstract int findNbElem();
+
 }

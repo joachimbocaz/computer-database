@@ -126,13 +126,15 @@ public class ComputerDao extends Dao<Computer>{
 	public List<Computer> findAllLimite(int limite, int offset) {
 		List<Computer> computerList = new ArrayList<Computer>();
 		try {
+			String sql = "SELECT * "
+					   + "FROM computer "
+					   + "ORDER BY id ASC "
+					   + "LIMIT " + offset 
+					   + ", " + limite + ";";
+			System.out.println(sql);
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * "
-												   + "FROM computer "
-												   + "ORDER BY id ASC "
-												   + "LIMIT " + offset 
-												   + ", " + limite + ";");
+			ResultSet.CONCUR_UPDATABLE).executeQuery(sql);
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {

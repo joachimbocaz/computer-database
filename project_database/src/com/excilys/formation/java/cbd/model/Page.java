@@ -1,36 +1,44 @@
 package com.excilys.formation.java.cbd.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Page {
-	private static final int NBELEM = 25;
-	private int maxElem, numPage;
-	private List<Computer> computerL;
-	private List<Companie> companieL;
+import com.excilys.formation.java.cbd.dao.Dao;
+
+public abstract class Page <T>{
+	protected List<T> entity;
+	protected static final int NB_ELEMENTS_BY_PAGE = 3;
+	private int numPage;
+	protected int offset;
 	
-	public Page(int maxElem, int numPage) {
-		this.maxElem = maxElem;
+	public Page(int numPage) {
 		this.numPage = numPage;
-	}	
-		
-	public int getMaxElem() {
-		return this.maxElem;
+	}
+	
+	public int getOffSet() {
+		return this.offset;
 	}
 	
 	public int getNumPage() {
-		return this.numPage;
+		return numPage;
+	}
+
+	public void setNumPage(int numPage) {
+		this.numPage = numPage;
 	}
 	
-	public List<Computer> getComputerL(){
-		return this.computerL;
+	public void setOffset() {
+		this.offset = (this.numPage - 1) * NB_ELEMENTS_BY_PAGE;
 	}
 	
-	public void setComputerL() {
-		
+	public Integer getNbPages(Dao<T> dao) {
+		Integer nbEntries = dao.findNbElem();
+		Integer nbPages = nbEntries/NB_ELEMENTS_BY_PAGE;
+		return nbEntries%NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
 	}
 	
-	public List<Companie> getCompanieL(){
-		return this.companieL;
-	}
+	public abstract List<T> getEntity();
+	
+	public abstract void setEntity(Dao<T> dao);
+	
+	public abstract void printPage();
 }
