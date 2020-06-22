@@ -1,0 +1,21 @@
+package com.excilys.formation.java.cbd.pages;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.excilys.formation.java.cbd.model.Companie;
+import com.excilys.formation.java.cbd.model.Computer;
+
+public class Page {
+	private static final int nbElem = 25;
+	private List<Computer> computerL;
+	private List<Companie> companieL;
+	
+	public Page(int nbElem,  List<Computer> computerL,  List<Companie> companieL) {
+		this.nbElem = nbElem;
+		this.computerL = new ArrayList<Computer>();
+		this.companieL = new ArrayList<Companie>();
+	}
+	
+	
+}

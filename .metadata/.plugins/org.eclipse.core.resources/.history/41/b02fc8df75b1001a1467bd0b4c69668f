@@ -1,0 +1,41 @@
+package com.excilys.formation.java.cbd.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.excilys.formation.java.cbd.dao.CompanieDao;
+import com.excilys.formation.java.cbd.dao.ComputerDao;
+
+public class Page {
+	private static final int NBELEM = 25;
+	private int maxElem, numPage;
+	private List<Computer> computerL;
+	private List<Companie> companieL;
+	private ComputerDao computerDao;
+	private CompanieDao companieDao;
+	
+	public Page(int maxElem, int numPage) {
+		this.maxElem = maxElem;
+		this.numPage = numPage;
+	}
+		
+	public int getMaxElem() {
+		return this.maxElem;
+	}
+	
+	public int getNumPage() {
+		return this.numPage;
+	}
+	
+	public List<Computer> getComputerL(){
+		return this.computerL;
+	}
+	
+	public void setComputerL() {
+		findAllLimite
+	}
+	
+	public List<Companie> getCompanieL(){
+		return this.companieL;
+	}
+}

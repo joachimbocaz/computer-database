@@ -1,0 +1,59 @@
+package com.excilys.formation.java.cbd.model;
+
+import java.util.List;
+
+import com.excilys.formation.java.cbd.dao.Dao;
+
+public class CompaniePage extends Page<Companie>{
+
+	public CompaniePage(int numPage) {
+		super(numPage);
+	}
+
+	@Override
+	public List<Companie> getEntity() {
+		return this.entity;
+	}
+
+	@Override
+	public void setEntity(Dao<Companie> dao) {
+		this.entity = dao.findAllLimite(NB_ELEMENTS_BY_PAGE, this.offset);
+	}
+
+	@Override
+	public void printPage() {
+		for(Companie elem:entity) {
+			System.out.println(elem);
+		}
+	}
+
+	@Override
+	public Integer getComputersNbPages(Dao<Companie> dao) {
+		Integer nbEntries = dao.findNbElem();
+		Integer nbPages = nbEntries/NB_ELEMENTS_BY_PAGE;
+		return nbEntries%NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
+	}
+	}
+	
+//	private static final int NBELEM = 25;
+//	private int maxElem, numPage;
+//	private List<Companie> companieL;
+//	private CompanieDao companieDao;
+//	
+//	public CompaniePage(int maxElem, int numPage) {
+//		this.maxElem = maxElem;
+//		this.numPage = numPage;
+//	}
+//		
+//	public int getMaxElem() {
+//		return this.maxElem;
+//	}
+//	
+//	public int getNumPage() {
+//		return this.numPage;
+//	}
+//	
+//	public List<Companie> getCompanieL(){
+//		return this.companieL;
+//	}
+}

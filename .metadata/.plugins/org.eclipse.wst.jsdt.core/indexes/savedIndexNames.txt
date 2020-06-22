@@ -1,0 +1,4 @@
+INDEX VERSION 1.4+/home/joachim/CBD/computer-database/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+963130930.index
+2211321848.index
+3255573736.index

@@ -1,0 +1,3 @@
+INDEX VERSION 1.131
+/home/joachim/CBD/computer-database/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3255573736.index
+/computer-database/src/main/resources

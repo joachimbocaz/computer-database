@@ -1,0 +1,35 @@
+package com.excilys.formation.java.cbd.mapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.excilys.formation.java.cbd.model.Computer;
+
+public class CompanieMapper extends AbstractMapper{
+	
+	@Override
+	public Computer createEntity(ResultSet result) throws SQLException {
+		Computer computer = new Computer(result.getInt("id"), result.getString("name"), result.getInt("company_id"));
+		if(result.getString("introduced") == null) {
+	    	computer.setDateIn(null);
+		}
+		else {
+			computer.setDateIn(result.getDate("introduced").toLocalDate());
+		}
+		if(result.getDate("discontinued") == null){
+			computer.setDateOut(null);
+		}
+		else {
+			computer.setDateIn(result.getDate("discontinued").toLocalDate());
+		}
+		return computer;
+	}
+
+	@Override
+	public List createListEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

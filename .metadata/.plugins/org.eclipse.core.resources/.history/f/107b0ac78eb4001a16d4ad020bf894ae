@@ -1,0 +1,6 @@
+package excilys.formation.java.cbd.dao;
+import junit.framework.TestCase;
+
+public class TestCommandLine extends TestCase {
+
+}

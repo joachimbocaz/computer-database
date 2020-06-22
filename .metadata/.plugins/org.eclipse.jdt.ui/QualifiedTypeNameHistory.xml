@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.Singleton"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.Singleton.SingletonHolder"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.Companie"/>
+<fullyQualifiedTypeName name="java.util.Properties"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.model.Database"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.dao.Dao"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.dao.CompanieDao"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.service.ConnectDB"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.dao.ComputerDao"/>
+<fullyQualifiedTypeName name="java.time.Month"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.cli.CommandLine"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.lang.Character"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.cli.CommandIn"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.cli.CommandLine.Choix"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.cli.CommandLine.Command"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="com.sun.org.apache.bcel.internal.generic.INSTANCEOF"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.model.Computer"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.model.PageDisplay"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.model.Companie"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.AbstractMapper"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.ComputerMapper"/>
+<fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.CompanieMapper"/>
+</qualifiedTypeNameHistroy>

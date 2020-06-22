@@ -1,0 +1,7 @@
+package com.excilys.formation.java.cbd.pages;
+
+public class PageDisplay {
+	public void printPage() {
+		
+	}
+}

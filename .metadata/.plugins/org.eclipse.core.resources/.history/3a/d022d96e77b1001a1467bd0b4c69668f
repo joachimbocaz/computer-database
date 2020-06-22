@@ -1,0 +1,19 @@
+package com.excilys.formation.java.cbd.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Page <T>{
+	private List<T> entity;
+	private static final int NBELEM = 25;
+	
+	public Page(ArrayList<T> entity) {
+		this.entity = entity;
+	}
+	
+	public void printPage() {
+		for(T elem:entity) {
+			System.out.println(elem);
+		}
+	}
+}

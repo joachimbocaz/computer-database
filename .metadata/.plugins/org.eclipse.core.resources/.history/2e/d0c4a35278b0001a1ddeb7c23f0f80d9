@@ -1,0 +1,16 @@
+package com.excilys.formation.java.cbd.cli;
+
+public class TestCli {
+	public static void main(String[] args) {
+		System.out.println("q".codePointAt(0));
+		CommandLine command = new CommandLine();
+		command.home();
+		while(true) {
+			if(command.getCommandIn() == "q".codePointAt(0)) {
+				break;
+			}
+			command.executeCommande();
+		}
+		System.out.println("Fin fu programme");
+	}
+}
