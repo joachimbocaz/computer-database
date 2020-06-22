@@ -16,6 +16,8 @@ public class TestCli {
 			System.out.println("Entrez une option : ");
 			command.setCommandIn(sc.nextLine());
 			command.setOptionList();
+//			System.out.println("Il y a " + command.compagniePage.getNbPages(command.computerDao) + " pages d'ordinateur");
+//			System.out.println("Il y a " + command.getNumPage() + " pages de compagnie");
 			if(command.getCommandIn().equals("q")) {
 				break;
 			}

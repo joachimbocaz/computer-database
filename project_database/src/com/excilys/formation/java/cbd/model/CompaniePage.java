@@ -5,6 +5,10 @@ import java.util.List;
 import com.excilys.formation.java.cbd.dao.Dao;
 
 public class CompaniePage extends Page<Companie>{
+	
+	public CompaniePage() {
+	}
+	
 	public CompaniePage(int numPage) {
 		super(numPage);
 	}

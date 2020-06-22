@@ -17,7 +17,6 @@ import com.excilys.formation.java.cbd.service.ConnectDB;
 
 public class CommandLine {
 	private String commandIn;
-	private Page page;
 	private String[] optionList;
 	private enum Command{
 		Aide,
@@ -34,6 +33,8 @@ public class CommandLine {
 	ConnectDB con;
 	CompanieDao companieDao;
 	ComputerDao computerDao;
+	Page<Computer> computerPage;
+	Page<Companie> compagniePage;
 	List<Companie> companieL =  new LinkedList<Companie>();
 	List<Computer> computerL =  new ArrayList<Computer>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -43,6 +44,8 @@ public class CommandLine {
 		this.con = con;
 		this.companieDao = new CompanieDao(this.con);
 		this.computerDao = new ComputerDao(this.con);
+		this.computerPage = new ComputerPage();
+		this.compagniePage = new CompaniePage();
 	}
 	
 	public void setCompanieL() {
@@ -104,7 +107,7 @@ public class CommandLine {
 				break;
 			case Liste_Comp:
 				//this.listCompanies();
-				this.listPageComputer();
+				this.listPageCompagnie();
 				break;
 			case Liste_Ordi:
 				//this.listComputer();
@@ -132,7 +135,7 @@ public class CommandLine {
 				+ "Taper 'h' pour avoir l'aide sur les différentes commande disponible");
 	}
 	
-	public void help() {
+	private void help() {
 		System.out.println("Liste des différent commande disponible :\n"
 				+ "'h' : Aide sur les instructions possible\n"
 				+ "'q' : Quitter l'interface de commande\n"
@@ -143,9 +146,7 @@ public class CommandLine {
 				+ "'cu' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Maj d'un pc, les parametres avec -i -o -c sont optionnels\n"
 				+ "'cd' ['id'] : Supression d'un ordinateur grace a son id\n"
 				+ "WARNING : les dates sont au formats 'yyy-MM-dd'");
-		
 	}
-	
 	private Computer createComputerCli() {
 		Computer compute = new Computer(Integer.parseInt(optionList[1]), optionList[2]);
 		List<Boolean> optionChoose = new ArrayList<Boolean>();
@@ -205,9 +206,7 @@ public class CommandLine {
 		return compute;
 	}
 
-	private int getNumPage() {
-		System.out.println(this.optionList[1]);
-		
+	public int getNumPage() {
 		return Integer.valueOf(this.optionList[1]);
 	}
 	
@@ -229,18 +228,18 @@ public class CommandLine {
 	}
 	
 	public void listPageComputer() {
-		this.page = new ComputerPage(getNumPage());
-		this.page.setOffset();
-		this.page.setEntity(this.computerDao);
-		this.computerL = this.page.getEntity();
+		this.computerPage = new ComputerPage(getNumPage());
+		this.computerPage.setOffset();
+		computerPage.setEntity(this.computerDao);
+		this.computerL = computerPage.getEntity();
 		printListComputer(this.computerL);
 	}
 	
-	public void listPageompagnie() {
-		this.page = new CompaniePage(getNumPage());
-		this.page.setOffset();
-		this.page.setEntity(this.companieDao);
-		this.companieL= this.page.getEntity();
+	public void listPageCompagnie() {
+		this.compagniePage = new CompaniePage(getNumPage());
+		this.compagniePage.setOffset();
+		this.compagniePage.setEntity(this.companieDao);
+		this.companieL= this.compagniePage.getEntity();
 		printListCompanie(this.companieL);
 	}
 	

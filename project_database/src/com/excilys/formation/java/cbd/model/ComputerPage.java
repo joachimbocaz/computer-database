@@ -5,6 +5,9 @@ import java.util.List;
 import com.excilys.formation.java.cbd.dao.Dao;
 
 public class ComputerPage extends Page<Computer>{
+	public ComputerPage() {
+	}
+	
 	public ComputerPage(int numPage) {
 		super(numPage);
 	}

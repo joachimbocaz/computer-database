@@ -10,6 +10,10 @@ public abstract class Page <T>{
 	private int numPage;
 	protected int offset;
 	
+	public Page() {
+		
+	}
+	
 	public Page(int numPage) {
 		this.numPage = numPage;
 	}
