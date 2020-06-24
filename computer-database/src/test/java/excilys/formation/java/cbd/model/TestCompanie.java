@@ -18,5 +18,15 @@ public class TestCompanie extends TestCase {
 		assertEquals("test", companie.getName());
 	}
 	
-
+	@Test
+	public void testCompanieToString() {
+		Companie companie = new Companie(1, "test");
+		assertEquals("Companie : test", companie.toString());
+	}
+	
+	@Test
+	public void testCompabue() {
+		Companie companie = new Companie();
+		assertNotNull(companie);
+	}
 }
