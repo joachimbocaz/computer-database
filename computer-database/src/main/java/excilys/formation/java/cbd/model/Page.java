@@ -23,9 +23,9 @@ public abstract class Page <T>{
 	}
 	
 	public int getNumPage() {
-		return numPage;
+		return this.numPage;
 	}
-
+	
 	public void setNumPage(int numPage) {
 		this.numPage = numPage;
 	}

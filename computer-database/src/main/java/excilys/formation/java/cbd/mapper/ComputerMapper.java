@@ -9,11 +9,11 @@ import excilys.formation.java.cbd.model.Computer;
 
 public class ComputerMapper{
 
-	private static Computer entity(ResultSet result) throws SQLException {
+	public static Computer entity(ResultSet result) throws SQLException {
 		Computer computer = new Computer();
 		computer = new Computer(result.getInt("id"), result.getString("name"));
 		
-		if(result.getString("introduced") == null) {
+		if(result.getDate("introduced") == null) {
 	    	computer.setDateIn(null);
 		}
 		else {
@@ -23,7 +23,8 @@ public class ComputerMapper{
 			computer.setDateOut(null);
 		}
 		else {
-			computer.setDateIn(result.getDate("discontinued").toLocalDate());
+			System.out.println("date out valide");
+			computer.setDateOut(result.getDate("discontinued").toLocalDate());
 		}
 		computer.setManufacturer(result.getInt("company_id"));
 		

@@ -30,14 +30,14 @@ public class CommandLine {
 		Default;	
 	}
 	private Command command;
-	ConnectDB con;
-	CompanieDao companieDao;
-	ComputerDao computerDao;
-	Page<Computer> computerPage;
-	Page<Companie> compagniePage;
-	List<Companie> companieL =  new LinkedList<Companie>();
-	List<Computer> computerL =  new ArrayList<Computer>();
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private ConnectDB con;
+	private CompanieDao companieDao;
+	private ComputerDao computerDao;
+	private Page<Computer> computerPage;
+	private Page<Companie> compagniePage;
+	private List<Companie> companieL =  new LinkedList<Companie>();
+	private List<Computer> computerL =  new ArrayList<Computer>();
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	
 	public CommandLine(ConnectDB con) {
@@ -145,8 +145,9 @@ public class CommandLine {
 				+ "'cr' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Création d'un nouveau pc, les parametres avec -i -o -c sont optionnels\n"
 				+ "'cu' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Maj d'un pc, les parametres avec -i -o -c sont optionnels\n"
 				+ "'cd' ['id'] : Supression d'un ordinateur grace a son id\n"
-				+ "WARNING : les dates sont au formats 'yyy-MM-dd'");
+				+ "WARNING : les dates sont au formats 'yyyy-MM-dd'");
 	}
+	
 	private Computer createComputerCli() {
 		Computer compute = new Computer(Integer.parseInt(optionList[1]), optionList[2]);
 		List<Boolean> optionChoose = new ArrayList<Boolean>();

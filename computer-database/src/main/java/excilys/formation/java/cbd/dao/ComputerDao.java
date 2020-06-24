@@ -7,11 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import excilys.formation.java.cbd.mapper.ComputerMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 public class ComputerDao extends Dao<Computer>{
+
+	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
 
 	public ComputerDao(ConnectDB conn) {
 		super(conn);
@@ -43,6 +48,7 @@ public class ComputerDao extends Dao<Computer>{
 		    }
  			st.executeUpdate(sql);
 		    }catch (SQLException e) {
+		    	logger.error("Error create computer");
 		    	e.printStackTrace();
 		    	return false;
 		    }
@@ -56,6 +62,7 @@ public class ComputerDao extends Dao<Computer>{
 			String sql = "DELETE FROM computer WHERE id = " + obj.getId();
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
+		    	logger.error("Error delete computer");
 		    	e.printStackTrace();
 		    	return false;
 		    }
@@ -85,7 +92,7 @@ public class ComputerDao extends Dao<Computer>{
 		    System.out.println(sql);
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	System.out.println("Error Update Computer");
+		    	logger.error("Error update computer");
 		    	e.printStackTrace();
 		    	return obj;
 		    }
@@ -102,6 +109,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computer = ComputerMapper.createEntity(result);
 	   	}catch (SQLException e) {
+	   		logger.error("Error find computer");
 	    	e.printStackTrace();
 	    }
 		return computer;
@@ -117,11 +125,12 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-		    	e.printStackTrace();
+			logger.error("Error find all computer");
+	    	e.printStackTrace();
 		}
 		return computerList;
 	}
-
+ 
 	@Override
 	public List<Computer> findAllLimite(int limite, int offset) {
 		List<Computer> computerList = new ArrayList<Computer>();
@@ -138,7 +147,8 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-		    	e.printStackTrace();
+			logger.error("Error find computer from " + limite + " to " + limite + offset);
+		    e.printStackTrace();
 		}
 		return computerList;
 	}
@@ -154,6 +164,7 @@ public class ComputerDao extends Dao<Computer>{
 		    	return result.getInt("total");
 		    }
 		}catch (SQLException e) {
+			logger.error("Error find number of computer");
 	    	e.printStackTrace();
 	    }
 		return 0;

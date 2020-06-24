@@ -29,6 +29,7 @@ public class Computer {
 	}
 	
 	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
+		this.id = id;
 		this.name = name;
 		this.manufacturer = manufacturer;
 		
@@ -106,7 +107,41 @@ public class Computer {
 			throw new IllegalArgumentException("Date out need to be after Date in");
 		}
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Computer other = (Computer) obj;
+		if (dateIn == null) {
+			if (other.dateIn != null)
+				return false;
+		} else if (!dateIn.equals(other.dateIn))
+			return false;
+		if (dateOut == null) {
+			if (other.dateOut != null)
+				return false;
+		} else if (!dateOut.equals(other.dateOut))
+			return false;
+		if (id != other.id)
+			return false;
+		if (manufacturer == null) {
+			if (other.manufacturer != null)
+				return false;
+		} else if (!manufacturer.equals(other.manufacturer))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "[Ordinateur] : " + this.name +

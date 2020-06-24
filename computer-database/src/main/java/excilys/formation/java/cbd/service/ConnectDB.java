@@ -7,6 +7,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import excilys.formation.java.cbd.dao.ComputerDao;
+
 public class ConnectDB {
 		private static ConnectDB instance;
 		private Connection connect;
@@ -14,6 +19,9 @@ public class ConnectDB {
 		private String url = "jdbc:mysql://localhost/computer-database-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	    private String username = "admincdb";
 	    private String password = "qwerty1234";
+	    
+		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
+
 
 		public ConnectDB() throws SQLException {
 			try {
@@ -22,10 +30,11 @@ public class ConnectDB {
 	            System.out.println("Connect");
 	           
 	        } catch (ClassNotFoundException ex) {
-	            System.out.println("Database Connection Creation Failed : " + ex.getMessage());
+	        	logger.error("Driver not found");
+	        	ex.printStackTrace();
 	        } catch(SQLException s) {
-				System.out.println("toto");
-				s.printStackTrace();
+	        	logger.error("Error connection to DB");
+	        	s.printStackTrace();
 			}
 		}
 		
@@ -52,20 +61,14 @@ public class ConnectDB {
 				rsmd = resultats.getMetaData();
 				int nbCols = rsmd.getColumnCount();
 				while (resultats.next()) {
-				      for (int i = 1; i <= nbCols; i++)
-				          System.out.print(resultats.getString(i) + " ");
-				       System.out.println();				}
+					for (int i = 1; i <= nbCols; i++)
+						System.out.print(resultats.getString(i) + " ");
+						System.out.println();
+					}
 				resultats.close();
 			} catch (SQLException e) {
+				logger.error("Error request");
 				e.printStackTrace();
 			}
 		}
-		
-		/*
-		public static void main(String[] args) throws SQLException {
-			ConnectDB con = new ConnectDB();
-			String requete = "SELECT * FROM company";
-			doRequest(con, requete);
-		}
-		*/
 }

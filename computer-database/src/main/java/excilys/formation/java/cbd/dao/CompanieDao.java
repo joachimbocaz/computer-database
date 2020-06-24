@@ -7,12 +7,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import excilys.formation.java.cbd.mapper.CompanieMapper;
 import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 public class CompanieDao extends Dao<Companie>{
-
+	
+	private static Logger logger = LoggerFactory.getLogger(CompanieDao.class);
+	
 	public CompanieDao(ConnectDB conn) {
 		super(conn);
 	}
@@ -25,7 +30,8 @@ public class CompanieDao extends Dao<Companie>{
 														 + obj.getName() + ");";
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	e.printStackTrace();
+		    	logger.error("Error create companie");
+				e.printStackTrace();
 		    	return false;
 		    }
 		return true;
@@ -38,7 +44,8 @@ public class CompanieDao extends Dao<Companie>{
 			String sql = "DELETE FROM company WHERE id = " + obj.getId();
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	e.printStackTrace();
+		    	logger.error("Error delete companie");
+				e.printStackTrace();
 		    	return false;
 		    }
 		return false;
@@ -53,7 +60,8 @@ public class CompanieDao extends Dao<Companie>{
 		    ps.setString(2, obj.getName());
 		    ps.executeUpdate();
 		    }catch (SQLException e) {
-		    	e.printStackTrace();
+		    	logger.error("Error update companie");
+				e.printStackTrace();
 		    	return obj;
 		    }
 		return obj;
@@ -69,7 +77,8 @@ public class CompanieDao extends Dao<Companie>{
 			
 			companie = CompanieMapper.createEntity(result);
 		}catch (SQLException e) {
-		    	e.printStackTrace();
+	    	logger.error("Error find companie");
+			e.printStackTrace();
 	    }
 		return companie;
 	}
@@ -84,7 +93,8 @@ public class CompanieDao extends Dao<Companie>{
 			
 			companyList = CompanieMapper.createListEntity(result);
 		}catch (SQLException e) {
-		    	e.printStackTrace();
+	    	logger.error("Error find all companie");
+			e.printStackTrace();
 		}
 		return companyList;
 	}
@@ -106,7 +116,8 @@ public class CompanieDao extends Dao<Companie>{
 				companyList.add(company);
 			}
 		}catch (SQLException e) {
-		    	e.printStackTrace();
+	    	logger.error("Error find all "+ limite +" companie");
+	    	e.printStackTrace();
 		}
 		return companyList;
 	}
@@ -122,6 +133,7 @@ public class CompanieDao extends Dao<Companie>{
 		    	return result.getInt("total");
 		    }
 		}catch (SQLException e) {
+	    	logger.error("Error find number of companie");
 	    	e.printStackTrace();
 	    }
 		return 0;
