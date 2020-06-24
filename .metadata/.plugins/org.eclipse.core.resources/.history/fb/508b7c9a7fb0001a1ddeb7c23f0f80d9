@@ -1,0 +1,22 @@
+package com.excilys.formation.java.cbd.cli;
+
+import java.util.Scanner;
+
+public class TestCli {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		CommandLine command = new CommandLine();
+		command.home();
+		
+		while(true) {
+			command.setCommandIn(sc.nextLine());
+			if(command.getCommandIn() == "q") {
+				break;
+			}
+			command.executeCommande();
+		}
+		
+		System.out.println("Fin du programme");
+		sc.close();
+	}
+}

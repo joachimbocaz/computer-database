@@ -1,0 +1,10 @@
+package com.excilys.formation.java.cbd.mapper;
+
+import java.sql.ResultSet;
+
+
+public abstract class AbstractMapper <T>{
+
+	public abstract T createEntity(ResultSet result);
+
+}

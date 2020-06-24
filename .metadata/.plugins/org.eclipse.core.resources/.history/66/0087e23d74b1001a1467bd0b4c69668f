@@ -1,0 +1,24 @@
+package com.excilys.formation.java.cbd.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PageDisplay {
+	private Page pageL;
+	
+	public PageDisplay(ArrayList<Page> pageL) {
+		this.pageL = pageL;
+	}
+	
+	public void printPageComputer(int nPage) {
+		for(Computer elem:this.pageL.get(nPage).getComputerL()) {
+			System.out.println(elem);
+		}
+	}
+	
+	public void printPageCompanie(int nPage) {
+		for(Companie elem:pageL.get(nPage).getCompanieL()) {
+			System.out.println(elem);
+		}
+	}
+}

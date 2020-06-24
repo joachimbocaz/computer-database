@@ -1,0 +1,45 @@
+package com.excilys.formation.java.cbd.model;
+
+import java.util.List;
+
+import com.excilys.formation.java.cbd.dao.Dao;
+
+public abstract class Page <T>{
+	protected List<T> entity;
+	protected static final int NB_ELEMENTS_BY_PAGE = 10;
+	private int numPage;
+	protected int offset;
+	
+	public Page(int numPage) {
+		this.numPage = numPage;
+	}
+	
+	public int getNumPage() {
+		return numPage;
+	}
+
+	public void setNumPage(int numPage) {
+		this.numPage = numPage;
+	}
+	
+	public void setOffset() {
+		this.offset = (this.numPage - 1) * NB_ELEMENTS_BY_PAGE;
+	}
+	
+	public abstract List<T> getEntity();//{
+//		return this.entity;
+//	}
+	
+	public abstract void setEntity(Dao<T> dao);// {
+//		this.entity = dao.findAllLimite(NB_ELEMENTS_BY_PAGE, this.offset);
+//	}
+	
+	public abstract void printPage();// {
+//		for(T elem:entity) {
+//			System.out.println(elem);
+//		}
+//	}
+	
+	public abstract int getComputersNbPages(Dao<T> dao);
+	
+}

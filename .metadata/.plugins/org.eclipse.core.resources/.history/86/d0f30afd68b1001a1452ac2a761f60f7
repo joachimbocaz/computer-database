@@ -1,0 +1,30 @@
+package com.excilys.formation.java.cbd.mapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.excilys.formation.java.cbd.model.Companie;
+
+
+public class CompanieMapper{
+
+	public Companie createEntity(ResultSet result) throws SQLException {
+		Companie companie = new Companie();
+	    if(result.first()) {
+	    	companie = new Companie(result.getInt("id"), result.getString("name"));
+		}
+		return companie;
+	}
+
+	public List<Companie> createListEntity(ResultSet result) throws SQLException{
+		List<Companie> companyList = new ArrayList<Companie>();
+		while(result.next()) {
+			companyList.add(createEntity(result));
+		}
+		return companyList;
+	}
+	
+
+}

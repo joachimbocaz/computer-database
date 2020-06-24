@@ -1,0 +1,30 @@
+package com.excilys.formation.java.cbd.model;
+
+public class CompaniePage extends Page<Companie>{
+
+	public CompaniePage(int numPage) {
+		super(numPage);
+	}
+	
+//	private static final int NBELEM = 25;
+//	private int maxElem, numPage;
+//	private List<Companie> companieL;
+//	private CompanieDao companieDao;
+//	
+//	public CompaniePage(int maxElem, int numPage) {
+//		this.maxElem = maxElem;
+//		this.numPage = numPage;
+//	}
+//		
+//	public int getMaxElem() {
+//		return this.maxElem;
+//	}
+//	
+//	public int getNumPage() {
+//		return this.numPage;
+//	}
+//	
+//	public List<Companie> getCompanieL(){
+//		return this.companieL;
+//	}
+}
