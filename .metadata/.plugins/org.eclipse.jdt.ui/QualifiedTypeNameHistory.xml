@@ -28,9 +28,7 @@
 <fullyQualifiedTypeName name="java.lang.Object"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="com.sun.org.apache.bcel.internal.generic.INSTANCEOF"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
-<fullyQualifiedTypeName name="java.time.LocalDate"/>
 <fullyQualifiedTypeName name="java.lang.Boolean"/>
 <fullyQualifiedTypeName name="com.excilys.formation.java.cbd.model.Computer"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -41,4 +39,9 @@
 <fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.AbstractMapper"/>
 <fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.ComputerMapper"/>
 <fullyQualifiedTypeName name="com.excilys.formation.java.cbd.mapper.CompanieMapper"/>
+<fullyQualifiedTypeName name="excilys.formation.java.cbd.model.Companie"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
 </qualifiedTypeNameHistroy>

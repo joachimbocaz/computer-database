@@ -1,7 +1,0 @@
-package com.excilys.formation.java.cbd.dao;
-
-import java.sql.Connection;
-
-public class Dao {
-
-}

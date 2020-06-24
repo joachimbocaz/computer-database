@@ -1,7 +1,0 @@
-package com.excilys.formation.java.cbd;
-
-import java.util.ArrayList;
-
-public class Database {
-	private List<Compagnie> companieList = new ArrayList<Compagnie>()
-}
