@@ -7,6 +7,33 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>computer-database Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
+    <reporting>
+	    <plugins>
+		    <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+	
+	        <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.1</version>
+	            <configuration>
+	                <configLocation>checkstyle/checkstyle.xml</configLocation>
+	            </configuration>
+	
+	        </plugin>
+	    </plugins>
+  </reporting>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -52,8 +79,11 @@
 	    <version>1.4.200</version>
 	    <scope>test</scope>
 	</dependency>
-
+	
   </dependencies>
+  
+
+
   <build>
     <finalName>computer-database</finalName>
   </build>
