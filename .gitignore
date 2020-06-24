@@ -11,8 +11,8 @@ computer-database/.settings/
 computer-database/.classpath
 
 #ignore jdbc properties
-#computer-database/src/main/resources/jdbc.properties
-#computer-database/src/test/resources/jdbc.properties
+computer-database/src/main/resources/jdbc.properties
+computer-database/src/test/resources/jdbc.properties
 
 #ignore metadata
 .metadata/
