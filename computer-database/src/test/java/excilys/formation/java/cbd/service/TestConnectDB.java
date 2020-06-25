@@ -30,7 +30,7 @@ public class TestConnectDB extends TestCase {
 //	  public void setUp() {
 //	    MockitoAnnotations.initMocks(this);
 //	  }
-	  
+//  
 //	  @Test
 //	  public void testMockDBConnection() throws Exception {
 //	    Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
