@@ -8,17 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DashBoardServlet
+ * Servlet implementation class AddComputerServlet
  */
-@WebServlet(name = "DashBoardServlet", urlPatterns = "/dashboard")
-public class DashBoardServlet extends HttpServlet {
+@WebServlet(name = "AddComputerServlet", urlPatterns = "/addComputer")
+public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DashBoardServlet() {
+    public AddComputerServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -26,13 +27,14 @@ public class DashBoardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
