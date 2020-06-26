@@ -1,58 +1,32 @@
 package excilys.formation.java.cbd.mapper;
 
-import excilys.formation.java.cbd.dao.Dao;
+import java.util.ArrayList;
+import java.util.List;
+
+import excilys.formation.java.cbd.dao.ComputerDao;
+import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.model.Computer;
 
-public class ComputerDtoMapper extends AbstractDtoMapper{
-	private String computerId, computerName, computerIdCompanie, computerIdDateIn, computerIdDateOut;
+public class ComputerDtoMapper{
+	private ComputerDao computerDao;
 	
-	public void entity(Dao<Computer> dao, int idComputer) {
-		Computer computer = null;
-		computer = dao.find(idComputer);
-		computerId = String.valueOf(computer.getId());
-		computerName = computer.getName().equals(null) ? "null" : computer.getName();
-		computerIdCompanie = String.valueOf(computer.getManufacturer());
-		computerIdDateIn = String.valueOf(computer.getDateIn());
-		computerIdDateIn = String.valueOf(computer.getDateOut());
+	public static ComputerDto computerToDto (Computer computer) {
+		ComputerDto computerDto = new ComputerDto();
+		computerDto.setId(String.valueOf(computer.getId()));
+		computerDto.setName(computer.getName());
+		computerDto.setIntroduced(String.valueOf(computer.getDateIn()));
+		computerDto.setDiscontinued(String.valueOf(computer.getDateOut()));
+		computerDto.setIdCompanie(String.valueOf(computer.getManufacturer()));
+		return computerDto;
 	}
-
-	public String getCompanieId() {
-		return computerId;
-	}
-
-	public void setCompanieId(String companieId) {
-		this.computerId = companieId;
-	}
-
-	public String getCompanieName() {
-		return computerName;
-	}
-
-	public void setCompanieName(String companieName) {
-		this.computerName = companieName;
-	}
-
-	public String getComputerIdCompanie() {
-		return computerIdCompanie;
-	}
-
-	public void setComputerIdCompanie(String computerIdCompanie) {
-		this.computerIdCompanie = computerIdCompanie;
-	}
-
-	public String getComputerIdDateIn() {
-		return computerIdDateIn;
-	}
-
-	public void setComputerIdDateIn(String computerIdDateIn) {
-		this.computerIdDateIn = computerIdDateIn;
-	}
-
-	public String getComputerIdDateOut() {
-		return computerIdDateOut;
-	}
-
-	public void setComputerIdDateOut(String computerIdDateOut) {
-		this.computerIdDateOut = computerIdDateOut;
+	
+	public List<ComputerDto> listComputerToDto(){
+		ArrayList<ComputerDto> computerDtoListe = new ArrayList<ComputerDto>();
+		List<Computer> computerList = computerDao.findAll();
+		
+		for(Computer computer:computerList) {
+			computerDtoListe.add(ComputerDtoMapper.computerToDto(computer));
+		}
+		return computerDtoListe;
 	}
 }
