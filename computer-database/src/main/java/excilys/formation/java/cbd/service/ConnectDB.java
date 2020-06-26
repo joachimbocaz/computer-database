@@ -1,32 +1,50 @@
 package excilys.formation.java.cbd.service;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import excilys.formation.java.cbd.dao.ComputerDao;
-
 public class ConnectDB {
-		private static ConnectDB instance;
+
+	private static ConnectDB instance;
 		private Connection connect;
 		
-		private String url = "jdbc:mysql://localhost/computer-database-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-	    private String username = "admincdb";
-	    private String password = "qwerty1234";
-	    
+		public static final String FICHIER_PROPERTIES="src/main/resources/jdbc.properties"; 
+		
+		private static String url, user, passwd, driver;
+		
+				
 		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
 
 
 		public ConnectDB() throws SQLException {
+//			Properties properties = new Properties();
+//			String driver;
+//			String url;
+//			String nomUtilisateur; 
+//			String motDePasse;
+//			ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
+//			InputStream fichierProperties=classLoader.getResourceAsStream(FICHIER_PROPERTIES);
+			
 			try {
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	            this.connect = DriverManager.getConnection(url, username, password);
+				getProperties();
+	            System.out.println(url);
+	            System.out.println(user);
+	            System.out.println(passwd);
+	            System.out.println(driver);
+				Class.forName(driver);
+	            this.connect = DriverManager.getConnection(url, user, passwd);
 	            System.out.println("Connect");
 	           
 	        } catch (ClassNotFoundException ex) {
@@ -68,6 +86,23 @@ public class ConnectDB {
 				resultats.close();
 			} catch (SQLException e) {
 				logger.error("Error request");
+				e.printStackTrace();
+			}
+		}
+		
+		private static void getProperties() {
+			Properties prop = new Properties();
+			try(InputStream input = new FileInputStream(FICHIER_PROPERTIES)){
+				prop.load(input);
+				url = prop.getProperty("db.url");
+				user = prop.getProperty("db.username");
+				passwd = prop.getProperty("db.password");
+				driver = prop.getProperty("db.driver");
+			} catch (FileNotFoundException e) {
+				logger.error("File not Found");
+				e.printStackTrace();
+			} catch (IOException e) {
+				logger.error("IO Exceptions");
 				e.printStackTrace();
 			}
 		}

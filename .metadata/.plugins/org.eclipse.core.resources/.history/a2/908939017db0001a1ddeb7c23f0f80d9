@@ -1,5 +1,0 @@
-package com.excilys.formation.java.cbd.cli;
-
-public enum CommandIn {
-
-}

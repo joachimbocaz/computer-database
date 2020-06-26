@@ -1,7 +1,0 @@
-#DriverManager.Preferences
-#Mon Jun 15 15:57:52 CEST 2020
-org.eclipse.datatools.enablement.ibm.db2.luw.other.driverTemplate=true
-org.eclipse.datatools.enablement.ibm.db2.luw.kerberosDriverTemplate=true
-org.eclipse.datatools.enablement.ibm.db2.luw.driverTemplate=true
-org.eclipse.datatools.enablement.ibm.db2.luw.jdbc4.kerberosDriverTemplate=true
-org.eclipse.datatools.enablement.ibm.db2.luw.jdbc4.driverTemplate=true
