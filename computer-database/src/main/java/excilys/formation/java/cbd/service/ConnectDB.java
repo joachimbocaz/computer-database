@@ -12,20 +12,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class ConnectDB {
 
 	private static ConnectDB instance;
 		private Connection connect;
 		
-		public static final String FICHIER_PROPERTIES="src/main/resources/jdbc.properties"; 
+		public static final String FICHIER_PROPERTIES="/home/joachim/computer-database/computer-database/src/main/resources/jdbc.properties"; 
 		
 		private static String url, user, passwd, driver;
 		
 				
-		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
+//		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
 
 
 		public ConnectDB() throws SQLException {
@@ -48,10 +45,12 @@ public class ConnectDB {
 	            System.out.println("Connect");
 	           
 	        } catch (ClassNotFoundException ex) {
-	        	logger.error("Driver not found");
+	        	System.out.println("driver not found");
+//	        	logger.error("Driver not found");
 	        	ex.printStackTrace();
 	        } catch(SQLException s) {
-	        	logger.error("Error connection to DB");
+	        	System.out.println("error connection a la bdd");
+//	        	logger.error("Error connection to DB");
 	        	s.printStackTrace();
 			}
 		}
@@ -85,7 +84,8 @@ public class ConnectDB {
 					}
 				resultats.close();
 			} catch (SQLException e) {
-				logger.error("Error request");
+//				logger.error("Error request");
+				System.out.println("error request");
 				e.printStackTrace();
 			}
 		}
@@ -99,10 +99,12 @@ public class ConnectDB {
 				passwd = prop.getProperty("db.password");
 				driver = prop.getProperty("db.driver");
 			} catch (FileNotFoundException e) {
-				logger.error("File not Found");
+				System.out.println("impossible de trouver le fichier");
+//				logger.error("File not Found");
 				e.printStackTrace();
 			} catch (IOException e) {
-				logger.error("IO Exceptions");
+				System.out.println("impossible de lire le fichier");
+//				logger.error("IO Exceptions");
 				e.printStackTrace();
 			}
 		}

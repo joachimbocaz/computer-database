@@ -17,9 +17,11 @@ import excilys.formation.java.cbd.service.ConnectDB;
 public class ComputerDao extends Dao<Computer>{
 
 	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
-
-	public ComputerDao(ConnectDB conn) {
-		super(conn);
+	
+	private ConnectDB connect;
+	
+	public ComputerDao() throws SQLException {
+		this.connect = new ConnectDB();
 	}
 
 	@Override
@@ -126,6 +128,7 @@ public class ComputerDao extends Dao<Computer>{
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 			logger.error("Error find all computer");
+
 	    	e.printStackTrace();
 		}
 		return computerList;

@@ -18,8 +18,10 @@ public class CompanieDao extends Dao<Companie>{
 	
 	private static Logger logger = LoggerFactory.getLogger(CompanieDao.class);
 	
-	public CompanieDao(ConnectDB conn) {
-		super(conn);
+	private ConnectDB connect;
+	
+	public CompanieDao() throws SQLException {
+		this.connect = new ConnectDB();
 	}
 
 	@Override
@@ -30,7 +32,7 @@ public class CompanieDao extends Dao<Companie>{
 														 + obj.getName() + ");";
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	logger.error("Error create companie");
+//		    	logger.error("Error create companie");
 				e.printStackTrace();
 		    	return false;
 		    }
@@ -44,7 +46,7 @@ public class CompanieDao extends Dao<Companie>{
 			String sql = "DELETE FROM company WHERE id = " + obj.getId();
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	logger.error("Error delete companie");
+//		    	logger.error("Error delete companie");
 				e.printStackTrace();
 		    	return false;
 		    }

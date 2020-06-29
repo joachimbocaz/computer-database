@@ -7,10 +7,6 @@ import excilys.formation.java.cbd.service.ConnectDB;
 public abstract class Dao<T> {
 	 protected ConnectDB connect = null;
 
-	 public Dao(ConnectDB conn){
-	    this.connect = conn;
-	  }
-	  
 	 public abstract boolean create(T obj);
 
 	 public abstract boolean delete(T obj);

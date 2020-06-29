@@ -14,9 +14,25 @@ public class ComputerDto{
 	public ComputerDto (String id, String name, String introduced, String discontinued, String idCompanie) {
 		this.id = id;
 		this.name = name;
-		this.introduced = introduced;
-		this.discontinued = discontinued;
-		this.idCompanie = idCompanie;
+		System.out.println(introduced);
+		if(introduced.equals("null")) {
+			this.introduced = "";
+		}
+		else {
+			this.introduced = introduced;
+		}
+		if(discontinued.equals("null")) {
+			this.discontinued = "";
+		}
+		else {
+			this.discontinued = discontinued;
+		}
+		if(idCompanie.equals("0")) {
+			this.idCompanie = "";
+		}
+		else {
+			this.idCompanie = idCompanie;
+		}
 	}
 	
 	public String getId() {
@@ -40,7 +56,12 @@ public class ComputerDto{
 	}
 
 	public void setIntroduced(String introduced) {
-		this.introduced = introduced;
+		if(introduced.equals("null")) {
+			this.introduced = "";
+		}
+		else {
+			this.introduced = introduced;
+		}
 	}
 
 	public String getDiscontinued() {
@@ -48,7 +69,12 @@ public class ComputerDto{
 	}
 
 	public void setDiscontinued(String discontinued) {
-		this.discontinued = discontinued;
+		if(discontinued.equals("null")) {
+			this.discontinued = "";
+		}
+		else {
+			this.discontinued = discontinued;
+		}
 	}
 
 	public String getIdCompanie() {
@@ -56,7 +82,12 @@ public class ComputerDto{
 	}
 
 	public void setIdCompanie(String idCompanie) {
-		this.idCompanie = idCompanie;
+		if(idCompanie.equals("0")) {
+			this.idCompanie = "";
+		}
+		else {
+			this.idCompanie = idCompanie;
+		}
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package excilys.formation.java.cbd.cli;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,10 +41,10 @@ public class CommandLine {
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	
-	public CommandLine(ConnectDB con) {
+	public CommandLine(ConnectDB con) throws SQLException {
 		this.con = con;
-		this.companieDao = new CompanieDao(this.con);
-		this.computerDao = new ComputerDao(this.con);
+		this.companieDao = new CompanieDao();
+		this.computerDao = new ComputerDao();
 		this.computerPage = new ComputerPage();
 		this.compagniePage = new CompaniePage();
 	}

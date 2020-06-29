@@ -16,8 +16,8 @@ import excilys.formation.java.cbd.service.ConnectDB;
 public class Main {
 	public static void main(String[] args) throws SQLException {
 		ConnectDB con = new ConnectDB();
-		CompanieDao companieDao = new CompanieDao(con);
-		ComputerDao computerDao = new ComputerDao(con);
+		CompanieDao companieDao = new CompanieDao();
+		ComputerDao computerDao = new ComputerDao();
 		List<Companie> companieL =  new LinkedList<Companie>();
 		List<Computer> computerL =  new ArrayList<Computer>();
 		
