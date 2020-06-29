@@ -21,10 +21,13 @@ public class ComputerDtoMapper{
 	
 	public static Computer dtoToComputer(ComputerDto computerDto) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.FRENCH);
-		return new Computer(Integer.valueOf(computerDto.getId()), 
-							computerDto.getName(),
-							Integer.valueOf(computerDto.getIdCompanie()),
-							LocalDate.parse(computerDto.getIntroduced(), formatter),
-							LocalDate.parse(computerDto.getDiscontinued(), formatter));
+		
+		Computer computer = new Computer(Integer.valueOf(computerDto.getId()),computerDto.getName());
+		
+		computer.setManufacturer(computerDto.getIdCompanie().equals("") ? null:Integer.valueOf(computerDto.getIdCompanie()));
+		computer.setDateIn(computerDto.getIntroduced().equals("") ? null:LocalDate.parse(computerDto.getIntroduced(), formatter));
+		computer.setDateOut(computerDto.getDiscontinued().equals("") ? null:LocalDate.parse(computerDto.getDiscontinued(), formatter));
+		
+		return computer;
 	}
 }
