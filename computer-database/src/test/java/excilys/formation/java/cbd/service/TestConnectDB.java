@@ -1,5 +1,7 @@
 package excilys.formation.java.cbd.service;
 
+import org.junit.Ignore;
+
 //import java.sql.Connection;
 //import java.sql.ResultSet;
 //import java.sql.Statement;
@@ -14,6 +16,7 @@ package excilys.formation.java.cbd.service;
 
 import junit.framework.TestCase;
 
+@Ignore
 public class TestConnectDB extends TestCase {
 //
 //	private static final String URL = "jdbc:mysql://localhost/computer-database-db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";

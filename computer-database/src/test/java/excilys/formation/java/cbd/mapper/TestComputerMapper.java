@@ -9,10 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.Computer;
 import junit.framework.TestCase;
-import sun.util.resources.LocaleData;
 
 public class TestComputerMapper extends TestCase {
 	private final static String ATTRIBUT_COMPUTER = "id"; 
