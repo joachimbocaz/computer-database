@@ -21,4 +21,6 @@ public abstract class Dao<T> {
 	
 	 public abstract int findNbElem();
 
+	 public abstract int maxId();
+
 }

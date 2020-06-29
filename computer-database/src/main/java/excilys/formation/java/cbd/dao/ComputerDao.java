@@ -34,13 +34,13 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql += null + ", ";;
 		    }
 		    else {
-		    	sql += obj.getDateIn() + ", ";
+		    	sql += "'" + obj.getDateIn() + "', ";
 		    }
 		    if(obj.getDateIn() == null) {
 		    	sql += null + ", ";
 		    }
 		    else {
-		    	sql += obj.getDateIn() + ", ";
+		    	sql += "'" + obj.getDateIn() + "', ";
 		    }
 		    if(obj.getManufacturer() == null) {
 		    	sql += null + ");";
@@ -48,6 +48,7 @@ public class ComputerDao extends Dao<Computer>{
 		    else {
 		    	sql += obj.getManufacturer() + ");";
 		    }
+		    System.out.println(sql);
  			st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	logger.error("Error create computer");
@@ -165,6 +166,23 @@ public class ComputerDao extends Dao<Computer>{
 			
 		    if(result.first()) {
 		    	return result.getInt("total");
+		    }
+		}catch (SQLException e) {
+			logger.error("Error find number of computer");
+	    	e.printStackTrace();
+	    }
+		return 0;
+	}
+	
+	@Override
+	public int maxId() {
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT MAX(id) AS max FROM computer");
+			
+		    if(result.first()) {
+		    	return result.getInt("max");
 		    }
 		}catch (SQLException e) {
 			logger.error("Error find number of computer");

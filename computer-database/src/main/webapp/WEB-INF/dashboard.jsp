@@ -84,11 +84,10 @@
 							<tr>
 								<td class="editMode"><input type="checkbox" name="cb"
 									class="cb" value=${ computerDtoCollection.id }></td>
-								<td><a href="editComputer" onclick="">${ computerDtoCollection.name }</a>
-								</td>
-								<td>${computerDtoCollection.introduced}</td>
-								<td>${computerDtoCollection.discontinued}</td>
-								<td>${computerDtoCollection.idCompanie}</td>
+								<td><a href="editComputer" onclick="">${ computerDtoCollection.name }</a></td>
+								<td><c:out value="${computerDtoCollection.introduced}"/></td>
+								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
+								<td><c:out value="${computerDtoCollection.idCompanie}"/></td>
 							</tr>
 						</c:forEach>
 					

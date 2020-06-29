@@ -140,4 +140,21 @@ public class CompanieDao extends Dao<Companie>{
 	    }
 		return 0;
 	}
+
+	@Override
+	public int maxId() {
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT MAX(id) AS max FROM computer");
+			
+		    if(result.first()) {
+		    	return result.getInt("max");
+		    }
+		}catch (SQLException e) {
+	    	logger.error("Error find number of companie");
+	    	e.printStackTrace();
+	    }
+		return 0;
+	}
 }

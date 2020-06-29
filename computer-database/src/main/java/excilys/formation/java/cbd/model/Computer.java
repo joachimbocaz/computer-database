@@ -85,7 +85,7 @@ public class Computer {
 			this.dateIn = dateIn;
 		}
 		else {
-			throw new IllegalArgumentException("Date in need to be before Date out");
+			this.dateIn = null;
 		}
 	}
 
@@ -104,7 +104,7 @@ public class Computer {
 			this.dateOut = dateOut;
 		}
 		else {
-			throw new IllegalArgumentException("Date out need to be after Date in");
+			this.dateOut = null;
 		}
 	}
 

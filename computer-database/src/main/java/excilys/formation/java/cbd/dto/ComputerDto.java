@@ -11,7 +11,7 @@ public class ComputerDto{
 	public ComputerDto() {
 	}
 
-	public ComputerDto (String id, String name, String introduced, String discontinued, String idCompanie) {
+	public ComputerDto (String id, String name, String idCompanie, String introduced, String discontinued) {
 		this.id = id;
 		this.name = name;
 		System.out.println(introduced);
