@@ -42,7 +42,7 @@ public abstract class Page <T>{
 	
 	public abstract List<T> getEntity();
 	
-	public abstract void setEntity(Dao<T> dao);
+	public abstract void setEntity();
 	
 	public abstract void printPage();
 }

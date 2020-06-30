@@ -31,7 +31,6 @@ public class CommandLine {
 		Default;	
 	}
 	private Command command;
-	private ConnectDB con;
 	private CompanieDao companieDao;
 	private ComputerDao computerDao;
 	private Page<Computer> computerPage;
@@ -42,7 +41,6 @@ public class CommandLine {
 	
 	
 	public CommandLine(ConnectDB con) throws SQLException {
-		this.con = con;
 		this.companieDao = new CompanieDao();
 		this.computerDao = new ComputerDao();
 		this.computerPage = new ComputerPage();
@@ -232,7 +230,7 @@ public class CommandLine {
 	public void listPageComputer() {
 		this.computerPage = new ComputerPage(getNumPage());
 		this.computerPage.setOffset();
-		computerPage.setEntity(this.computerDao);
+		computerPage.setEntity();
 		this.computerL = computerPage.getEntity();
 		printListComputer(this.computerL);
 	}
@@ -240,7 +238,7 @@ public class CommandLine {
 	public void listPageCompagnie() {
 		this.compagniePage = new CompaniePage(getNumPage());
 		this.compagniePage.setOffset();
-		this.compagniePage.setEntity(this.companieDao);
+		this.compagniePage.setEntity();
 		this.companieL= this.compagniePage.getEntity();
 		printListCompanie(this.companieL);
 	}
