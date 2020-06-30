@@ -34,13 +34,13 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql += null + ", ";;
 		    }
 		    else {
-		    	sql += "'" + obj.getDateIn() + "', ";
+		    	sql += "'" + obj.getDateIn() + "', ";	
 		    }
-		    if(obj.getDateIn() == null) {
+		    if(obj.getDateOut() == null) {
 		    	sql += null + ", ";
 		    }
 		    else {
-		    	sql += "'" + obj.getDateIn() + "', ";
+		    	sql += "'" + obj.getDateOut() + "', ";
 		    }
 		    if(obj.getManufacturer() == null) {
 		    	sql += null + ");";
@@ -48,7 +48,6 @@ public class ComputerDao extends Dao<Computer>{
 		    else {
 		    	sql += obj.getManufacturer() + ");";
 		    }
-		    System.out.println(sql);
  			st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	logger.error("Error create computer");
@@ -92,7 +91,6 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql += "company_id = " + obj.getManufacturer();
 		    }
 		    sql += " WHERE id = " + obj.getId();
-		    System.out.println(sql);
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	logger.error("Error update computer");
@@ -144,7 +142,6 @@ public class ComputerDao extends Dao<Computer>{
 					   + "ORDER BY id ASC "
 					   + "LIMIT " + offset 
 					   + ", " + limite + ";";
-			System.out.println(sql);
 			ResultSet result = this.connect.getConnection().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
 			ResultSet.CONCUR_UPDATABLE).executeQuery(sql);

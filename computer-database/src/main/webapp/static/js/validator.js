@@ -41,9 +41,8 @@ function verifDates() {
 }
 
 function verifName(champ){
-   if(champ.value == ""){
+   if(champ.value.trim() == ""){
       surligne(champ, true);
-      computerName
       return false;
    }
    else{

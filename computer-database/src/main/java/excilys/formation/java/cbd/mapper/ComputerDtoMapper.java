@@ -27,7 +27,6 @@ public class ComputerDtoMapper{
 		computer.setManufacturer(computerDto.getIdCompanie().equals("") ? null:Integer.valueOf(computerDto.getIdCompanie()));
 		computer.setDateIn(computerDto.getIntroduced().equals("") ? null:LocalDate.parse(computerDto.getIntroduced(), formatter));
 		computer.setDateOut(computerDto.getDiscontinued().equals("") ? null:LocalDate.parse(computerDto.getDiscontinued(), formatter));
-		
 		return computer;
 	}
 }

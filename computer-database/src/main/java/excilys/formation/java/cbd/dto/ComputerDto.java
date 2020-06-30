@@ -14,7 +14,6 @@ public class ComputerDto{
 	public ComputerDto (String id, String name, String idCompanie, String introduced, String discontinued) {
 		this.id = id;
 		this.name = name;
-		System.out.println(introduced);
 		if(introduced.equals("null")) {
 			this.introduced = "";
 		}

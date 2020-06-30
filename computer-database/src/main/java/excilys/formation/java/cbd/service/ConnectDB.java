@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ConnectDB {
 
 	private static ConnectDB instance;
@@ -22,7 +25,7 @@ public class ConnectDB {
 		private static String url, user, passwd, driver;
 		
 				
-//		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
+		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
 
 
 		public ConnectDB() throws SQLException {
@@ -36,21 +39,14 @@ public class ConnectDB {
 			
 			try {
 				getProperties();
-	            System.out.println(url);
-	            System.out.println(user);
-	            System.out.println(passwd);
-	            System.out.println(driver);
 				Class.forName(driver);
 	            this.connect = DriverManager.getConnection(url, user, passwd);
-	            System.out.println("Connect");
-	           
 	        } catch (ClassNotFoundException ex) {
-	        	System.out.println("driver not found");
-//	        	logger.error("Driver not found");
+	        	logger.error("Driver not found");
 	        	ex.printStackTrace();
 	        } catch(SQLException s) {
 	        	System.out.println("error connection a la bdd");
-//	        	logger.error("Error connection to DB");
+	        	logger.error("Error connection to DB");
 	        	s.printStackTrace();
 			}
 		}
@@ -84,8 +80,7 @@ public class ConnectDB {
 					}
 				resultats.close();
 			} catch (SQLException e) {
-//				logger.error("Error request");
-				System.out.println("error request");
+				logger.error("Error request");
 				e.printStackTrace();
 			}
 		}
@@ -99,12 +94,10 @@ public class ConnectDB {
 				passwd = prop.getProperty("db.password");
 				driver = prop.getProperty("db.driver");
 			} catch (FileNotFoundException e) {
-				System.out.println("impossible de trouver le fichier");
-//				logger.error("File not Found");
+				logger.error("File not Found");
 				e.printStackTrace();
 			} catch (IOException e) {
-				System.out.println("impossible de lire le fichier");
-//				logger.error("IO Exceptions");
+				logger.error("IO Exceptions");
 				e.printStackTrace();
 			}
 		}

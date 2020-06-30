@@ -18,6 +18,7 @@ import excilys.formation.java.cbd.mapper.CompanieDtoMapper;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.service.AddComputerService;
+import excilys.formation.java.cbd.validator.Validator;
 
 /**
  * Servlet implementation class AddComputerServlet
@@ -62,12 +63,15 @@ public class AddComputerServlet extends HttpServlet {
 		try {
 			ComputerDao computerDao = new ComputerDao();
 			idComputer = String.valueOf(computerDao.maxId() + 1);
+			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
 			computerDao.create(computer);
-		} catch (SQLException e) {
+		}catch (SQLException e) {
 		 	e.printStackTrace();
-		} finally {
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
 			doGet(request, response);
 		}
 		

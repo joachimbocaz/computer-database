@@ -23,7 +23,6 @@ public class ComputerMapper{
 			computer.setDateOut(null);
 		}
 		else {
-			System.out.println("date out valide");
 			computer.setDateOut(result.getDate("discontinued").toLocalDate());
 		}
 		computer.setManufacturer(result.getInt("company_id"));
