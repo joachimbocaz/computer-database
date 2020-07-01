@@ -24,7 +24,7 @@
        	<section id="main">
 	    	<div class="container">			
 	            <h1 id="homeTitle">
-	                ${nbComputers} Computers found
+	                ${ nbComputer } Computers found
 	            </h1>
 	            <div id="actions" class="form-horizontal">
 	                <div class="pull-left">
