@@ -1,6 +1,7 @@
 package excilys.formation.java.cbd.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import excilys.formation.java.cbd.dao.CompanieDao;
@@ -16,23 +17,21 @@ public class CompaniePage extends Page<Companie>{
 	}
 
 	@Override
-	public List<Companie> getEntity() {
-		return this.entity;
-	}
-
-	@Override
-	public void setEntity() {
+	public List<Companie> findAllEntity() {
+		List<Companie> compagnieList = new ArrayList<Companie>();
 		try {
 			Dao<Companie> companieDao = new CompanieDao();
-			this.entity = companieDao.findAllLimite(NB_ELEMENTS_BY_PAGE, this.offset);
+			compagnieList = companieDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		this.setEntity(compagnieList);
+		return compagnieList;
 	}
 	
 	@Override
 	public void printPage() {
-		for(Companie elem:entity) {
+		for(Companie elem:getEntity()) {
 			System.out.println(elem);
 		}
 	}

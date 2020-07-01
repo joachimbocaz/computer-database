@@ -1,6 +1,7 @@
 package excilys.formation.java.cbd.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import excilys.formation.java.cbd.dao.ComputerDao;
@@ -15,25 +16,25 @@ public class ComputerPage extends Page<Computer>{
 		super(numPage);
 	}
 
-	@Override
-	public List<Computer> getEntity() {
-		return this.entity;
-	}
 
 	@Override
-	public void setEntity() {
+	public List<Computer> findAllEntity() {
+		List<Computer> computerList = new ArrayList<Computer>();
 		try {
 			Dao<Computer> computerDao = new ComputerDao();
-			this.entity = computerDao.findAllLimite(NB_ELEMENTS_BY_PAGE, this.offset);
+			computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		this.setEntity(computerList);
+		return computerList;
 	}
-
+	
 	@Override
 	public void printPage() {
-		for(Computer elem:entity) {
+		for(Computer elem:getEntity()) {
 			System.out.println(elem);
 		}
 	}
+
 }

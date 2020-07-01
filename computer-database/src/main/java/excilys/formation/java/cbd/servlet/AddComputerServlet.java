@@ -41,10 +41,7 @@ public class AddComputerServlet extends HttpServlet {
 		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
 
 		request.setAttribute("companieDtoCollection", companieDtoCollection);
-
-		request.getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);
-		
-   
+		request.getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);   
 	}
 
 	/**
@@ -52,14 +49,12 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String idComputer, computerName, introduced, discontinued, companyId;
-		
 
-	    
 		computerName = request.getParameter("computerName");
 		introduced = request.getParameter("introduced");
 		discontinued = request.getParameter("discontinued");
 		companyId = request.getParameter("companyId");
-		
+
 		try {
 			ComputerDao computerDao = new ComputerDao();
 			idComputer = String.valueOf(computerDao.maxId() + 1);
@@ -74,9 +69,7 @@ public class AddComputerServlet extends HttpServlet {
 		}finally {
 			doGet(request, response);
 		}
-		
-				
-		
+
 		request.getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);
 	}
 }

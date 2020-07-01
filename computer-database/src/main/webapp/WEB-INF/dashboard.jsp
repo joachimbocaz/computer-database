@@ -24,7 +24,7 @@
        	<section id="main">
 	    	<div class="container">			
 	            <h1 id="homeTitle">
-	                ${nbComputer} Computers found
+	                ${nbComputers} Computers found
 	            </h1>
 	            <div id="actions" class="form-horizontal">
 	                <div class="pull-left">
@@ -98,31 +98,55 @@
 		</section>
     
 		<footer class="navbar-fixed-bottom">
-	        <div class="container text-center">
-	            <ul class="pagination">
-	                <li>
-	                    <a href="#" aria-label="Previous">
-	                      <span aria-hidden="true">&laquo;</span>
-	                  </a>
-	              </li>
-	              <li><a href="#">1</a></li>
-	              <li><a href="#">2</a></li>
-	              <li><a href="#">3</a></li>
-	              <li><a href="#">4</a></li>
-	              <li><a href="#">5</a></li>
-	              <li>
-	                <a href="#" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	            </li>
-	        </ul>
-			</div>
-	        <div class="btn-group btn-group-sm pull-right" role="group" >
-	            <button type="button" class="btn btn-default">10</button>
-	            <button type="button" class="btn btn-default">50</button>
-	            <button type="button" class="btn btn-default">100</button>
-	        </div>
-
+	     <div class="container text-center">
+            <ul class="pagination">
+                <li>
+                	<c:if test="${page.getNumPage() > 1}">
+                    	<a href="/computer-database/dashboard?page=${page.getNumPage() - 1}" aria-label="Previous">
+                      		<span aria-hidden="true">&laquo;</span>
+                  		</a>
+                	</c:if>
+              	</li>
+              	<c:forEach var="i" begin="1" end="2">
+              		<c:if test="${page.getNumPage() - (3 - i) >= 1}">
+              			<li><a href="/computer-database/dashboard?page=${page.getNumPage() - (3 - i)}"><c:out value="${page.getNumPage() - (3 - i)}"/></a></li>
+              		</c:if>
+              	</c:forEach>
+              	<c:forEach var="i" begin="0" end="2">
+              		<c:if test="${page.getNumPage() + i <= nbPagesMax}">
+              			<c:set var="active" value=""/>
+                        <c:if test = "${page.getNumPage() + i ==  page.getNumPage()}">
+                          <c:set var="active" value="active"/>
+                         </c:if>
+              			<li class="${active}"><a href="/computer-database/dashboard?page=${page.getNumPage() + i}"><c:out value="${page.getNumPage() + i}"/></a></li>
+              		</c:if>
+              	</c:forEach>
+              	<li>
+              		<c:if test="${page.getNumPage() < nbPagesMax}">
+                		<a href="/computer-database/dashboard?page=${page.getNumPage() + 1}" aria-label="Next">
+                    		<span aria-hidden="true">&raquo;</span>
+                		</a>
+                	</c:if>
+            	</li>
+        	</ul>
+   			<div class="btn-group btn-group-sm pull-right" role="group" >
+	        	<c:set var="active" value=""/>
+	            <c:if test = "${page.getNbElementByPage() == 10}">
+	               <c:set var="active" value="active"/>
+	            </c:if>
+	            <a href="/computer-database/dashboard?nbByPage=10"><button type="button" class="btn btn-default ${active}">10</button></a>
+	            <c:set var="active" value=""/>
+	            <c:if test = "${page.getNbElementByPage() == 50}">
+	               <c:set var="active" value="active"/>
+	            </c:if>
+	            <a href="/computer-database/dashboard?nbByPage=50"><button type="button" class="btn btn-default ${active}">50</button></a>
+	            <c:set var="active" value=""/>
+	            <c:if test = "${page.getNbElementByPage() == 100}">
+	               <c:set var="active" value="active"/>
+	            </c:if>
+	            <a href="/computer-database/dashboard?nbByPage=100"><button type="button" class="btn btn-default ${active}">100</button></a>
+        	</div>
+		</div>
     	</footer>
     
 		

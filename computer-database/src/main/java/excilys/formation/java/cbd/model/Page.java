@@ -5,10 +5,10 @@ import java.util.List;
 import excilys.formation.java.cbd.dao.Dao;
 
 public abstract class Page <T>{
-	protected List<T> entity;
-	protected static final int NB_ELEMENTS_BY_PAGE = 3;
+	private List<T> entity;
+	private int NB_ELEMENTS_BY_PAGE = 50;
 	private int numPage;
-	protected int offset;
+	private int offset;
 	
 	public Page() {
 		
@@ -37,12 +37,27 @@ public abstract class Page <T>{
 	public Integer getNbPages(Dao<T> dao) {
 		Integer nbEntries = dao.findNbElem();
 		Integer nbPages = nbEntries/NB_ELEMENTS_BY_PAGE;
-		return nbEntries%NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
+		return nbEntries % NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
 	}
 	
-	public abstract List<T> getEntity();
+	public List<T> getEntity(){
+		return this.entity;
+	}
 	
-	public abstract void setEntity();
+	public int getNbElementByPage() {
+		return this.NB_ELEMENTS_BY_PAGE;
+	}
+	
+	public void setNbElementByPage(int NB_ELEMENTS_BY_PAGE) {
+		this.NB_ELEMENTS_BY_PAGE = NB_ELEMENTS_BY_PAGE;
+	}
+	
+	public void setEntity(List<T> entity) {
+		this.entity = entity;
+	}
+		
+	public abstract List<T> findAllEntity();
+
 	
 	public abstract void printPage();
 }
