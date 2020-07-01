@@ -16,3 +16,6 @@ computer-database/src/test/resources/jdbc.properties
 
 #ignore metadata
 .metadata/
+
+#ignore setting
+Servers/.settings
