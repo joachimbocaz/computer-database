@@ -15,6 +15,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 public class ConnectDB {
 
 	private static ConnectDB instance;
@@ -26,17 +29,18 @@ public class ConnectDB {
 		
 				
 		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
-
+		
+//		private static HikariDataSource ds = new HikariDataSource(new HikariConfig("FICHIER_PROPERTIES"));
 
 		public ConnectDB() throws SQLException {
-//			Properties properties = new Properties();
-//			String driver;
-//			String url;
-//			String nomUtilisateur; 
-//			String motDePasse;
-//			ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
-//			InputStream fichierProperties=classLoader.getResourceAsStream(FICHIER_PROPERTIES);
-			
+/*			Properties properties = new Properties();
+			String driver;
+			String url;
+			String nomUtilisateur; 
+			String motDePasse;
+			ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
+			InputStream fichierProperties=classLoader.getResourceAsStream(FICHIER_PROPERTIES);
+*/		
 			try {
 				getProperties();
 				Class.forName(driver);
@@ -64,6 +68,20 @@ public class ConnectDB {
 			}
 			return instance;
 		}
+		/*
+		public Connection getInstance2() throws SQLException {
+			if(connect == null || connect.isClosed()) {
+				try {
+					connect = ds.getConnection();
+				} catch(SQLException eSQL) {
+					logger.error("Error connection to DB");
+					eSQL.printStackTrace();
+					
+				}
+			}
+			return connect;
+		}
+		*/
 		
 		public static void doRequest(ConnectDB con, String requete) {
 			ResultSet resultats = null;

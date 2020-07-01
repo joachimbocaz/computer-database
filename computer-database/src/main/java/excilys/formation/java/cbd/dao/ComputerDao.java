@@ -26,7 +26,7 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public boolean create(Computer obj) {
-		try {
+		try /*(Connection connect2 = connect.getInstance2())*/{
 			Statement st = this.connect.getConnection().createStatement();
 			String sql = "INSERT INTO computer values (" + obj.getId() + ", '" +
 															obj.getName() + "', ";		    

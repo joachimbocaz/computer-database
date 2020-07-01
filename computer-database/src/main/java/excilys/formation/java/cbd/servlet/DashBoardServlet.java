@@ -43,6 +43,7 @@ public class DashBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		@SuppressWarnings("unused")
 		int nbPage = 1;
+		int nbByPage;
 		List<ComputerDto> computerDtoCollection = new ArrayList<ComputerDto>();// = dashBoardService.listComputerToDto();
 		
 		computerPage = new ComputerPage();
@@ -55,10 +56,13 @@ public class DashBoardServlet extends HttpServlet {
 			nbPage = computerPage.getNbPages(computerDao);
 			
 			if(request.getParameter("nbByPage") != null) {
-				String nbByPage = request.getParameter("nbByPage");
-				computerPage.setNbElementByPage(Integer.parseInt(nbByPage));
+				nbByPage = Integer.parseInt(request.getParameter("nbByPage"));
+				if(nbByPage < 1) {
+					nbByPage = 1;
+				}
+				computerPage.setNbElementByPage(nbByPage);
 			}
-			
+
 			if(request.getParameter("page") != null) {
 				String pageWish = request.getParameter("page");
 				computerPage.setNumPage(Integer.parseInt(pageWish));

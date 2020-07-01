@@ -84,7 +84,7 @@
 							<tr>
 								<td class="editMode"><input type="checkbox" name="cb"
 									class="cb" value=${ computerDtoCollection.id }></td>
-								<td><a href="editComputer" onclick="">${ computerDtoCollection.name }</a></td>
+								<td><a href="editComputer?idComputer=${ computerDtoCollection.id }" onclick="">${ computerDtoCollection.name }</a></td>
 								<td><c:out value="${computerDtoCollection.introduced}"/></td>
 								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
 								<td><c:out value="${computerDtoCollection.idCompanie}"/></td>
