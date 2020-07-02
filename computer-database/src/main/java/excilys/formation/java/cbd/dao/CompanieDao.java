@@ -40,10 +40,10 @@ public class CompanieDao extends Dao<Companie>{
 	}
 
 	@Override
-	public boolean delete(Companie obj) {
+	public boolean delete(int id) {
 		try {
 			Statement st = this.connect.getConnection().createStatement();
-			String sql = "DELETE FROM company WHERE id = " + obj.getId();
+			String sql = "DELETE FROM company WHERE id = " + id;
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
 //		    	logger.error("Error delete companie");

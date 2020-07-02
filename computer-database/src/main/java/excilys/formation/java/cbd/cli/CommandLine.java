@@ -268,7 +268,7 @@ public class CommandLine {
 		for(Computer elem:computerL) {
 			if(elem.getId() == idComputer) {
 				System.out.println("supression de l'oridnateur");
-				this.computerDao.delete(elem);
+				this.computerDao.delete(elem.getId());
 				return;
 			}
 		}
