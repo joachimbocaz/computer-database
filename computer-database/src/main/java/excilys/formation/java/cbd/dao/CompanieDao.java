@@ -32,7 +32,7 @@ public class CompanieDao extends Dao<Companie>{
 														 + obj.getName() + ");";
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-//		    	logger.error("Error create companie");
+		    	logger.error("Error create companie");
 				e.printStackTrace();
 		    	return false;
 		    }
@@ -42,11 +42,18 @@ public class CompanieDao extends Dao<Companie>{
 	@Override
 	public boolean delete(int id) {
 		try {
+			this.connect.getConnection().setAutoCommit(false);
 			Statement st = this.connect.getConnection().createStatement();
+
+			String sqlDeleteComputer = "DELETE FROM computer WHERE company_id=" + id + ";";
+			st.executeUpdate(sqlDeleteComputer);
+
 			String sql = "DELETE FROM company WHERE id = " + id;
 			st.executeUpdate(sql);
+		
+			this.connect.getConnection().commit();
 		    }catch (SQLException e) {
-//		    	logger.error("Error delete companie");
+		    	logger.error("Error delete companie");
 				e.printStackTrace();
 		    	return false;
 		    }

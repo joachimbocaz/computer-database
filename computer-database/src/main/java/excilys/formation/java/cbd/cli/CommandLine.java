@@ -28,6 +28,7 @@ public class CommandLine {
 		Create,
 		Update,
 		Delete,
+		DeleteCo,
 		Default;	
 	}
 	private Command command;
@@ -93,6 +94,9 @@ public class CommandLine {
 		else if(this.optionList[0].equals("cd")) {
 			this.command = Command.Delete;
 		}
+		else if(this.optionList[0].equals("D")) {
+			this.command = Command.DeleteCo;
+		}
 		else {
 			this.command = Command.Default;
 		}
@@ -124,6 +128,9 @@ public class CommandLine {
 			case Delete:
 				this.deleteComputer();
 				break;
+			case DeleteCo:
+//				this.deleteCompany();
+				break;
 			default:
 				break;
 		}
@@ -144,6 +151,7 @@ public class CommandLine {
 				+ "'cr' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Création d'un nouveau pc, les parametres avec -i -o -c sont optionnels\n"
 				+ "'cu' ['id' 'nom' -c 'compagnie' -i 'dateIn' -o 'dateOut']' : Maj d'un pc, les parametres avec -i -o -c sont optionnels\n"
 				+ "'cd' ['id'] : Supression d'un ordinateur grace a son id\n"
+				+ "'D' ['id'] : Supression d'une companie et de tout les ordinateurs associé grace a l'id de la companie\n"
 				+ "WARNING : les dates sont au formats 'yyyy-MM-dd'");
 	}
 	
@@ -267,11 +275,16 @@ public class CommandLine {
 		int idComputer = Integer.parseInt(this.optionList[1]);
 		for(Computer elem:computerL) {
 			if(elem.getId() == idComputer) {
-				System.out.println("supression de l'oridnateur");
+				System.out.println("supression de l'ordinateur");
 				this.computerDao.delete(elem.getId());
 				return;
 			}
 		}
 		System.out.println("Ordinateur absent de la BDD");
+	}
+	
+	public void deleteCompany() {
+		int idCompany = Integer.parseInt(this.optionList[1]);
+		this.companieDao.delete(idCompany);
 	}
 }

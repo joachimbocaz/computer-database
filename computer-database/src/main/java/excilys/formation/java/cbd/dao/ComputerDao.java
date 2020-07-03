@@ -132,6 +132,21 @@ public class ComputerDao extends Dao<Computer>{
 	    }
 		return computer;
 	}
+	
+	public List<Computer> findWithCompanie(int company_id) {
+		List<Computer> computerList = new ArrayList<Computer>();
+		try {
+			ResultSet result = this.connect.getConnection().createStatement(
+		    ResultSet.TYPE_SCROLL_INSENSITIVE,
+		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer WHERE company_id = " + company_id);
+			
+			computerList = ComputerMapper.createListEntity(result);
+	   	}catch (SQLException e) {
+	   		logger.error("Error find list computer");
+	    	e.printStackTrace();
+	    }
+		return computerList;
+	}
 
 	@Override
 	public List<Computer> findAll() {
