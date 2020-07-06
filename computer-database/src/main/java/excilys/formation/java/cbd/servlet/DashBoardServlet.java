@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
@@ -23,7 +26,7 @@ import excilys.formation.java.cbd.model.ComputerPage;
 @WebServlet(name = "DashBoardServlet", urlPatterns = "/dashboard")
 public class DashBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-//	private static Logger logger = LoggerFactory.getLogger(DashBoardServlet.class);
+	private static Logger logger = LoggerFactory.getLogger(DashBoardServlet.class);
 //	private DashBoardService dashBoardService = new DashBoardService();
 	private ComputerPage computerPage;
 	private ComputerDao computerDao;
@@ -50,7 +53,6 @@ public class DashBoardServlet extends HttpServlet {
 		computerPage.setOffset();
 		
 		if(request.getParameter("orderBy") != null && !request.getParameter("orderBy").equals("")) {
-			System.out.println("orderby");
 			ArrayList<String> styleOrder = computerDao.splitOrder(request.getParameter("orderBy"));
 			column = styleOrder.get(0);
 			order = styleOrder.get(1);
@@ -61,9 +63,7 @@ public class DashBoardServlet extends HttpServlet {
 		}
 		
 		try {
-			System.out.println("je rentre");
 			computerDao = new ComputerDao();
-			System.out.println("je suis pas la");
 			nbPage = computerPage.getNbPages(computerDao);
 			if(request.getParameter("nbByPage") != null) {
 				nbByPage = Integer.parseInt(request.getParameter("nbByPage"));
@@ -124,8 +124,8 @@ public class DashBoardServlet extends HttpServlet {
 					try {
 						computerDao.delete(Integer.valueOf(c));
 					} catch (IllegalArgumentException e) {
-//						logger.error("Illegal arguments");
-//						logger.error("computer update not allowed",e);
+						logger.error("Illegal arguments");
+						logger.error("computer update not allowed",e);
 					}
 				}
 			} catch (SQLException e1) {

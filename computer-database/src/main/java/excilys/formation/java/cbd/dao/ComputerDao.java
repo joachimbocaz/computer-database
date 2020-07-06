@@ -8,13 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import excilys.formation.java.cbd.mapper.ComputerMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 public class ComputerDao extends Dao<Computer>{
 	
-//	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
+	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
 	
 	private ConnectDB connect;
 	
@@ -48,7 +51,7 @@ public class ComputerDao extends Dao<Computer>{
 		    }
  			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	//logger.error("Error create computer");
+		    	logger.error("Error create computer");
 		    	e.printStackTrace();
 		    	return false;
 		    }
@@ -78,7 +81,7 @@ public class ComputerDao extends Dao<Computer>{
 			String sql = "DELETE FROM computer WHERE id = " + id;
 			st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	//logger.error("Error delete computer");
+		    	logger.error("Error delete computer");
 		    	e.printStackTrace();
 		    	return false;
 		    }
@@ -107,7 +110,7 @@ public class ComputerDao extends Dao<Computer>{
 		    sql += " WHERE id = " + obj.getId();
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
-		    	//logger.error("Error update computer");
+		    	logger.error("Error update computer");
 		    	e.printStackTrace();
 		    	return obj;
 		    }
@@ -124,7 +127,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computer = ComputerMapper.createEntity(result);
 	   	}catch (SQLException e) {
-	   		////logger.error("Error find computer");
+	   		logger.error("Error find computer");
 	    	e.printStackTrace();
 	    }
 		return computer;
@@ -139,7 +142,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 	   	}catch (SQLException e) {
-	   		//logger.error("Error find list computer");
+	   		logger.error("Error find list computer");
 	    	e.printStackTrace();
 	    }
 		return computerList;
@@ -155,7 +158,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-			//logger.error("Error find all computer");
+			logger.error("Error find all computer");
 
 	    	e.printStackTrace();
 		}
@@ -177,7 +180,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-			//logger.error("Error find computer from " + limite + " to " + limite + offset);
+			logger.error("Error find computer from " + limite + " to " + limite + offset);
 		    e.printStackTrace();
 		}
 		return computerList;
@@ -199,7 +202,7 @@ public class ComputerDao extends Dao<Computer>{
 			ResultSet.CONCUR_UPDATABLE).executeQuery(sql);
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-			//logger.error("Error find computer from " + limite + " to " + limite + offset);
+			logger.error("Error find computer from " + limite + " to " + limite + offset);
 		    e.printStackTrace();
 		}
 		return computerList;
@@ -216,7 +219,7 @@ public class ComputerDao extends Dao<Computer>{
 		    	return result.getInt("total");
 		    }
 		}catch (SQLException e) {
-			//logger.error("Error find number of computer");
+			logger.error("Error find number of computer");
 	    	e.printStackTrace();
 	    }
 		return 0;
@@ -233,7 +236,7 @@ public class ComputerDao extends Dao<Computer>{
 		    	return result.getInt("max");
 		    }
 		}catch (SQLException e) {
-			//logger.error("Error find id max of computer");
+			logger.error("Error find id max of computer");
 	    	e.printStackTrace();
 	    }
 		return 0;
@@ -247,7 +250,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-			//logger.error("Error find search of computer");
+			logger.error("Error find search of computer");
 	    	e.printStackTrace();
 	    }
 		return computerList;
@@ -265,7 +268,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
-			//logger.error("Error find search of computer");
+			logger.error("Error find search of computer");
 	    	e.printStackTrace();
 	    }
 		return computerList;
@@ -285,7 +288,7 @@ public class ComputerDao extends Dao<Computer>{
 		    }
 			
 		}catch (SQLException e) {
-			//logger.error("Error find number of search computer");
+			logger.error("Error find number of search computer");
 	    	e.printStackTrace();
 	    }
 		return nbComputer;
@@ -326,7 +329,7 @@ public class ComputerDao extends Dao<Computer>{
 			ResultSet.CONCUR_UPDATABLE).executeQuery(requete);
 			return result;
 		} catch (SQLException e) {
-			//logger.error("Error create requete");
+			logger.error("Error create requete");
 			e.printStackTrace();
 		}
 		return null;
