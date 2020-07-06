@@ -50,6 +50,7 @@ public class DashBoardServlet extends HttpServlet {
 		computerPage.setOffset();
 		
 		if(request.getParameter("orderBy") != null && !request.getParameter("orderBy").equals("")) {
+			System.out.println("orderby");
 			ArrayList<String> styleOrder = computerDao.splitOrder(request.getParameter("orderBy"));
 			column = styleOrder.get(0);
 			order = styleOrder.get(1);
