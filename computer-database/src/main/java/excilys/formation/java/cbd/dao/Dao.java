@@ -9,7 +9,7 @@ public abstract class Dao<T> {
 
 	 public abstract boolean create(T obj);
 
-	 public abstract boolean delete(T obj);
+	 public abstract boolean delete(int idEntity);
 
 	 public abstract T update(T obj);
 	
@@ -22,5 +22,6 @@ public abstract class Dao<T> {
 	 public abstract int findNbElem();
 
 	 public abstract int maxId();
+
 
 }

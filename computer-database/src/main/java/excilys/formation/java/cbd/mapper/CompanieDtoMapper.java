@@ -6,7 +6,7 @@ import excilys.formation.java.cbd.model.Companie;
 public class CompanieDtoMapper {
 	
 	public static CompanieDto companieToDto(Companie companie) {
-		CompanieDto companieDto = new CompanieDto(companie.getName(), String.valueOf(companie.getId()));
+		CompanieDto companieDto = new CompanieDto(String.valueOf(companie.getId()), companie.getName());
 		return companieDto;
 	}
 	

@@ -3,7 +3,7 @@ package excilys.formation.java.cbd.model;
 import java.time.LocalDate;
 
 public class Computer {
-	private int id;
+	private int id, idCompany;
 	private String name;
 	private Integer manufacturer = null;
 	private LocalDate dateIn, dateOut;
@@ -30,6 +30,31 @@ public class Computer {
 	
 	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
 		this.id = id;
+		this.name = name;
+		this.manufacturer = manufacturer;
+		
+		if(dateIn == null) {
+			this.dateIn = null;
+			this.dateOut = dateOut;
+		}
+		else if(dateOut == null) {
+			this.dateIn = dateIn;
+			this.dateOut = null;
+		}
+		else {
+			if(dateIn.isBefore(dateOut)) {
+				this.dateIn = dateIn;
+				this.dateOut = dateOut;
+			}
+			else {
+				this.dateIn = null;
+				this.dateOut = dateOut;
+				//throw new IllegalArgumentException("Date out need to be after Date in");
+			}
+		}
+	}
+	
+	public Computer(String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
 		this.name = name;
 		this.manufacturer = manufacturer;
 		
@@ -107,6 +132,27 @@ public class Computer {
 			this.dateOut = null;
 		}
 	}
+	
+	public int getIdCompany() {
+		return idCompany;
+	}
+
+	public void setIdCompany(int idCompany) {
+		this.idCompany = idCompany;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateIn == null) ? 0 : dateIn.hashCode());
+		result = prime * result + ((dateOut == null) ? 0 : dateOut.hashCode());
+		result = prime * result + id;
+		result = prime * result + idCompany;
+		result = prime * result + ((manufacturer == null) ? 0 : manufacturer.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -128,6 +174,8 @@ public class Computer {
 		} else if (!dateOut.equals(other.dateOut))
 			return false;
 		if (id != other.id)
+			return false;
+		if (idCompany != other.idCompany)
 			return false;
 		if (manufacturer == null) {
 			if (other.manufacturer != null)

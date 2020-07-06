@@ -64,3 +64,17 @@ function verifForm(f){
 		return false;
 	}
 }
+
+function verifFormEdit(f){
+	var nameOk = verifName(f.computerName);
+	var dateOk = verifDates();
+   
+	if(nameOk && dateOk){
+		alert("Ordinateur mise a jour dans la base");
+		return true;
+	}
+	else{
+		alert("Veuillez remplir correctement tous les champs");
+		return false;
+	}
+}
