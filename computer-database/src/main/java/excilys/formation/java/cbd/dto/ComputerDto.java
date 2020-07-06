@@ -138,5 +138,9 @@ public class ComputerDto{
 		return true;
 	}
 
-
+	@Override
+	public String toString() {
+		return "ComputerDto [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
+				+ discontinued + ", idCompanie=" + idCompanie + "]";
+	}
 }

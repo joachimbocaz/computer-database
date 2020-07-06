@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 
 public class Validator {
 
-	private static Logger logger = LoggerFactory.getLogger(Validator.class);
+//	private static Logger logger = LoggerFactory.getLogger(Validator.class);
 
 	public static void validatorName(String name) throws Exception {
 		if (name.equals(null) || name.trim().length() == 0) {
-			logger.info("Name is empty");
+//			logger.info("Name is empty");
 		    throw new Exception( "Le nom est obligatoire." );
 		}
 	}
@@ -23,7 +23,7 @@ public class Validator {
 			LocalDate introducedDate = LocalDate.parse(introduced, formatter);
 			LocalDate discontinuedDate = LocalDate.parse(discontinued, formatter);
 			if (discontinuedDate.isBefore(introducedDate)) {
-				logger.info("Discontinued date is before introduced date");
+//				logger.info("Discontinued date is before introduced date");
 				throw new Exception( "Introduced date must be before discontinued date." );
 			}
 		}

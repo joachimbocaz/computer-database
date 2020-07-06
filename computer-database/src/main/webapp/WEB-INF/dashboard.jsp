@@ -24,7 +24,7 @@
        	<section id="main">
 	    	<div class="container">			
 	            <h1 id="homeTitle">
-	                ${nbComputers} Computers found
+	                ${ nbComputer } Computers found
 	            </h1>
 	            <div id="actions" class="form-horizontal">
 	                <div class="pull-left">
@@ -61,20 +61,28 @@
 	                                    </a>
 	                            </span>
 	                        </th>
-	                        <th>
-	                            Computer name
-	                        </th>
-	                        <th>
-	                            Introduced date
-	                        </th>
-	                        <!-- Table header for Discontinued Date -->
-	                        <th>
-	                            Discontinued date
-	                        </th>
-	                        <!-- Table header for Company -->
-	                        <th>
-	                            Company
-	                        </th>
+						<th onclick="window.location.href='?orderBy=${orderBy=='cnASC'?'cnDSC': 'cnASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Computer name 
+						<c:if test="${orderBy == 'cnASC'}"><span class="pull-right">⬆</span></c:if>
+						<c:if test="${orderBy == 'cnDSC'}"><span class="pull-right">⬇</span></c:if>
+						<c:if test="${orderBy != 'cnASC'&& orderBy != 'cnDSC'}"><span class="pull-right">⬆⬇</span></c:if>
+						</th>
+						<th onclick="window.location.href='?orderBy=${orderBy=='diASC'?'diDSC': 'diASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Introduced date 
+						<c:if test="${orderBy == 'diASC'}"><span class="pull-right">⬆</span></c:if>
+						<c:if test="${orderBy == 'diDSC'}"><span class="pull-right">⬇</span></c:if>
+						<c:if test="${orderBy != 'diASC'&& orderBy != 'diDSC'}"><span class="pull-right">⬆⬇</span></c:if>
+						</th>
+						<!-- Table header for Discontinued Date -->
+						<th  onclick="window.location.href='?orderBy=${orderBy=='ddASC'?'ddDSC': 'ddASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Discontinued date 
+						<c:if test="${orderBy == 'ddASC'}"><span class="pull-right">⬆</span></c:if>
+						<c:if test="${orderBy == 'ddDSC'}"><span class="pull-right">⬇</span></c:if>
+						<c:if test="${orderBy != 'ddASC'&& orderBy != 'ddDSC'}"><span class="pull-right">⬆⬇</span></c:if>
+						</th>
+						<!-- Table header for Company -->
+						<th  onclick="window.location.href='?orderBy=${orderBy=='ciASC'?'ciDSC': 'ciASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Company
+						<c:if test="${orderBy == 'ciASC'}"><span class="pull-right">⬆</span></c:if>
+						<c:if test="${orderBy == 'ciDSC'}"><span class="pull-right">⬇</span></c:if>
+						<c:if test="${orderBy != 'ciASC'&& orderBy != 'ciDSC'}"><span class="pull-right">⬆⬇</span></c:if>
+						</th>
 	
 	                    </tr>
 	                </thead>
@@ -84,7 +92,7 @@
 							<tr>
 								<td class="editMode"><input type="checkbox" name="cb"
 									class="cb" value=${ computerDtoCollection.id }></td>
-								<td><a href="editComputer" onclick="">${ computerDtoCollection.name }</a></td>
+								<td><a href="editComputer?idComputer=${ computerDtoCollection.id }" onclick="">${ computerDtoCollection.name }</a></td>
 								<td><c:out value="${computerDtoCollection.introduced}"/></td>
 								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
 								<td><c:out value="${computerDtoCollection.idCompanie}"/></td>
@@ -102,14 +110,14 @@
             <ul class="pagination">
                 <li>
                 	<c:if test="${page.getNumPage() > 1}">
-                    	<a href="/computer-database/dashboard?page=${page.getNumPage() - 1}" aria-label="Previous">
+                    	<a href="/computer-database/dashboard?page=${page.getNumPage() - 1}&search=${ search }nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
                       		<span aria-hidden="true">&laquo;</span>
                   		</a>
                 	</c:if>
               	</li>
               	<c:forEach var="i" begin="1" end="2">
               		<c:if test="${page.getNumPage() - (3 - i) >= 1}">
-              			<li><a href="/computer-database/dashboard?page=${page.getNumPage() - (3 - i)}"><c:out value="${page.getNumPage() - (3 - i)}"/></a></li>
+              			<li><a href="/computer-database/dashboard?page=${page.getNumPage() - (3 - i)}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() - (3 - i)}"/></a></li>
               		</c:if>
               	</c:forEach>
               	<c:forEach var="i" begin="0" end="2">
@@ -118,12 +126,12 @@
                         <c:if test = "${page.getNumPage() + i ==  page.getNumPage()}">
                           <c:set var="active" value="active"/>
                          </c:if>
-              			<li class="${active}"><a href="/computer-database/dashboard?page=${page.getNumPage() + i}"><c:out value="${page.getNumPage() + i}"/></a></li>
+              			<li class="${active}"><a href="/computer-database/dashboard?page=${page.getNumPage() + i}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() + i}"/></a></li>
               		</c:if>
               	</c:forEach>
               	<li>
               		<c:if test="${page.getNumPage() < nbPagesMax}">
-                		<a href="/computer-database/dashboard?page=${page.getNumPage() + 1}" aria-label="Next">
+                		<a href="/computer-database/dashboard?page=${page.getNumPage() + 1}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Next">
                     		<span aria-hidden="true">&raquo;</span>
                 		</a>
                 	</c:if>
@@ -134,17 +142,17 @@
 	            <c:if test = "${page.getNbElementByPage() == 10}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=10"><button type="button" class="btn btn-default ${active}">10</button></a>
+	            <a href="/computer-database/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">10</button></a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 50}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=50"><button type="button" class="btn btn-default ${active}">50</button></a>
+	            <a href="/computer-database/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">50</button></a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 100}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=100"><button type="button" class="btn btn-default ${active}">100</button></a>
+	            <a href="/computer-database/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">100</button></a>
         	</div>
 		</div>
     	</footer>
