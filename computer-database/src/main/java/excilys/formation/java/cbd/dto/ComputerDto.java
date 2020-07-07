@@ -7,10 +7,11 @@ public class ComputerDto{
 	private String introduced;
 	private String discontinued;
 	private String idCompanie;
+	private String nameCompany;
 	
 	public ComputerDto() {
 	}
-
+	
 	public ComputerDto (String id, String name, String idCompanie, String introduced, String discontinued) {
 		this.id = id;
 		this.name = name;
@@ -31,6 +32,30 @@ public class ComputerDto{
 		}
 		else {
 			this.idCompanie = idCompanie;
+		}
+	}
+
+	public ComputerDto (String id, String name, String idCompanie, String introduced, String discontinued, String nameCompany) {
+		this.id = id;
+		this.name = name;
+		if(introduced.equals("null")) {
+			this.introduced = "";
+		}
+		else {
+			this.introduced = introduced;
+		}
+		if(discontinued.equals("null")) {
+			this.discontinued = "";
+		}
+		else {
+			this.discontinued = discontinued;
+		}
+		if(idCompanie.equals("0")) {
+			this.idCompanie = "";
+		}
+		else {
+			this.idCompanie = idCompanie;
+			this.nameCompany = nameCompany;
 		}
 	}
 	
@@ -89,16 +114,12 @@ public class ComputerDto{
 		}
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((discontinued == null) ? 0 : discontinued.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((idCompanie == null) ? 0 : idCompanie.hashCode());
-		result = prime * result + ((introduced == null) ? 0 : introduced.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+	public String getNameCompany() {
+		return nameCompany;
+	}
+
+	public void setNameCompany(String nameCompany) {
+		this.nameCompany = nameCompany;
 	}
 
 	@Override
@@ -143,4 +164,6 @@ public class ComputerDto{
 		return "ComputerDto [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
 				+ discontinued + ", idCompanie=" + idCompanie + "]";
 	}
+
+
 }

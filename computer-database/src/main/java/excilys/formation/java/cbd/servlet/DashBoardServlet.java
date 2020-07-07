@@ -58,7 +58,7 @@ public class DashBoardServlet extends HttpServlet {
 			order = styleOrder.get(1);
 		}
 		else {
-			column = "name";
+			column = "computer.id";
 			order = "ASC";
 		}
 		
@@ -82,7 +82,6 @@ public class DashBoardServlet extends HttpServlet {
 			
 			if(request.getParameter("search") != null && !request.getParameter("search").equals("")) {
 				computerPage.findSearchEntity(request.getParameter("search"), column, order);
-				System.out.println(column + " " + order);
 				for(Computer computer:computerPage.getEntity()) {
 					computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 				}
@@ -90,6 +89,7 @@ public class DashBoardServlet extends HttpServlet {
 				nbPage = computerPage.getNbSearchPages(request.getParameter("search"));
 			}
 			else {
+				System.out.println(column);
 				computerPage.findAllEntity(column, order);
 				for(Computer computer:computerPage.getEntity()) {
 					computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
@@ -97,7 +97,6 @@ public class DashBoardServlet extends HttpServlet {
 				nbComputer = computerDao.findNbElem();
 				nbPage = computerPage.getNbPages(computerDao);
 			}
-			
 			request.setAttribute("orderBy", request.getParameter("orderBy"));
 			request.setAttribute("search", request.getParameter("search"));
 			request.setAttribute("nbComputer", nbComputer);

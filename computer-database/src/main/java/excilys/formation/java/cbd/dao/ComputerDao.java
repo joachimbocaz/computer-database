@@ -123,7 +123,7 @@ public class ComputerDao extends Dao<Computer>{
 		try {
 			ResultSet result = this.connect.getInstance().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer WHERE id = " + id);
+		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE computer.id = " + id);
 			
 			computer = ComputerMapper.createEntity(result);
 	   	}catch (SQLException e) {
@@ -154,7 +154,7 @@ public class ComputerDao extends Dao<Computer>{
 		try {
 			ResultSet result = this.connect.getInstance().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer");
+			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id");
 			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
@@ -171,6 +171,7 @@ public class ComputerDao extends Dao<Computer>{
 		try {
 			String sql = "SELECT * "
 					   + "FROM computer "
+					   + "LEFT join company as cp on computer.company_id = cp.id"
 					   + "ORDER BY id ASC "
 					   + "LIMIT " + offset 
 					   + ", " + limite + ";";
@@ -191,11 +192,10 @@ public class ComputerDao extends Dao<Computer>{
 		List<Computer> computerList = new ArrayList<Computer>();
 		try {
 			String sql = "SELECT * "
-					   + "FROM computer "
+					   + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
 					   + "ORDER BY " + column +" " + order
 					   + " LIMIT " + offset 
 					   + ", " + limite + ";";
-			
 			System.out.println(sql);
 			ResultSet result = this.connect.getInstance().createStatement(
 			ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -245,7 +245,7 @@ public class ComputerDao extends Dao<Computer>{
 	public List<Computer> searchComputer(String search, int limite, int offset){
 		List<Computer> computerList = new ArrayList<Computer>();
 		try {
-			String sql = "SELECT * FROM computer WHERE name LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') order by id asc limit " + offset + ", " + limite + ";";
+			String sql = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE name LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') order by id asc limit " + offset + ", " + limite + ";";
 			ResultSet result = createRequete(sql);
 			
 			computerList = ComputerMapper.createListEntity(result);
@@ -260,9 +260,9 @@ public class ComputerDao extends Dao<Computer>{
 		List<Computer> computerList = new ArrayList<Computer>();
 		try {
 			String sql = "SELECT * FROM computer "
-					   + "WHERE name "
-					   		+ "LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') "
-					   		+ "ORDER BY " + column +" " + order +" limit " + limite + ", " + offset + ";";
+					   + "WHERE name LEFT JOIN company as cp on computer.company_id = cp.id "
+					   + "LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') "
+					   + "ORDER BY " + column +" " + order +" limit " + limite + ", " + offset + ";";
 			//revoir le limit et offset
 			ResultSet result = createRequete(sql);
 			
@@ -299,16 +299,16 @@ public class ComputerDao extends Dao<Computer>{
 		String orderColumn = order.substring(2, 5);
 		
 		if(column.equals("cn")) {
-			column = "name";
+			column = "computer.name";
 		}
 		else if(column.equals("di")) {
-			column = "introduced";
+			column = "computer.introduced";
 		}
 		else if(column.equals("dd")) {
-			column = "discontinued";
+			column = "computer.discontinued";
 		}
 		else if(column.equals("ci")) {
-			column = "compagny.name";
+			column = "cp.name";
 		}
 		if(orderColumn.contentEquals("DSC")) {
 			orderColumn = "DESC";
