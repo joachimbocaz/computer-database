@@ -4,9 +4,10 @@ import java.time.LocalDate;
 
 public class Computer {
 	private int id, idCompany;
-	private String name;
+	private String name, nameCompany;
 	private Integer manufacturer = null;
 	private LocalDate dateIn, dateOut;
+	private Companie companie;
 	
 	public Computer() {}
 	
@@ -49,7 +50,6 @@ public class Computer {
 			else {
 				this.dateIn = null;
 				this.dateOut = dateOut;
-				//throw new IllegalArgumentException("Date out need to be after Date in");
 			}
 		}
 	}
@@ -74,9 +74,35 @@ public class Computer {
 			else {
 				this.dateIn = null;
 				this.dateOut = dateOut;
-				//throw new IllegalArgumentException("Date out need to be after Date in");
 			}
 		}
+	}
+	
+	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut, Companie companie) {
+		this.id = id;
+		this.name = name;
+		this.manufacturer = manufacturer;
+		
+		if(dateIn == null) {
+			this.dateIn = null;
+			this.dateOut = dateOut;
+		}
+		else if(dateOut == null) {
+			this.dateIn = dateIn;
+			this.dateOut = null;
+		}
+		else {
+			if(dateIn.isBefore(dateOut)) {
+				this.dateIn = dateIn;
+				this.dateOut = dateOut;
+			}
+			else {
+				this.dateIn = null;
+				this.dateOut = dateOut;
+			}
+		}
+		
+		this.setCompanie(companie);
 	}
 	
 	public int getId() {
@@ -87,6 +113,15 @@ public class Computer {
 		return name;
 	}
 
+	
+	public String getNameCompany() {
+		return this.nameCompany;
+	}
+	
+	public void setNameCompany(String nameCompany) {
+		this.nameCompany = nameCompany;
+	}
+	
 	public Integer getManufacturer() {
 		return manufacturer;
 	}
@@ -141,17 +176,12 @@ public class Computer {
 		this.idCompany = idCompany;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dateIn == null) ? 0 : dateIn.hashCode());
-		result = prime * result + ((dateOut == null) ? 0 : dateOut.hashCode());
-		result = prime * result + id;
-		result = prime * result + idCompany;
-		result = prime * result + ((manufacturer == null) ? 0 : manufacturer.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+	public Companie getCompanie() {
+		return companie;
+	}
+
+	public void setCompanie(Companie companie) {
+		this.companie = companie;
 	}
 
 	@Override
@@ -197,4 +227,6 @@ public class Computer {
 				" [Companie] : " + this.manufacturer + 
 				" [Date in / Date out] : " + this.dateIn + "/" + this.dateOut;
 	}
+
+
 }

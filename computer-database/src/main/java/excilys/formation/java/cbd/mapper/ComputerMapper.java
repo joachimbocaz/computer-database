@@ -5,28 +5,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.Computer;
 
 public class ComputerMapper{
-
+	
+	private static final String COMPUTER_TABLE = "computer.";
+	
 	public static Computer entity(ResultSet result) throws SQLException {
 		Computer computer = new Computer();
-		computer = new Computer(result.getInt("id"), result.getString("name"));
+		Companie companie = new Companie();
+		computer = new Computer(result.getInt(COMPUTER_TABLE + "id"), result.getString(COMPUTER_TABLE + "name"));
 		
-		if(result.getDate("introduced") == null) {
+		if(result.getDate(COMPUTER_TABLE + "introduced") == null) {
 	    	computer.setDateIn(null);
 		}
 		else {
-			computer.setDateIn(result.getDate("introduced").toLocalDate());
+			computer.setDateIn(result.getDate(COMPUTER_TABLE + "introduced").toLocalDate());
 		}
-		if(result.getDate("discontinued") == null){
+		if(result.getDate(COMPUTER_TABLE + "discontinued") == null){
 			computer.setDateOut(null);
 		}
 		else {
-			computer.setDateOut(result.getDate("discontinued").toLocalDate());
+			computer.setDateOut(result.getDate(COMPUTER_TABLE + "discontinued").toLocalDate());
 		}
-		computer.setManufacturer(result.getInt("company_id"));
-		
+		if(result.getInt(COMPUTER_TABLE + "company_id") != 0){
+			computer.setManufacturer(result.getInt(COMPUTER_TABLE + "company_id"));
+			computer.setCompanie(new Companie(result.getInt(COMPUTER_TABLE + "company_id"), result.getString(7)));
+		}
+		else {
+			computer.setManufacturer(result.getInt(COMPUTER_TABLE + "company_id"));
+			computer.setCompanie(new Companie());
+		}
+
 		return computer;
 	}
 	
