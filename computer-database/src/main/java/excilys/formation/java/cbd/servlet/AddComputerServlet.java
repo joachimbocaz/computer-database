@@ -52,7 +52,6 @@ public class AddComputerServlet extends HttpServlet {
 		introduced = request.getParameter("introduced");
 		discontinued = request.getParameter("discontinued");
 		companyId = request.getParameter("companyId");
-
 		try {
 			ComputerDao computerDao = new ComputerDao();
 			idComputer = String.valueOf(computerDao.maxId() + 1);

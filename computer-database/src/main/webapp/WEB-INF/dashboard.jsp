@@ -95,7 +95,7 @@
 								<td><a href="editComputer?idComputer=${ computerDtoCollection.id }" onclick="">${ computerDtoCollection.name }</a></td>
 								<td><c:out value="${computerDtoCollection.introduced}"/></td>
 								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
-								<td><c:out value="${computerDtoCollection.idCompanie}"/></td>
+								<td><c:out value="${computerDtoCollection.nameCompany}"/></td>
 							</tr>
 						</c:forEach>
 					

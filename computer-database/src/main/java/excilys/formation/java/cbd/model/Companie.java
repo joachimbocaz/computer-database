@@ -4,7 +4,10 @@ public class Companie {
 	private int id; 
 	private String name;
 	
-	public Companie() {}
+	public Companie() {
+		this.id = 0;
+		this.name = "";
+	}
 	
 	public Companie(int id, String name) {
 		this.id = id;
@@ -21,7 +24,7 @@ public class Companie {
 	
 	@Override
 	public String toString() {
-		return "Companie : " + this.name;
+		return "Companie : " + this.name + " Id : " + this.id;
 	}
 
 	@Override
