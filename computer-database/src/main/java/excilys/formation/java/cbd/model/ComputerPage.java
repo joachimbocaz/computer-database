@@ -30,8 +30,24 @@ public class ComputerPage extends Page<Computer>{
 		return computerList;
 	}
 	
+	public List<Computer> findAllEntity2(List<Computer> computerList) {
+		this.setEntity(computerList);
+		return computerList;
+	}
+	
 	public List<Computer> findAllEntity(String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
+		try {
+			ComputerDao computerDao = new ComputerDao();
+			computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet(), column, order);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.setEntity(computerList);
+		return computerList;
+	}
+	
+	public List<Computer> findAllEntity2(List<Computer> computerList, String column, String order) {
 		try {
 			ComputerDao computerDao = new ComputerDao();
 			computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet(), column, order);

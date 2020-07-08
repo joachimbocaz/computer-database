@@ -21,17 +21,16 @@ public class ConnectDB {
 		private static HikariDataSource ds = new HikariDataSource(hK);
 
 		public ConnectDB(){
-			try {
-				connect = ds.getConnection();
-			} catch (SQLException e) {
-				logger.info("connection impossible");
-				e.printStackTrace();
-			}
 		}
 
 		public Connection getInstance() throws SQLException{
 			if(connect == null || connect.isClosed()){
-				new ConnectDB();
+				try {
+					connect = ds.getConnection();
+				} catch (SQLException e) {
+					logger.info("connection impossible");
+					e.printStackTrace();
+				}
 			}
 			return connect;
 		}   

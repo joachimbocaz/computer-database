@@ -9,11 +9,13 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.CompanieMapper;
 import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.service.ConnectDB;
 
+@Repository
 public class CompanieDao extends Dao<Companie>{
 	
 	private static Logger logger = LoggerFactory.getLogger(CompanieDao.class);

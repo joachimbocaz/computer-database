@@ -34,8 +34,8 @@ public abstract class Page <T>{
 		this.offset = (this.numPage - 1) * NB_ELEMENTS_BY_PAGE;
 	}
 	
-	public Integer getNbPages(Dao<T> dao) {
-		Integer nbEntries = dao.findNbElem();
+	public Integer getNbPages(int nbElem) {
+		Integer nbEntries = nbElem;
 		Integer nbPages = nbEntries/NB_ELEMENTS_BY_PAGE;
 		return nbEntries % NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
 	}
