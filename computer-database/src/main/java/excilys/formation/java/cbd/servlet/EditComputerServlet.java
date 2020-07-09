@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.CompanieDto;
@@ -24,7 +28,16 @@ import excilys.formation.java.cbd.validator.Validator;
 @WebServlet(name = "EditComputerServlet", urlPatterns = "/editComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	@Autowired
+	private ComputerDao computerDao;
+	
+    @Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,25 +56,22 @@ public class EditComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idComputer = Integer.valueOf(request.getParameter("idComputer"));
 		Computer computer = new Computer();
-		ComputerDao computerDao;
+		
 		ComputerDto computerDto;
 		AddComputerService addComputerService = new AddComputerService();
 
-		try {
-			computerDao = new ComputerDao();
-			computerDto = new ComputerDto();
-			computer = computerDao.find(idComputer);
-			computerDto = ComputerDtoMapper.computerToDto(computer);
-			
-			List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
-			
-			request.setAttribute("companieDtoCollection", companieDtoCollection);
-			request.setAttribute("computer", computerDto);
-			request.setAttribute("idComputer", idComputer);
-			request.getRequestDispatcher("/WEB-INF/editComputer.jsp").forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+		computerDto = new ComputerDto();
+		computer = computerDao.find(idComputer);
+		computerDto = ComputerDtoMapper.computerToDto(computer);
+		
+		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
+		
+		request.setAttribute("companieDtoCollection", companieDtoCollection);
+		request.setAttribute("computer", computerDto);
+		request.setAttribute("idComputer", idComputer);
+		request.getRequestDispatcher("/WEB-INF/editComputer.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -77,10 +87,10 @@ public class EditComputerServlet extends HttpServlet {
 		companyId = request.getParameter("companyId");
 
 		try {
-			ComputerDao computerDao = new ComputerDao();
 			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
+			System.out.println(computer);
 			computerDao.update(computer);
 		}catch (SQLException e) {
 		 	e.printStackTrace();

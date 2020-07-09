@@ -42,8 +42,8 @@ public class ComputerMapper{
 	
 	public static Computer createEntity(ResultSet result) throws SQLException {
 		Computer computer = new Computer();
-		
-		if(result.first()) {
+
+		if(result.next()) {
 			computer = entity(result);
 		}
 		return computer;

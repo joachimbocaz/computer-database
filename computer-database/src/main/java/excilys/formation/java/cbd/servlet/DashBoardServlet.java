@@ -34,10 +34,6 @@ public class DashBoardServlet extends HttpServlet {
 	@Autowired
 	private ComputerDao computerDao;
 	
-	@Autowired
-	ComputerDao computerDao2;
-	
-	
     @Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);

@@ -138,12 +138,16 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql += "introduced = '" + Date.valueOf(obj.getDateIn()) + "', ";
 		    }
 		    if(!(obj.getDateOut() == null)) {
-		    	sql += "discontinued = '" + Date.valueOf(obj.getDateOut()) + "', ";
+		    	sql += "discontinued = '" + Date.valueOf(obj.getDateOut()) + "' , ";
 		    }
 		    if(!(obj.getManufacturer() == null)) {
 		    	sql += "company_id = " + obj.getManufacturer();
 		    }
+		    else {
+		    	sql = sql.substring(0, sql.length() - 2);
+		    }
 		    sql += " WHERE id = " + obj.getId();
+		    System.out.println(sql);
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	logger.error("Error update computer");
@@ -162,6 +166,7 @@ public class ComputerDao extends Dao<Computer>{
 			
 			sql.setInt(1, id);
 			ResultSet result = sql.executeQuery();
+			
 			computer = ComputerMapper.createEntity(result);
 				
 			}catch(SQLException eSQL) {
@@ -252,12 +257,13 @@ public class ComputerDao extends Dao<Computer>{
 	
 	@Override
 	public int maxId() {
+		System.out.println("sqipfsdiofhj");
 		try {
 			ResultSet result = this.connect.getInstance().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT MAX(id) AS max FROM computer");
 			
-			
+			System.out.println("titi");
 		    if(result.next()) {
 		    	return result.getInt("max");
 		    }
