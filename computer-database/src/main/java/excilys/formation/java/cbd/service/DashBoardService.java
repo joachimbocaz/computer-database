@@ -1,6 +1,5 @@
 package excilys.formation.java.cbd.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +12,7 @@ public class DashBoardService {
 	private ComputerDao computerDao;
 	
 	public DashBoardService () {
-		try {
-			this.computerDao = new ComputerDao();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		this.computerDao = new ComputerDao();
 	}
 	
 	public List<ComputerDto> listComputerToDto(){

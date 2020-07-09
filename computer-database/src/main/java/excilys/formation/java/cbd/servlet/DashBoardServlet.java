@@ -124,19 +124,15 @@ public class DashBoardServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ComputerDao computerDao;
 		if(request.getParameter("selection")!=null) {
-			try {
-				computerDao = new ComputerDao();
-				String[] computerIds = request.getParameter("selection").split(",");
-				for(String c: computerIds) {
-					try {
-						computerDao.delete(Integer.valueOf(c));
-					} catch (IllegalArgumentException e) {
-						logger.error("Illegal arguments");
-						logger.error("computer update not allowed",e);
-					}
+			computerDao = new ComputerDao();
+			String[] computerIds = request.getParameter("selection").split(",");
+			for(String c: computerIds) {
+				try {
+					computerDao.delete(Integer.valueOf(c));
+				} catch (IllegalArgumentException e) {
+					logger.error("Illegal arguments");
+					logger.error("computer update not allowed",e);
 				}
-			} catch (SQLException e1) {
-				e1.printStackTrace();
 			}
 		}
 		doGet(request, response);

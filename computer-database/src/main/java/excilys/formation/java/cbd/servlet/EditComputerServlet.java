@@ -32,6 +32,9 @@ public class EditComputerServlet extends HttpServlet {
 	@Autowired
 	private ComputerDao computerDao;
 	
+	@Autowired
+	private AddComputerService addComputerService;
+	
     @Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -58,7 +61,7 @@ public class EditComputerServlet extends HttpServlet {
 		Computer computer = new Computer();
 		
 		ComputerDto computerDto;
-		AddComputerService addComputerService = new AddComputerService();
+		
 
 
 		computerDto = new ComputerDto();

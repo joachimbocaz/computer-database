@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.ComputerMapper;
@@ -37,11 +38,11 @@ public class ComputerDao extends Dao<Computer>{
 	}
 	
 	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
-	 
+	
+	@Autowired
 	private ConnectDB connect;
 	
-	public ComputerDao() throws SQLException {
-		this.connect = new ConnectDB();
+	public ComputerDao() {
 	}
 
 	@Override
