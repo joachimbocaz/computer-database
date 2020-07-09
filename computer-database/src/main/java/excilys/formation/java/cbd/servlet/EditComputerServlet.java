@@ -90,7 +90,6 @@ public class EditComputerServlet extends HttpServlet {
 			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
-			System.out.println(computer);
 			computerDao.update(computer);
 		}catch (SQLException e) {
 		 	e.printStackTrace();

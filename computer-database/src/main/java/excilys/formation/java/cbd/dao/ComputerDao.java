@@ -147,7 +147,6 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql = sql.substring(0, sql.length() - 2);
 		    }
 		    sql += " WHERE id = " + obj.getId();
-		    System.out.println(sql);
 		    st.executeUpdate(sql);
 		    }catch (SQLException e) {
 		    	logger.error("Error update computer");
