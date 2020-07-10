@@ -1,6 +1,5 @@
 package excilys.formation.java.cbd.model;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,63 +19,54 @@ public class ComputerPage extends Page<Computer>{
 	@Override
 	public List<Computer> findAllEntity() {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			Dao<Computer> computerDao = new ComputerDao();
-			computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Dao<Computer> computerDao = new ComputerDao();
+		computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
+		this.setEntity(computerList);
+		return computerList;
+	}
+	
+	public List<Computer> findAllEntity2(List<Computer> computerList) {
 		this.setEntity(computerList);
 		return computerList;
 	}
 	
 	public List<Computer> findAllEntity(String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			ComputerDao computerDao = new ComputerDao();
-			computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet(), column, order);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		ComputerDao computerDao = new ComputerDao();
+		computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet(), column, order);
+		this.setEntity(computerList);
+		return computerList;
+	}
+	
+	public List<Computer> findAllEntity2(List<Computer> computerList, String column, String order) {
+		ComputerDao computerDao = new ComputerDao();
+		computerList = computerDao.findAllLimite(this.getNbElementByPage(), this.getOffSet(), column, order);
 		this.setEntity(computerList);
 		return computerList;
 	}
 	
 	public List<Computer> findSearchEntity(String search, String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			ComputerDao computerDao = new ComputerDao();
-			computerList = computerDao.searchComputer(search, this.getNbElementByPage(), this.getOffSet(), column, order);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		ComputerDao computerDao = new ComputerDao();
+		computerList = computerDao.searchComputer(search, this.getNbElementByPage(), this.getOffSet(), column, order);
 		this.setEntity(computerList);
 		return computerList;
 	}
 	
 	public List<Computer> findSearchEntity(String search) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			ComputerDao computerDao = new ComputerDao();
-			computerList = computerDao.searchComputer(search, this.getNbElementByPage(), this.getOffSet());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		ComputerDao computerDao = new ComputerDao();
+		computerList = computerDao.searchComputer(search, this.getNbElementByPage(), this.getOffSet());
 		this.setEntity(computerList);
 		return computerList;
 	}
 	
 	public Integer getNbSearchPages(String search) {
 		ComputerDao computerDao;
-		try {
-			computerDao = new ComputerDao();
-			Integer nbEntries = computerDao.findNbSearchComputer(search);
-			Integer nbPages = nbEntries / this.getNbElementByPage();
-			return nbEntries % this.getNbElementByPage() == 0 ? nbPages:nbPages + 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
+		computerDao = new ComputerDao();
+		Integer nbEntries = computerDao.findNbSearchComputer(search);
+		Integer nbPages = nbEntries / this.getNbElementByPage();
+		return nbEntries % this.getNbElementByPage() == 0 ? nbPages:nbPages + 1;
 	}
 	
 	
