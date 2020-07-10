@@ -1,32 +1,85 @@
 package excilys.formation.java.cbd.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.ComputerMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.service.ConnectDB;
 
+@Repository
 public class ComputerDao extends Dao<Computer>{
+	
+	
+	private static final String INSERT_SQL = "INSERT INTO computer (name,introduced,discontinued,company_id) values (?, ?, ?, ?);";
+	private static final String DELETE_SQL = "DELETE FROM computer WHERE id = ?";
+	private static final String SELECT_SQL = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE computer.id = ?";
+	private static final String SELECT_ALL_SQL = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id";
+	private static final String COUNT_SQL = "SELECT COUNT(id) AS total FROM computer";
+	private static final String SELECT_SEARCH = "SELECT * "
+											  + "FROM computer "
+											  + "LEFT JOIN company as cp on computer.company_id = cp.id "
+											  + "WHERE computer.name like ? OR cp.name like ? Order By ";
+	
+	private String limitSearchOrderSql(String column, String order) {
+		return SELECT_SEARCH + column + " IS NULL, " + column + " "  + order + " LIMIT ?,?";
+	}
 	
 	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
 	
+	@Autowired
 	private ConnectDB connect;
 	
-	public ComputerDao() throws SQLException {
-		this.connect = new ConnectDB();
+	public ComputerDao() {
 	}
 
 	@Override
-	public boolean create(Computer obj) {
+	public boolean create(Computer computer) {
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+			
+			sql.setString(1, computer.getName());
+				
+		    if(computer.getDateIn() == null) {
+		    	sql.setNull(2, Types.DATE);
+		    }
+		    else {
+		    	sql.setDate(2, Date.valueOf(computer.getDateIn()));	
+		    }
+		    if(computer.getDateOut() == null) {
+		    	sql.setNull(3, Types.DATE);
+		    }
+		    else {
+		    	sql.setDate(3, Date.valueOf(computer.getDateOut()));
+		    }
+		    if(computer.getCompanie() == null) {
+		    	sql.setNull(4, Types.BIGINT);
+		    }
+		    else {
+		    	sql.setInt(4, computer.getCompanie().getId());
+		    }
+		    
+			sql.executeUpdate();	
+		}catch(SQLException eSQL) {
+			logger.error("Erreur insertion computer dans la BDD");
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean create2(Computer obj) {
 		try /*(Connection connect2 = connect.getInstance2())*/{
 			Statement st = this.connect.getInstance().createStatement();
 			String sql = "INSERT INTO computer values (" + obj.getId() + ", '" +
@@ -58,34 +111,18 @@ public class ComputerDao extends Dao<Computer>{
 		return true;
 	}
 
-	/*
-	@Override
-	public boolean delete(Computer obj) {
-		try {
-			Statement st = this.connect.getConnection().createStatement();
-			String sql = "DELETE FROM computer WHERE id = " + obj.getId();
-			st.executeUpdate(sql);
-		    }catch (SQLException e) {
-		    	//logger.error("Error delete computer");
-		    	e.printStackTrace();
-		    	return false;
-		    }
-		return false;
-	}
-	*/
-	
 	@Override
 	public boolean delete(int id) {
-		try {
-			Statement st = this.connect.getInstance().createStatement();
-			String sql = "DELETE FROM computer WHERE id = " + id;
-			st.executeUpdate(sql);
-		    }catch (SQLException e) {
-		    	logger.error("Error delete computer");
-		    	e.printStackTrace();
-		    	return false;
-		    }
-		return false;
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(DELETE_SQL)){
+			
+			sql.setInt(1, id);
+			sql.executeUpdate();
+			}catch(SQLException eSQL) {
+				logger.error("Error Delete Computer",eSQL);
+				return false;
+			}
+		return true;
 	}
 
 	/**
@@ -102,10 +139,13 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql += "introduced = '" + Date.valueOf(obj.getDateIn()) + "', ";
 		    }
 		    if(!(obj.getDateOut() == null)) {
-		    	sql += "discontinued = '" + Date.valueOf(obj.getDateOut()) + "', ";
+		    	sql += "discontinued = '" + Date.valueOf(obj.getDateOut()) + "' , ";
 		    }
 		    if(!(obj.getManufacturer() == null)) {
 		    	sql += "company_id = " + obj.getManufacturer();
+		    }
+		    else {
+		    	sql = sql.substring(0, sql.length() - 2);
 		    }
 		    sql += " WHERE id = " + obj.getId();
 		    st.executeUpdate(sql);
@@ -120,47 +160,33 @@ public class ComputerDao extends Dao<Computer>{
 	@Override
 	public Computer find(int id) {
 		Computer computer = new Computer();
-		try {
-			ResultSet result = this.connect.getInstance().createStatement(
-		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE computer.id = " + id);
+
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(SELECT_SQL)) {
+			
+			sql.setInt(1, id);
+			ResultSet result = sql.executeQuery();
 			
 			computer = ComputerMapper.createEntity(result);
-	   	}catch (SQLException e) {
-	   		logger.error("Error find computer");
-	    	e.printStackTrace();
-	    }
+				
+			}catch(SQLException eSQL) {
+				logger.error("Error Getting computer",eSQL);
+			}
 		return computer;
 	}
 	
-	public List<Computer> findWithCompanie(int company_id) {
-		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			ResultSet result = this.connect.getInstance().createStatement(
-		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer WHERE company_id = " + company_id);
-			
-			computerList = ComputerMapper.createListEntity(result);
-	   	}catch (SQLException e) {
-	   		logger.error("Error find list computer");
-	    	e.printStackTrace();
-	    }
-		return computerList;
-	}
-
 	@Override
 	public List<Computer> findAll() {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			ResultSet result = this.connect.getInstance().createStatement(
-			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id");
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(SELECT_ALL_SQL)) {
 			
+			ResultSet result = sql.executeQuery();
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 			logger.error("Error find all computer");
-
 	    	e.printStackTrace();
+	    	return null;
 		}
 		return computerList;
 	}
@@ -168,17 +194,17 @@ public class ComputerDao extends Dao<Computer>{
 	@Override
 	public List<Computer> findAllLimite(int limite, int offset) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			String sql = "SELECT * "
-					   + "FROM computer "
-					   + "LEFT join company as cp on computer.company_id = cp.id"
-					   + "ORDER BY id ASC "
-					   + "LIMIT " + offset 
-					   + ", " + limite + ";";
-			ResultSet result = this.connect.getInstance().createStatement(
-			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_UPDATABLE).executeQuery(sql);
+		String sqlTmp = "SELECT * "
+				   + "FROM computer "
+				   + "LEFT join company as cp on computer.company_id = cp.id"
+				   + "ORDER BY id ASC "
+				   + "LIMIT " + offset 
+				   + ", " + limite + ";";
+		
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(sqlTmp)) {
 			
+			ResultSet result = sql.executeQuery();
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 			logger.error("Error find computer from " + limite + " to " + limite + offset);
@@ -190,17 +216,18 @@ public class ComputerDao extends Dao<Computer>{
 
 	public List<Computer> findAllLimite(int limite, int offset, String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			String sql = "SELECT * "
-					   + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
-					   + "ORDER BY " + column +" " + order
-					   + " LIMIT " + offset 
-					   + ", " + limite + ";";
-			System.out.println(sql);
-			ResultSet result = this.connect.getInstance().createStatement(
-			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_UPDATABLE).executeQuery(sql);
+		String sqlTmp = "SELECT * "
+				   + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
+				   + "ORDER BY " + column +" " + order
+				   + " LIMIT " + offset 
+				   + ", " + limite;
+		
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(sqlTmp)) {
+			
+			ResultSet result = sql.executeQuery();
 			computerList = ComputerMapper.createListEntity(result);
+			
 		}catch (SQLException e) {
 			logger.error("Error find computer from " + limite + " to " + limite + offset);
 		    e.printStackTrace();
@@ -210,29 +237,34 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public int findNbElem() {
-		try {
-			ResultSet result = this.connect.getInstance().createStatement(
-		    ResultSet.TYPE_SCROLL_INSENSITIVE,
-		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT COUNT(*) AS total FROM computer");
+		int nbElem = 0;
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(COUNT_SQL)) {
 			
-		    if(result.first()) {
-		    	return result.getInt("total");
+			ResultSet result = sql.executeQuery();
+			
+		    if(result.next()) {
+		    	nbElem = result.getInt("total");
 		    }
+		    return nbElem;
+		    
 		}catch (SQLException e) {
 			logger.error("Error find number of computer");
 	    	e.printStackTrace();
+	    	return nbElem;
 	    }
-		return 0;
 	}
 	
 	@Override
 	public int maxId() {
+		System.out.println("sqipfsdiofhj");
 		try {
 			ResultSet result = this.connect.getInstance().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT MAX(id) AS max FROM computer");
 			
-		    if(result.first()) {
+			System.out.println("titi");
+		    if(result.next()) {
 		    	return result.getInt("max");
 		    }
 		}catch (SQLException e) {
@@ -247,7 +279,6 @@ public class ComputerDao extends Dao<Computer>{
 		try {
 			String sql = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE name LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') order by id asc limit " + offset + ", " + limite + ";";
 			ResultSet result = createRequete(sql);
-			
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
 			logger.error("Error find search of computer");
@@ -256,23 +287,42 @@ public class ComputerDao extends Dao<Computer>{
 		return computerList;
 	}
 	
+//	public List<Computer> searchComputer(String search, int offset, int limite, String column, String order){
+//		List<Computer> computerList = new ArrayList<Computer>();
+//		try {
+//			String sql = "SELECT * FROM computer "
+//					   + "WHERE name LEFT JOIN company as cp on computer.company_id = cp.id "
+//					   + "LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') "
+//					   + "ORDER BY " + column +" " + order +" limit " + limite + ", " + offset + ";";
+//			System.out.println(sql);
+//			//revoir le limit et offset
+//			ResultSet result = createRequete(sql);
+//			computerList = ComputerMapper.createListEntity(result);
+//		}catch (SQLException e) {
+//			logger.error("Error find search of computer");
+//	    	e.printStackTrace();
+//	    }
+//		return computerList;
+//	}
+	
 	public List<Computer> searchComputer(String search, int offset, int limite, String column, String order){
-		List<Computer> computerList = new ArrayList<Computer>();
-		try {
-			String sql = "SELECT * FROM computer "
-					   + "WHERE name LEFT JOIN company as cp on computer.company_id = cp.id "
-					   + "LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') "
-					   + "ORDER BY " + column +" " + order +" limit " + limite + ", " + offset + ";";
-			//revoir le limit et offset
-			ResultSet result = createRequete(sql);
+		List<Computer> computerList = new ArrayList<>();
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement prepare = connect.prepareStatement(limitSearchOrderSql(column, order))) {
 			
+			prepare.setString(1, "%"+search+"%");
+			prepare.setString(2, "%"+search+"%");
+			prepare.setInt(4, offset);
+			prepare.setInt(3, limite);
+
+			ResultSet result = prepare.executeQuery();
 			computerList = ComputerMapper.createListEntity(result);
-		}catch (SQLException e) {
-			logger.error("Error find search of computer");
-	    	e.printStackTrace();
-	    }
+			
+		}catch(SQLException eSQL) {
+			logger.error("Error Getting Computers between Search",eSQL);
+		}
 		return computerList;
-	}
+}
 	
 	public int findNbSearchComputer(String search){
 		int nbComputer = 0;
@@ -281,6 +331,7 @@ public class ComputerDao extends Dao<Computer>{
 			PreparedStatement result2 = this.connect.getInstance().prepareStatement(sql3);
 			result2.setString(1, "%" + search + "%");
 			result2.setString(2, "%" + search + "%");
+			System.out.println(result2);
 			ResultSet tmp = result2.executeQuery();
 		    if(tmp.next()) {
 		    	nbComputer = tmp.getInt("toto");

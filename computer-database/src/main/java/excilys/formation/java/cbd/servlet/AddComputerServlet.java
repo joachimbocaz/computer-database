@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.CompanieDto;
@@ -24,6 +28,19 @@ import excilys.formation.java.cbd.validator.Validator;
 @WebServlet(name = "AddComputerServlet", urlPatterns = "/addComputer")
 public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private AddComputerService addComputerService;
+	
+	@Autowired
+	private ComputerDao computerDao;
+	
+    @Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,7 +52,6 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AddComputerService addComputerService = new AddComputerService();
 		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
 
 		request.setAttribute("companieDtoCollection", companieDtoCollection);
@@ -53,10 +69,10 @@ public class AddComputerServlet extends HttpServlet {
 		discontinued = request.getParameter("discontinued");
 		companyId = request.getParameter("companyId");
 		try {
-			ComputerDao computerDao = new ComputerDao();
 			idComputer = String.valueOf(computerDao.maxId() + 1);
 			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
+			System.out.println(computerDto);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
 			computerDao.create(computer);
 		}catch (SQLException e) {

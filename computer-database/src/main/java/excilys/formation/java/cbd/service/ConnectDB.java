@@ -3,12 +3,17 @@ package excilys.formation.java.cbd.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+@Component
 public class ConnectDB {
 
 		private Connection connect;
@@ -19,19 +24,22 @@ public class ConnectDB {
 		
 		private static HikariConfig hK =  new HikariConfig(FICHIER_PROPERTIES);
 		private static HikariDataSource ds = new HikariDataSource(hK);
-
-		public ConnectDB(){
-			try {
-				connect = ds.getConnection();
-			} catch (SQLException e) {
-				logger.info("connection impossible");
-				e.printStackTrace();
-			}
+		
+		private DataSource hikariDataSource;
+		
+		@Autowired
+		public ConnectDB(DataSource hikariDataSource){
+			this.hikariDataSource = hikariDataSource;
 		}
 
 		public Connection getInstance() throws SQLException{
 			if(connect == null || connect.isClosed()){
-				new ConnectDB();
+				try {
+					connect = ds.getConnection();
+				} catch (SQLException e) {
+					logger.info("connection impossible");
+					e.printStackTrace();
+				}
 			}
 			return connect;
 		}   

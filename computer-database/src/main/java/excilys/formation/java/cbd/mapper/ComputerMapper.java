@@ -14,7 +14,6 @@ public class ComputerMapper{
 	
 	public static Computer entity(ResultSet result) throws SQLException {
 		Computer computer = new Computer();
-		Companie companie = new Companie();
 		computer = new Computer(result.getInt(COMPUTER_TABLE + "id"), result.getString(COMPUTER_TABLE + "name"));
 		
 		if(result.getDate(COMPUTER_TABLE + "introduced") == null) {
@@ -43,8 +42,8 @@ public class ComputerMapper{
 	
 	public static Computer createEntity(ResultSet result) throws SQLException {
 		Computer computer = new Computer();
-		
-		if(result.first()) {
+
+		if(result.next()) {
 			computer = entity(result);
 		}
 		return computer;
@@ -52,7 +51,6 @@ public class ComputerMapper{
 
 	public static List<Computer> createListEntity(ResultSet result) throws SQLException {
 		List<Computer> computerList = new ArrayList<Computer>();
-		
 		while(result.next()) {
 			computerList.add(entity(result));
 		}

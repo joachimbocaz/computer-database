@@ -1,23 +1,23 @@
 package excilys.formation.java.cbd.service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import excilys.formation.java.cbd.dao.CompanieDao;
 import excilys.formation.java.cbd.dto.CompanieDto;
 import excilys.formation.java.cbd.mapper.CompanieDtoMapper;
 import excilys.formation.java.cbd.model.Companie;
 
+@Service
 public class AddComputerService {
+	
+	@Autowired
 	private CompanieDao companieDao;
 	
 	public AddComputerService () {
-		try {
-			this.companieDao = new CompanieDao();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public List<CompanieDto> listCompanieToDto(){
