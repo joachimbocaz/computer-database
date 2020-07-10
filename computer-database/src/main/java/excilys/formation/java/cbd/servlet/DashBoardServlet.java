@@ -1,7 +1,6 @@
 package excilys.formation.java.cbd.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
