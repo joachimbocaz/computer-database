@@ -15,10 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.ComputerMapper;
 import excilys.formation.java.cbd.model.Computer;
+import excilys.formation.java.cbd.model.ComputerPage;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 @Repository
@@ -38,14 +42,16 @@ public class ComputerDao extends Dao<Computer>{
 													  + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
 													  + "ORDER BY ";
 	private static final String COUNT_SQL = "SELECT COUNT(id) AS total FROM computer";
-	private static final String SELECT_SEARCH = "SELECT * "
+	private static final String SELECT_SEARCH = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id, cp.name as Cname "
 											  + "FROM computer "
 											  + "LEFT JOIN company as cp on computer.company_id = cp.id "
 											  + "WHERE computer.name like ? OR cp.name like ? Order By ";
 	
+	private NamedParameterJdbcTemplate vJdbcTemplate;
 	
 	private String limitSearchOrderSql(String column, String order) {
-		return SELECT_SEARCH + column + " IS NULL, " + column + " "  + order + " LIMIT ?,?";
+		String requete = SELECT_SEARCH + column + " IS NULL, " + column + " "  + order + " LIMIT ?,?";
+		return requete;
 	}
 	
 	private static Logger logger = LoggerFactory.getLogger(ComputerDao.class);
@@ -53,8 +59,12 @@ public class ComputerDao extends Dao<Computer>{
 	@Autowired
 	private ConnectDB connect;
 	
-	public ComputerDao() {
-	}
+//	@Autowired
+//	public ComputerDao(NamedParameterJdbcTemplate vJdbcTemplate) {
+//		this.vJdbcTemplate = vJdbcTemplate;
+//	}
+	
+	public ComputerDao() {}
 
 	@Override
 	public boolean create(Computer computer) {
@@ -188,22 +198,27 @@ public class ComputerDao extends Dao<Computer>{
 		return computer;
 	}
 	
-	public Computer findJDBC(int id) {
-		Computer computer = new Computer();
-
-		try(Connection connect = this.connect.getInstance();
-			PreparedStatement sql = connect.prepareStatement(SELECT_SQL)) {
-			
-			sql.setInt(1, id);
-			ResultSet result = sql.executeQuery();
-			
-			computer = ComputerMapper.createEntity(result);
-				
-			}catch(SQLException eSQL) {
-				logger.error("Error Getting computer",eSQL);
-			}
-		return computer;
-	}
+	
+//	public Computer findJDBC(int id) {
+//		Computer computer = new Computer();
+//		
+//		try(Connection connect = this.connect.getInstance();
+//			PreparedStatement sql = connect.prepareStatement(SELECT_SQL)) {
+//			
+//			vJdbcTemplate = new JdbcTemplate(this.connect.getHikariDataSource());
+//			sql.setInt(1, id);
+//			vJdbcTemplate.queryForObject(sql, Integer.class);
+//			
+//			
+//			ResultSet result = sql.executeQuery();
+//			
+//			computer = ComputerMapper.createEntity(result);
+//				
+//			}catch(SQLException eSQL) {
+//				logger.error("Error Getting computer",eSQL);
+//			}
+//		return computer;
+//	}
 	
 	@Override
 	public List<Computer> findAll() {
@@ -244,9 +259,9 @@ public class ComputerDao extends Dao<Computer>{
 	}
 	
 
-	public List<Computer> findAllLimite(int limite, int offset, String column, String order) {
+	public List<Computer> findAllLimite(ComputerPage page, String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		String sqlTmp = SELECT_ALL_LIMITE_SQL + column +" " + order + " LIMIT " + offset + ", " + limite;
+		String sqlTmp = SELECT_ALL_LIMITE_SQL + column +" " + order + " LIMIT " + page.getOffSet() + ", " + page.getNbElementByPage();
 		
 		try(Connection connect = this.connect.getInstance();
 			PreparedStatement sql = connect.prepareStatement(sqlTmp)) {
@@ -255,52 +270,56 @@ public class ComputerDao extends Dao<Computer>{
 			computerList = ComputerMapper.createListEntity(result);
 			
 		}catch (SQLException e) {
-			logger.error("Error find computer from " + limite + " to " + limite + offset);
+			logger.error("Error find computer");
 		    e.printStackTrace();
 		}
 		return computerList;
 	}
 
-//	@Override
-//	public int findNbElem() {
-//		int nbElem = 0;
-//		
-//		try(Connection connect = this.connect.getInstance();
-//			PreparedStatement sql = connect.prepareStatement(COUNT_SQL)) {
-//			
-//			ResultSet result = sql.executeQuery();
-//			
-//		    if(result.next()) {
-//		    	nbElem = result.getInt("total");
-//		    }
-//		    return nbElem;
-//		    
-//		}catch (SQLException e) {
-//			logger.error("Error find number of computer");
-//	    	e.printStackTrace();
-//	    	return nbElem;
-//	    }
-//	}
-	
 	@Override
 	public int findNbElem() {
 		int nbElem = 0;
-		JdbcTemplate vJdbcTemplate;
-
-		try(Connection connect = this.connect.getInstance();) {
-			
-			vJdbcTemplate = new JdbcTemplate(this.connect.getHikariDataSource());
-			nbElem = vJdbcTemplate.queryForObject(COUNT_SQL, Integer.class);
 		
-			return nbElem;
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(COUNT_SQL)) {
 			
-		} catch (SQLException e) {
+			ResultSet result = sql.executeQuery();
+			
+		    if(result.next()) {
+		    	nbElem = result.getInt("total");
+		    }
+		    return nbElem;
+		    
+		}catch (SQLException e) {
 			logger.error("Error find number of computer");
-			e.printStackTrace();
-		}
-	   
-	   return nbElem;
+	    	e.printStackTrace();
+	    	return nbElem;
+	    }
 	}
+	
+//	@Override
+//	public int findNbElem() {
+//		
+////		SqlParameterSource parameters = new MapSqlParameterSource();
+////		
+////		return vJdbcTemplate.queryForObject(COUNT_SQL,parameters, Integer.class);
+//		
+//		JdbcTemplate tmp;
+//		
+//		try(Connection connect = this.connect.getInstance();) {
+//			
+//			tmp = new JdbcTemplate(this.connect.getHikariDataSource());
+//			nbElem = vJdbcTemplate.queryForObject(COUNT_SQL, Integer.class);
+//		
+//			return nbElem;
+//			
+//		} catch (SQLException e) {
+//			logger.error("Error find number of computer");
+//			e.printStackTrace();
+//		}
+//	   
+//	   return nbElem;
+//	}
 	
 	@Override
 	public int maxId() {
@@ -310,7 +329,6 @@ public class ComputerDao extends Dao<Computer>{
 		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT MAX(id) AS max FROM computer");
 			
 		    if(result.next()) {
-		    	System.out.println(result.getInt("max"));
 		    	return result.getInt("max");
 		    }
 		}catch (SQLException e) {
@@ -320,10 +338,10 @@ public class ComputerDao extends Dao<Computer>{
 		return 0;
 	}
 	
-	public List<Computer> searchComputer(String search, int limite, int offset){
+	public List<Computer> searchComputer(String search, ComputerPage page){
 		List<Computer> computerList = new ArrayList<Computer>();
 		try {
-			String sql = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE name LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') order by id asc limit " + offset + ", " + limite + ";";
+			String sql = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE name LIKE '%" + search + "%' OR company_id in (select id from company where name like '%" + search + "%') order by id asc limit " + page.getOffSet()+ ", " + page.getNbElementByPage() + ";";
 			ResultSet result = createRequete(sql);
 			computerList = ComputerMapper.createListEntity(result);
 		}catch (SQLException e) {
@@ -351,15 +369,15 @@ public class ComputerDao extends Dao<Computer>{
 //		return computerList;
 //	}
 	
-	public List<Computer> searchComputer(String search, int offset, int limite, String column, String order){
+	public List<Computer> searchComputer(String search, ComputerPage page, String column, String order){
 		List<Computer> computerList = new ArrayList<>();
 		try(Connection connect = this.connect.getInstance();
 			PreparedStatement prepare = connect.prepareStatement(limitSearchOrderSql(column, order))) {
 			
 			prepare.setString(1, "%"+search+"%");
 			prepare.setString(2, "%"+search+"%");
-			prepare.setInt(4, offset);
-			prepare.setInt(3, limite);
+			prepare.setInt(3, page.getOffSet());
+			prepare.setInt(4, page.getNbElementByPage());
 
 			ResultSet result = prepare.executeQuery();
 			computerList = ComputerMapper.createListEntity(result);
@@ -373,14 +391,13 @@ public class ComputerDao extends Dao<Computer>{
 	public int findNbSearchComputer(String search){
 		int nbComputer = 0;
 		try {
-			String sql3 = "SELECT COUNT(computer.id) as toto FROM computer LEFT JOIN company as cp on computer.company_id = cp.id WHERE computer.name LIKE ? OR cp.name LIKE ?;";
+			String sql3 = "SELECT COUNT(computer.id) as total FROM computer LEFT JOIN company as cp on computer.company_id = cp.id WHERE computer.name LIKE ? OR cp.name LIKE ?;";
 			PreparedStatement result2 = this.connect.getInstance().prepareStatement(sql3);
 			result2.setString(1, "%" + search + "%");
 			result2.setString(2, "%" + search + "%");
-			System.out.println(result2);
 			ResultSet tmp = result2.executeQuery();
 		    if(tmp.next()) {
-		    	nbComputer = tmp.getInt("toto");
+		    	nbComputer = tmp.getInt("total");
 		    	return nbComputer;
 		    }
 			

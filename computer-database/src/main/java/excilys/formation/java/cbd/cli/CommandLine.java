@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import excilys.formation.java.cbd.dao.CompanieDao;
 import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.model.Companie;
@@ -33,6 +35,7 @@ public class CommandLine {
 	}
 	private Command command;
 	private CompanieDao companieDao;
+	@Autowired
 	private ComputerDao computerDao;
 	private Page<Computer> computerPage;
 	private Page<Companie> compagniePage;
@@ -43,7 +46,7 @@ public class CommandLine {
 	
 	public CommandLine(ConnectDB con) throws SQLException {
 		this.companieDao = new CompanieDao();
-		this.computerDao = new ComputerDao();
+//		this.computerDao = new ComputerDao();
 		this.computerPage = new ComputerPage();
 		this.compagniePage = new CompaniePage();
 	}

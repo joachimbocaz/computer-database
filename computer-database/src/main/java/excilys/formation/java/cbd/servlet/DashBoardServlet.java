@@ -16,11 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.model.ComputerPage;
+import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 
 /**
  * Servlet implementation class DashBoardServlet
@@ -31,7 +31,7 @@ public class DashBoardServlet extends HttpServlet {
 	private static Logger logger = LoggerFactory.getLogger(DashBoardServlet.class);
 	private ComputerPage computerPage;
 	@Autowired
-	private ComputerDao computerDao;
+	ComputerServiceImpl computerService;
 	
     @Override
 	public void init(ServletConfig config) throws ServletException {
@@ -57,12 +57,12 @@ public class DashBoardServlet extends HttpServlet {
 		List<ComputerDto> computerDtoCollection = new ArrayList<ComputerDto>();// = dashBoardService.listComputerToDto();
 		
 		computerPage = new ComputerPage();
-		computerPage.setNbElementByPage(20);
+		computerPage.setNbElementByPage(10);
 		computerPage.setNumPage(1);
 		computerPage.setOffset();
 		
 		if(request.getParameter("orderBy") != null && !request.getParameter("orderBy").equals("")) {
-			ArrayList<String> styleOrder = computerDao.splitOrder(request.getParameter("orderBy"));
+			ArrayList<String> styleOrder = computerService.splitOrder(request.getParameter("orderBy"));
 			column = styleOrder.get(0);
 			order = styleOrder.get(1);
 		}
@@ -71,7 +71,7 @@ public class DashBoardServlet extends HttpServlet {
 			order = "ASC";
 		}
 		
-		nbPage = computerPage.getNbPages(computerDao.findNbElem());
+		nbPage = computerPage.getNbPages(computerService.getNbComputers());
 		if(request.getParameter("nbByPage") != null) {
 			nbByPage = Integer.parseInt(request.getParameter("nbByPage"));
 			if(nbByPage < 1) {
@@ -90,21 +90,20 @@ public class DashBoardServlet extends HttpServlet {
 		if(request.getParameter("search") != null && !request.getParameter("search").equals("")) {
 			
 //			computerPage.findSearchEntity(request.getParameter("search"), column, order);
-			computerPage.setEntity(computerDao.searchComputer(request.getParameter("search"), computerPage.getNbElementByPage(), computerPage.getOffSet(), column, order));
-			System.out.println("Nombre de computer : " + computerPage.getEntity().size());
+			computerPage.setEntity(computerService.getComputersByPagesSearch(request.getParameter("search"), computerPage, column, order));
 			for(Computer computer:computerPage.getEntity()) {
 				computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 			}
-			nbComputer = computerDao.findNbSearchComputer(request.getParameter("search"));
-			nbPage = computerPage.getNbSearchPages(request.getParameter("search"));
+			nbComputer = computerService.getNbComputersPagesSearch(request.getParameter("search"));
+			nbPage = computerService.getNbSearchPages(request.getParameter("search"), computerPage);
 		}
 		else {
-			computerPage.setEntity(computerDao.findAllLimite(computerPage.getNbElementByPage(), computerPage.getOffSet(), column, order));
+			computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));
 			for(Computer computer:computerPage.getEntity()) {
 				computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 			}
-			nbComputer = computerDao.findNbElem();
-			nbPage = computerPage.getNbPages(computerDao.findNbElem());
+			nbComputer = computerService.getNbComputers();
+			nbPage = computerPage.getNbPages(nbComputer);
 		}
 		
 		request.setAttribute("orderBy", request.getParameter("orderBy"));
@@ -121,13 +120,11 @@ public class DashBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ComputerDao computerDao;
 		if(request.getParameter("selection")!=null) {
-			computerDao = new ComputerDao();
 			String[] computerIds = request.getParameter("selection").split(",");
 			for(String c: computerIds) {
 				try {
-					computerDao.delete(Integer.valueOf(c));
+					computerService.deleteComputer(Integer.valueOf(c));
 				} catch (IllegalArgumentException e) {
 					logger.error("Illegal arguments");
 					logger.error("computer update not allowed",e);

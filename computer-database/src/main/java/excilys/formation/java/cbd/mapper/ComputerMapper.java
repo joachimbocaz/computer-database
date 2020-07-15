@@ -28,11 +28,15 @@ public class ComputerMapper{
 		}
 		if(result.getInt("company_id") != 0){
 			computer.setManufacturer(result.getInt("company_id"));
-			computer.setCompanie(new Companie(result.getInt("company_id"), result.getString("company_id")));
 		}
 		else {
 			computer.setManufacturer(result.getInt("company_id"));
+		}
+		if(result.getString("Cname") == null){
 			computer.setCompanie(new Companie());
+		}
+		else {
+			computer.setCompanie(new Companie(result.getInt("company_id"), result.getString("Cname")));
 		}
 
 		return computer;

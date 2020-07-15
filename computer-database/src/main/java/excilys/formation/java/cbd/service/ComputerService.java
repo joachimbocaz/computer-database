@@ -1,8 +1,10 @@
 package excilys.formation.java.cbd.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import excilys.formation.java.cbd.model.Computer;
+import excilys.formation.java.cbd.model.ComputerPage;
 
 public interface ComputerService {
 
@@ -16,14 +18,16 @@ public interface ComputerService {
 	
 	void deleteComputer(Integer id);
 	
-//	List<Computer> getComputersByPage(Page page, String order, String ascending);
-//	
-//	Integer getComputersNbPages(Page page);
-//	
-//	Integer getNbComputers();
-//	
-//	Integer getNbComputersPagesSearch(Page page, String search);
-//	
-//	List<Computer> getComputersByPagesSearch(Page page, String search, String order, String ascending);
+	List<Computer> getComputersByPage(ComputerPage page, String order, String ascending);
+	
+	Integer getComputersNbPages(ComputerPage page);
+	
+	Integer getNbComputers();
+	
+	Integer getNbComputersPagesSearch(String search);
+	
+	List<Computer> getComputersByPagesSearch(String search, ComputerPage page, String order, String ascending);
+	
+	ArrayList<String> splitOrder(String order);
 	
 }
