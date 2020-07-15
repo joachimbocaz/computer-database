@@ -31,7 +31,7 @@ public class ComputerDao extends Dao<Computer>{
 	
 	private static final String INSERT_SQL = "INSERT INTO computer (name,introduced,discontinued,company_id) values (?, ?, ?, ?);";
 	private static final String DELETE_SQL = "DELETE FROM computer WHERE id = ?";
-	private static final String SELECT_SQL = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id "
+	private static final String SELECT_SQL = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id, cp.name as Cname "
 										   + "FROM computer "
 										   + "LEFT join company as cp on computer.company_id = cp.id "
 										   + "WHERE computer.id = ?";
