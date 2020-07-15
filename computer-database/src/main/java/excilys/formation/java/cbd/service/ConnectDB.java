@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
 @Component
 public class ConnectDB {
 
@@ -22,8 +19,8 @@ public class ConnectDB {
 				
 		private static Logger logger = LoggerFactory.getLogger(ConnectDB.class);
 		
-		private static HikariConfig hK =  new HikariConfig(FICHIER_PROPERTIES);
-		private static HikariDataSource ds = new HikariDataSource(hK);
+//		private static HikariConfig hK =  new HikariConfig(FICHIER_PROPERTIES);
+//		private static HikariDataSource ds = new HikariDataSource(hK);
 
 		private DataSource hikariDataSource;
 		
@@ -35,7 +32,7 @@ public class ConnectDB {
 		public Connection getInstance() throws SQLException{
 			if(connect == null || connect.isClosed()){
 				try {
-					connect = ds.getConnection();
+					connect = hikariDataSource.getConnection();
 				} catch (SQLException e) {
 					logger.info("connection impossible");
 					e.printStackTrace();
