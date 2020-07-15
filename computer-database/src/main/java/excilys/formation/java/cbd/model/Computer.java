@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Computer {
 	private int id, idCompany;
-	private String name, nameCompany;
+	private String name;
 	private Integer manufacturer = null;
 	private LocalDate dateIn, dateOut;
 	private Companie companie;
@@ -53,31 +53,7 @@ public class Computer {
 			}
 		}
 	}
-	
-	public Computer(String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
-		this.name = name;
-		this.manufacturer = manufacturer;
 		
-		if(dateIn == null) {
-			this.dateIn = null;
-			this.dateOut = dateOut;
-		}
-		else if(dateOut == null) {
-			this.dateIn = dateIn;
-			this.dateOut = null;
-		}
-		else {
-			if(dateIn.isBefore(dateOut)) {
-				this.dateIn = dateIn;
-				this.dateOut = dateOut;
-			}
-			else {
-				this.dateIn = null;
-				this.dateOut = dateOut;
-			}
-		}
-	}
-	
 	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut, Companie companie) {
 		this.id = id;
 		this.name = name;
@@ -112,15 +88,6 @@ public class Computer {
 	public String getName() {
 		return name;
 	}
-
-	
-	public String getNameCompany() {
-		return this.nameCompany;
-	}
-	
-	public void setNameCompany(String nameCompany) {
-		this.nameCompany = nameCompany;
-	}
 	
 	public Integer getManufacturer() {
 		return manufacturer;
@@ -144,9 +111,6 @@ public class Computer {
 		else if(dateIn.isBefore(this.dateOut)) {
 			this.dateIn = dateIn;
 		}
-		else {
-			this.dateIn = null;
-		}
 	}
 
 	public LocalDate getDateOut() {
@@ -162,9 +126,6 @@ public class Computer {
 		}
 		else if(dateOut.isAfter(this.dateIn)) {
 			this.dateOut = dateOut;
-		}
-		else {
-			this.dateOut = null;
 		}
 	}
 	

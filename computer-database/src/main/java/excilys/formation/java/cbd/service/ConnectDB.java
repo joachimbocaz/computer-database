@@ -24,7 +24,7 @@ public class ConnectDB {
 		
 		private static HikariConfig hK =  new HikariConfig(FICHIER_PROPERTIES);
 		private static HikariDataSource ds = new HikariDataSource(hK);
-		
+
 		private DataSource hikariDataSource;
 		
 		@Autowired
@@ -42,5 +42,13 @@ public class ConnectDB {
 				}
 			}
 			return connect;
-		}   
+		}
+
+		public DataSource getHikariDataSource() {
+			return this.hikariDataSource;
+		}
+
+		public void setHikariDataSource(DataSource hikariDataSource) {
+			this.hikariDataSource = hikariDataSource;
+		} 
 }

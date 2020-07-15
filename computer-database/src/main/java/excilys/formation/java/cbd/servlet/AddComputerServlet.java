@@ -69,10 +69,9 @@ public class AddComputerServlet extends HttpServlet {
 		discontinued = request.getParameter("discontinued");
 		companyId = request.getParameter("companyId");
 		try {
-			idComputer = String.valueOf(computerDao.maxId() + 1);
+			idComputer = String.valueOf(computerDao.maxId());
 			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
-			System.out.println(computerDto);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
 			computerDao.create(computer);
 		}catch (SQLException e) {

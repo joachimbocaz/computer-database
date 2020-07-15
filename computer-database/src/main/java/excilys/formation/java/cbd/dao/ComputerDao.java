@@ -10,9 +10,11 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.ComputerMapper;
@@ -25,13 +27,22 @@ public class ComputerDao extends Dao<Computer>{
 	
 	private static final String INSERT_SQL = "INSERT INTO computer (name,introduced,discontinued,company_id) values (?, ?, ?, ?);";
 	private static final String DELETE_SQL = "DELETE FROM computer WHERE id = ?";
-	private static final String SELECT_SQL = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id WHERE computer.id = ?";
-	private static final String SELECT_ALL_SQL = "SELECT * FROM computer LEFT join company as cp on computer.company_id = cp.id";
+	private static final String SELECT_SQL = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id "
+										   + "FROM computer "
+										   + "LEFT join company as cp on computer.company_id = cp.id "
+										   + "WHERE computer.id = ?";
+	private static final String SELECT_ALL_SQL = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id "
+											   + "FROM computer "
+											   + "LEFT join company as cp on computer.company_id = cp.id";
+	private static final String SELECT_ALL_LIMITE_SQL = "SELECT computer.id as id, computer.name as name, computer.introduced as introduced, computer.discontinued as discontinued, computer.company_id as company_id, cp.name as Cname "
+													  + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
+													  + "ORDER BY ";
 	private static final String COUNT_SQL = "SELECT COUNT(id) AS total FROM computer";
 	private static final String SELECT_SEARCH = "SELECT * "
 											  + "FROM computer "
 											  + "LEFT JOIN company as cp on computer.company_id = cp.id "
 											  + "WHERE computer.name like ? OR cp.name like ? Order By ";
+	
 	
 	private String limitSearchOrderSql(String column, String order) {
 		return SELECT_SEARCH + column + " IS NULL, " + column + " "  + order + " LIMIT ?,?";
@@ -71,6 +82,7 @@ public class ComputerDao extends Dao<Computer>{
 		    	sql.setInt(4, computer.getCompanie().getId());
 		    }
 		    
+		    System.out.println(sql);
 			sql.executeUpdate();	
 		}catch(SQLException eSQL) {
 			logger.error("Erreur insertion computer dans la BDD");
@@ -113,6 +125,7 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public boolean delete(int id) {
+		System.out.println("opiopis");
 		try(Connection connect = this.connect.getInstance();
 			PreparedStatement sql = connect.prepareStatement(DELETE_SQL)){
 			
@@ -175,6 +188,23 @@ public class ComputerDao extends Dao<Computer>{
 		return computer;
 	}
 	
+	public Computer findJDBC(int id) {
+		Computer computer = new Computer();
+
+		try(Connection connect = this.connect.getInstance();
+			PreparedStatement sql = connect.prepareStatement(SELECT_SQL)) {
+			
+			sql.setInt(1, id);
+			ResultSet result = sql.executeQuery();
+			
+			computer = ComputerMapper.createEntity(result);
+				
+			}catch(SQLException eSQL) {
+				logger.error("Error Getting computer",eSQL);
+			}
+		return computer;
+	}
+	
 	@Override
 	public List<Computer> findAll() {
 		List<Computer> computerList = new ArrayList<Computer>();
@@ -216,11 +246,7 @@ public class ComputerDao extends Dao<Computer>{
 
 	public List<Computer> findAllLimite(int limite, int offset, String column, String order) {
 		List<Computer> computerList = new ArrayList<Computer>();
-		String sqlTmp = "SELECT * "
-				   + "FROM computer LEFT join company as cp on computer.company_id = cp.id "
-				   + "ORDER BY " + column +" " + order
-				   + " LIMIT " + offset 
-				   + ", " + limite;
+		String sqlTmp = SELECT_ALL_LIMITE_SQL + column +" " + order + " LIMIT " + offset + ", " + limite;
 		
 		try(Connection connect = this.connect.getInstance();
 			PreparedStatement sql = connect.prepareStatement(sqlTmp)) {
@@ -235,36 +261,56 @@ public class ComputerDao extends Dao<Computer>{
 		return computerList;
 	}
 
+//	@Override
+//	public int findNbElem() {
+//		int nbElem = 0;
+//		
+//		try(Connection connect = this.connect.getInstance();
+//			PreparedStatement sql = connect.prepareStatement(COUNT_SQL)) {
+//			
+//			ResultSet result = sql.executeQuery();
+//			
+//		    if(result.next()) {
+//		    	nbElem = result.getInt("total");
+//		    }
+//		    return nbElem;
+//		    
+//		}catch (SQLException e) {
+//			logger.error("Error find number of computer");
+//	    	e.printStackTrace();
+//	    	return nbElem;
+//	    }
+//	}
+	
 	@Override
 	public int findNbElem() {
 		int nbElem = 0;
-		try(Connection connect = this.connect.getInstance();
-			PreparedStatement sql = connect.prepareStatement(COUNT_SQL)) {
+		JdbcTemplate vJdbcTemplate;
+
+		try(Connection connect = this.connect.getInstance();) {
 			
-			ResultSet result = sql.executeQuery();
+			vJdbcTemplate = new JdbcTemplate(this.connect.getHikariDataSource());
+			nbElem = vJdbcTemplate.queryForObject(COUNT_SQL, Integer.class);
+		
+			return nbElem;
 			
-		    if(result.next()) {
-		    	nbElem = result.getInt("total");
-		    }
-		    return nbElem;
-		    
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			logger.error("Error find number of computer");
-	    	e.printStackTrace();
-	    	return nbElem;
-	    }
+			e.printStackTrace();
+		}
+	   
+	   return nbElem;
 	}
 	
 	@Override
 	public int maxId() {
-		System.out.println("sqipfsdiofhj");
 		try {
 			ResultSet result = this.connect.getInstance().createStatement(
 		    ResultSet.TYPE_SCROLL_INSENSITIVE,
 		    ResultSet.CONCUR_UPDATABLE).executeQuery("SELECT MAX(id) AS max FROM computer");
 			
-			System.out.println("titi");
 		    if(result.next()) {
+		    	System.out.println(result.getInt("max"));
 		    	return result.getInt("max");
 		    }
 		}catch (SQLException e) {
