@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -26,6 +27,11 @@ public class SpringConfigurationContext extends AbstractContextLoaderInitializer
 	@Bean
 	public DataSource hikariDataSource() {
 		return new HikariDataSource(new HikariConfig("/datasource.properties"));
+	}
+	
+	@Bean
+	public NamedParameterJdbcTemplate jdbcTemplate(DataSource hikariDataSource){
+		return new NamedParameterJdbcTemplate(hikariDataSource);
 	}
 
 }

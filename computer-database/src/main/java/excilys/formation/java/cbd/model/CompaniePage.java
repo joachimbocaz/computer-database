@@ -1,10 +1,6 @@
 package excilys.formation.java.cbd.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import excilys.formation.java.cbd.dao.CompanieDao;
-import excilys.formation.java.cbd.dao.Dao;
 
 public class CompaniePage extends Page<Companie>{
 	
@@ -16,12 +12,13 @@ public class CompaniePage extends Page<Companie>{
 	}
 
 	@Override
-	public List<Companie> findAllEntity() {
-		List<Companie> compagnieList = new ArrayList<Companie>();
-		Dao<Companie> companieDao = new CompanieDao();
-		compagnieList = companieDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
-		this.setEntity(compagnieList);
-		return compagnieList;
+	public List<Companie> findAllEntity(String column, String order) {
+//		List<Companie> compagnieList = new ArrayList<Companie>();
+//		Dao<Companie> companieDao = new CompanieDao();
+//		compagnieList = companieDao.findAllLimite(this.getNbElementByPage(), this.getOffSet());
+//		this.setEntity(compagnieList);
+//		return compagnieList;
+		return null;		
 	}
 	
 	@Override

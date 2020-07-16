@@ -94,8 +94,8 @@ public class DashBoardServlet extends HttpServlet {
 			for(Computer computer:computerPage.getEntity()) {
 				computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 			}
-			nbComputer = computerService.getNbComputersPagesSearch(request.getParameter("search"));
-			nbPage = computerService.getNbSearchPages(request.getParameter("search"), computerPage);
+			nbComputer = computerService.getNbComputersPagesSearch(computerPage, column, order, request.getParameter("search"));
+			nbPage = computerPage.getNbPages(nbComputer);
 		}
 		else {
 			computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));

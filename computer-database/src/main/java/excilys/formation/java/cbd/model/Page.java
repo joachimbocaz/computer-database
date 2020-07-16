@@ -2,11 +2,9 @@ package excilys.formation.java.cbd.model;
 
 import java.util.List;
 
-import excilys.formation.java.cbd.dao.Dao;
-
 public abstract class Page <T>{
 	private List<T> entity;
-	private int NB_ELEMENTS_BY_PAGE = 50;
+	private int NB_ELEMENTS_BY_PAGE = 10;
 	private int numPage;
 	private int offset;
 	
@@ -56,7 +54,7 @@ public abstract class Page <T>{
 		this.entity = entity;
 	}
 		
-	public abstract List<T> findAllEntity();
+	public abstract List<T> findAllEntity(String column, String order);
 
 	
 	public abstract void printPage();

@@ -241,7 +241,7 @@ public class CommandLine {
 	public void listPageComputer() {
 		this.computerPage = new ComputerPage(getNumPage());
 		this.computerPage.setOffset();
-		computerPage.findAllEntity();//attention avant setEntity() potentiel bug, a tester
+		computerPage.findAllEntity("id", "ASC");//attention avant setEntity() potentiel bug, a tester
 		this.computerL = computerPage.getEntity();
 		printListComputer(this.computerL);
 	}
@@ -249,7 +249,7 @@ public class CommandLine {
 	public void listPageCompagnie() {
 		this.compagniePage = new CompaniePage(getNumPage());
 		this.compagniePage.setOffset();
-		this.compagniePage.findAllEntity();//attention avant setEntity() potentiel bug, a tester
+		this.compagniePage.findAllEntity("id", "ASC");//attention avant setEntity() potentiel bug, a tester
 		this.companieL= this.compagniePage.getEntity();
 		printListCompanie(this.companieL);
 	}

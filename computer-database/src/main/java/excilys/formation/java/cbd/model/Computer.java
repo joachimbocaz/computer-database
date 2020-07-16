@@ -185,7 +185,7 @@ public class Computer {
 	public String toString() {
 		return "[Ordinateur] : " + this.name +
 				" [ID] : " + this.id +
-				" [Companie] : " + this.manufacturer + 
+				" [Companie] : " + this.companie + 
 				" [Date in / Date out] : " + this.dateIn + "/" + this.dateOut;
 	}
 

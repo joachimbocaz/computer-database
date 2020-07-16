@@ -62,8 +62,8 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 
 	@Override
-	public Integer getNbComputersPagesSearch(String search) {
-		return computerDao.findNbSearchComputer(search);
+	public Integer getNbComputersPagesSearch(ComputerPage page, String column, String order, String search) {
+		return computerDao.findNbSearchComputer(page, column, order, search);
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class ComputerServiceImpl implements ComputerService{
 		return computerDao.splitOrder(order);
 	}
 	
-	public Integer getNbSearchPages(String search, ComputerPage page) {
-		Integer nbEntries = computerDao.findNbSearchComputer(search);
+	public Integer getNbSearchPages(ComputerPage page, String column, String order, String search) {
+		Integer nbEntries = computerDao.findNbSearchComputer(page, column, order, search);
 		Integer nbPages = nbEntries / page.getNbElementByPage();
 		return nbEntries % page.getNbElementByPage() == 0 ? nbPages:nbPages + 1;
 	}
