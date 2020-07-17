@@ -26,7 +26,7 @@ import excilys.formation.java.cbd.validator.Validator;
 /**
  * Servlet implementation class EditComputerServlet
  */
-@WebServlet(name = "EditComputerServlet", urlPatterns = "/editComputer")
+@WebServlet(name = "EditComputerServlet", urlPatterns = "/oldEditComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -97,8 +97,6 @@ public class EditComputerServlet extends HttpServlet {
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
 			computerService.updateComputer(computer);
-		}catch (SQLException e) {
-		 	e.printStackTrace();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
