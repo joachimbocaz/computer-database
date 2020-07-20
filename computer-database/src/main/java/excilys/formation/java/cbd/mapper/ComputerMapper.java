@@ -13,28 +13,30 @@ public class ComputerMapper{
 	private static final String COMPUTER_TABLE = "computer.";
 	
 	public static Computer entity(ResultSet result) throws SQLException {
-		Computer computer = new Computer();
-		computer = new Computer(result.getInt(COMPUTER_TABLE + "id"), result.getString(COMPUTER_TABLE + "name"));
-		
-		if(result.getDate(COMPUTER_TABLE + "introduced") == null) {
+		Computer computer = new Computer(result.getInt("id"), result.getString("name"));
+		if(result.getDate("introduced") == null) {
 	    	computer.setDateIn(null);
 		}
 		else {
-			computer.setDateIn(result.getDate(COMPUTER_TABLE + "introduced").toLocalDate());
+			computer.setDateIn(result.getDate("introduced").toLocalDate());
 		}
-		if(result.getDate(COMPUTER_TABLE + "discontinued") == null){
+		if(result.getDate("discontinued") == null){
 			computer.setDateOut(null);
 		}
 		else {
-			computer.setDateOut(result.getDate(COMPUTER_TABLE + "discontinued").toLocalDate());
+			computer.setDateOut(result.getDate("discontinued").toLocalDate());
 		}
-		if(result.getInt(COMPUTER_TABLE + "company_id") != 0){
-			computer.setManufacturer(result.getInt(COMPUTER_TABLE + "company_id"));
-			computer.setCompanie(new Companie(result.getInt(COMPUTER_TABLE + "company_id"), result.getString(7)));
+		if(result.getInt("company_id") != 0){
+			computer.setManufacturer(result.getInt("company_id"));
 		}
 		else {
-			computer.setManufacturer(result.getInt(COMPUTER_TABLE + "company_id"));
+			computer.setManufacturer(result.getInt("company_id"));
+		}
+		if(result.getString("Cname") == null){
 			computer.setCompanie(new Companie());
+		}
+		else {
+			computer.setCompanie(new Companie(result.getInt("company_id"), result.getString("Cname")));
 		}
 
 		return computer;

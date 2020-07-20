@@ -3,16 +3,19 @@ package excilys.formation.java.cbd.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
 import excilys.formation.java.cbd.model.Computer;
 
 public class DashBoardService {
+	@Autowired
 	private ComputerDao computerDao;
 	
 	public DashBoardService () {
-		this.computerDao = new ComputerDao();
+//		this.computerDao = new ComputerDao();
 	}
 	
 	public List<ComputerDto> listComputerToDto(){

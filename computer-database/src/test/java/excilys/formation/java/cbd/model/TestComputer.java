@@ -155,4 +155,39 @@ public class TestComputer extends TestCase {
 		Computer computer = new Computer(1, "test", 2, dateIn, dateOut);
 		assertNull(computer.getDateIn());
 	}
+	
+	@Test
+	public void testComputerWithCompanie() {
+		LocalDate dateIn = LocalDate.of(2020, 1, 8);
+		LocalDate dateOut = LocalDate.of(2020, 1, 8);
+		Companie companie = new Companie(1, "toto");
+		Computer computer = new Computer(1, "test", 2, dateIn, dateOut, companie);
+		assertEquals(companie, computer.getCompanie());
+	}
+	
+	@Test
+	public void testComputerWithCompanieInNull() {
+		LocalDate dateOut = LocalDate.of(2020, 1, 8);
+		Companie companie = new Companie(1, "toto");
+		Computer computer = new Computer(1, "test", 2, null, dateOut, companie);
+		assertNull(computer.getDateIn());
+	}
+	
+	@Test
+	public void testComputerWithCompanieOutNull() {
+		LocalDate dateIn = LocalDate.of(2020, 1, 8);
+		Companie companie = new Companie(1, "toto");
+		Computer computer = new Computer(1, "test", 2, dateIn, null, companie);
+		assertNull(computer.getDateOut());
+	}
+	
+	@Test
+	public void testComputerWithCompanieInBeforeOut() {
+		LocalDate dateIn = LocalDate.of(2013, 1, 8);
+		LocalDate dateOut = LocalDate.of(2020, 1, 8);
+		Companie companie = new Companie(1, "toto");
+		Computer computer = new Computer(1, "test", 2, dateIn, dateOut, companie);
+		assertTrue(computer.getDateIn().isBefore(computer.getDateOut()));
+	}
+	
 }
