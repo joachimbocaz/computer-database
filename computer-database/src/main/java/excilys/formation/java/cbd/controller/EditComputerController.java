@@ -29,9 +29,10 @@ public class EditComputerController {
 	private ComputerServiceImpl computerService;
 	
 	@GetMapping
-	public String initEdit(@RequestParam(required=false, name="idComputerParam") String idComputerParam,
+	public String initEdit(@RequestParam(required=false, name="idComputer") String idComputerParam,
 							Model model) {
 		
+		System.out.println(idComputerParam);
 		int idComputer = Integer.valueOf(idComputerParam);
 		Computer computer = new Computer();
 		ComputerDto computerDto;
@@ -49,11 +50,11 @@ public class EditComputerController {
 	}
 	
 	@PostMapping
-	public String editComputer(@RequestParam(required=false, name="idComputerParam") String idComputerParam,
-							   @RequestParam(required=false, name="computerNameParam") String computerNameParam,
-							   @RequestParam(required=false, name="introducedParam") String introducedParam,
-							   @RequestParam(required=false, name="discontinuedParam") String discontinuedParam,
-							   @RequestParam(required=false, name="companyIdParam") String companyIdParam) {
+	public String editComputer(@RequestParam(required=false, name="idComputer") String idComputerParam,
+							   @RequestParam(required=false, name="computerName") String computerNameParam,
+							   @RequestParam(required=false, name="introduced") String introducedParam,
+							   @RequestParam(required=false, name="discontinued") String discontinuedParam,
+							   @RequestParam(required=false, name="companyId") String companyIdParam) {
 
 		try {
 			Validator.validator(computerNameParam, introducedParam, discontinuedParam);

@@ -25,7 +25,7 @@ import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 /**
  * Servlet implementation class DashBoardServlet
  */
-@WebServlet(name = "toto", urlPatterns = "/toto")
+@WebServlet(name = "toto", urlPatterns = "/oldDashboard")
 public class DashBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LoggerFactory.getLogger(DashBoardServlet.class);

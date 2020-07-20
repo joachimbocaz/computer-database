@@ -108,7 +108,6 @@ public class ComputerDao extends Dao<Computer>{
 
 	@Override
 	public List<Computer> findAllLimite(Page<Computer> page, String column, String order) {
-		page = new ComputerPage();
 		List<Computer> allComputer = new ArrayList<Computer>();
 		SqlParameterSource parameters = new MapSqlParameterSource()
 				.addValue("offset", page.getOffSet())

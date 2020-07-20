@@ -37,8 +37,8 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 
 	@Override
-	public Computer createComputer(Computer computer) {
-		return computerDao.update(computer);
+	public Boolean createComputer(Computer computer) {
+		return computerDao.create(computer);
 	}
 
 	@Override

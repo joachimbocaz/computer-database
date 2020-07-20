@@ -90,7 +90,6 @@ public class DashBoardController {
 			nbComputer = computerService.getNbComputers();
 			nbPage = computerPage.getNbPages(nbComputer);
 		}
-		
 		model.addAttribute("orderBy", orderBy);
 		model.addAttribute("search", searchParam);
 		model.addAttribute("nbComputerDatabase", nbComputer);

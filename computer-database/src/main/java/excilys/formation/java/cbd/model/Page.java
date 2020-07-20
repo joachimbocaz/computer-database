@@ -58,4 +58,11 @@ public abstract class Page <T>{
 
 	
 	public abstract void printPage();
+
+	@Override
+	public String toString() {
+		return "Page [NB_ELEMENTS_BY_PAGE=" + NB_ELEMENTS_BY_PAGE + ", numPage=" + numPage + ", offset=" + offset + "nb entity" + entity.size() + "]";
+	}
+	
+	
 }

@@ -14,7 +14,7 @@ public interface ComputerService {
 	
 	Computer updateComputer(Computer computer);
 	
-	Computer createComputer(Computer computer);
+	Boolean createComputer(Computer computer);
 	
 	void deleteComputer(Integer id);
 	

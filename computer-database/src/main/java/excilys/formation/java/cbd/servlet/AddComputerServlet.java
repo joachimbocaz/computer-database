@@ -25,7 +25,7 @@ import excilys.formation.java.cbd.validator.Validator;
 /**
  * Servlet implementation class AddComputerServlet
  */
-@WebServlet(name = "AddComputerServlet", urlPatterns = "/addComputer")
+@WebServlet(name = "AddComputerServlet", urlPatterns = "/oldAddComputer")
 public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
