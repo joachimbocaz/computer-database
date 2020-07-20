@@ -2,6 +2,7 @@ package excilys.formation.java.cbd.dao;
 
 import java.util.List;
 
+import excilys.formation.java.cbd.model.Page;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 public abstract class Dao<T> {
@@ -17,11 +18,10 @@ public abstract class Dao<T> {
 	   
 	 public abstract List<T> findAll();
 	   
-	 public abstract List<T> findAllLimite(int limite, int offset);
+	 public abstract List<T> findAllLimite(Page<T> page, String column, String order);
 	
 	 public abstract int findNbElem();
 
 	 public abstract int maxId();
-
 
 }

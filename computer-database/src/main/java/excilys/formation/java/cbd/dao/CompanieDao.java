@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import excilys.formation.java.cbd.mapper.CompanieMapper;
 import excilys.formation.java.cbd.model.Companie;
+import excilys.formation.java.cbd.model.CompaniePage;
+import excilys.formation.java.cbd.model.Page;
 import excilys.formation.java.cbd.service.ConnectDB;
 
 @Repository
@@ -128,26 +130,8 @@ public class CompanieDao extends Dao<Companie>{
 	}
 
 	@Override
-	public List<Companie> findAllLimite(int limite, int offset) {
-		List<Companie> companyList = new ArrayList<Companie>();
-		Companie company = new Companie();
-		try {
-			ResultSet result = this.connect.getInstance().createStatement(
-			ResultSet.TYPE_SCROLL_INSENSITIVE,
-			ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * "
-												   + "FROM company "
-												   + "ORDER BY id ASC "
-												   + "LIMIT " + offset 
-												   + ", " + limite + ";");;
-			while(result.next()) {
-				company = new Companie(result.getInt("id"), result.getString("name"));
-				companyList.add(company);
-			}
-		}catch (SQLException e) {
-	    	logger.error("Error find all "+ limite +" companie");
-	    	e.printStackTrace();
-		}
-		return companyList;
+	public List<Companie> findAllLimite(Page<Companie> page, String column, String order) {
+		return null;
 	}
 
 	@Override

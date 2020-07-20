@@ -20,12 +20,13 @@ import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.service.AddComputerService;
+import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 import excilys.formation.java.cbd.validator.Validator;
 
 /**
  * Servlet implementation class EditComputerServlet
  */
-@WebServlet(name = "EditComputerServlet", urlPatterns = "/editComputer")
+@WebServlet(name = "EditComputerServlet", urlPatterns = "/oldEditComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -35,6 +36,8 @@ public class EditComputerServlet extends HttpServlet {
 	@Autowired
 	private AddComputerService addComputerService;
 	
+	@Autowired
+	private ComputerServiceImpl computerService;
     @Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -65,7 +68,7 @@ public class EditComputerServlet extends HttpServlet {
 
 
 		computerDto = new ComputerDto();
-		computer = computerDao.find(idComputer);
+		computer = computerService.getComputer(idComputer);
 		computerDto = ComputerDtoMapper.computerToDto(computer);
 		
 		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
@@ -93,9 +96,7 @@ public class EditComputerServlet extends HttpServlet {
 			Validator.validator(computerName, introduced, discontinued);
 			ComputerDto computerDto = new ComputerDto(idComputer, computerName, companyId, introduced, discontinued);
 			Computer computer = ComputerDtoMapper.dtoToComputer(computerDto);
-			computerDao.update(computer);
-		}catch (SQLException e) {
-		 	e.printStackTrace();
+			computerService.updateComputer(computer);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {

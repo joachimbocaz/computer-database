@@ -16,7 +16,12 @@ public class ComputerDtoMapper{
 		computerDto.setIntroduced(String.valueOf(computer.getDateIn()));
 		computerDto.setDiscontinued(String.valueOf(computer.getDateOut()));
 		computerDto.setIdCompanie(String.valueOf(computer.getManufacturer()));
-		//computerDto.setNameCompany(computer.getCompanie().getName());
+		if(computer.getCompanie() != null) {
+			computerDto.setNameCompany(computer.getCompanie().getName());
+		}
+		else {
+			computerDto.setNameCompany("");
+		}
 		return computerDto;
 	}
 	
