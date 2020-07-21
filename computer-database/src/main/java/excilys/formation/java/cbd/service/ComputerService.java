@@ -2,6 +2,7 @@ package excilys.formation.java.cbd.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.model.ComputerPage;
@@ -10,19 +11,19 @@ public interface ComputerService {
 
 	List<Computer> getAllComputers();
 	
-	Computer getComputer(Integer id);
+	Optional<Computer> getComputer(Long id);
 	
 	Computer updateComputer(Computer computer);
 	
-	Boolean createComputer(Computer computer);
+	Computer createComputer(Computer computer);
 	
-	void deleteComputer(Integer id);
+	void deleteComputer(Long id);
 	
 	List<Computer> getComputersByPage(ComputerPage page, String order, String ascending);
 	
 	Integer getComputersNbPages(ComputerPage page);
 	
-	Integer getNbComputers();
+	int getNbComputers();
 	
 	Integer getNbComputersPagesSearch(ComputerPage page, String column, String order, String search);
 	

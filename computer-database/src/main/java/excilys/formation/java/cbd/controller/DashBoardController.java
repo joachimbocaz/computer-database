@@ -83,8 +83,8 @@ public class DashBoardController {
 			nbPage = computerPage.getNbPages(nbComputer);
 		}
 		else {
-			computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));
-			for(Computer computer:computerPage.getEntity()) {
+			//computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));
+			for(Computer computer:computerService.getAllComputers()) {//computerPage.getEntity()) {
 				computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 			}
 			nbComputer = computerService.getNbComputers();
@@ -106,7 +106,7 @@ public class DashBoardController {
 			String[] computerIds = selection.split(",");
 			for(String c: computerIds) {
 				try {
-					computerService.deleteComputer(Integer.valueOf(c));
+					computerService.deleteComputer(Long.valueOf(c));
 				} catch (IllegalArgumentException e) {
 					logger.error("Illegal arguments");
 					logger.error("computer update not allowed",e);

@@ -3,6 +3,7 @@ package excilys.formation.java.cbd.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -61,15 +62,15 @@ public class EditComputerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idComputer = Integer.valueOf(request.getParameter("idComputer"));
-		Computer computer = new Computer();
+		Optional<Computer> computer;
 		
 		ComputerDto computerDto;
 		
 
 
 		computerDto = new ComputerDto();
-		computer = computerService.getComputer(idComputer);
-		computerDto = ComputerDtoMapper.computerToDto(computer);
+		computer = computerService.getComputer(Long.valueOf(idComputer));
+		computerDto = ComputerDtoMapper.computerToDto(computer.get());
 		
 		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
 		

@@ -38,7 +38,7 @@ public class EditComputerController {
 		ComputerDto computerDto;
 		
 		computerDto = new ComputerDto();
-		computer = computerService.getComputer(idComputer);
+		computer = computerService.getComputer(Long.valueOf(idComputer)).get();
 		computerDto = ComputerDtoMapper.computerToDto(computer);
 		
 		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();

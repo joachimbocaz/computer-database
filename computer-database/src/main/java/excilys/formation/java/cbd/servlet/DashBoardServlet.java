@@ -124,7 +124,7 @@ public class DashBoardServlet extends HttpServlet {
 			String[] computerIds = request.getParameter("selection").split(",");
 			for(String c: computerIds) {
 				try {
-					computerService.deleteComputer(Integer.valueOf(c));
+					computerService.deleteComputer(Long.valueOf(c));
 				} catch (IllegalArgumentException e) {
 					logger.error("Illegal arguments");
 					logger.error("computer update not allowed",e);

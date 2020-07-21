@@ -6,19 +6,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
-import excilys.formation.java.cbd.dao.CompanieDao;
-import excilys.formation.java.cbd.dao.ComputerDao;
+import excilys.formation.java.cbd.configuration.SpringConfigurationContext;
 import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.CompaniePage;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.model.ComputerPage;
 import excilys.formation.java.cbd.model.Page;
 import excilys.formation.java.cbd.service.ConnectDB;
+import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 
+@Component
 public class CommandLine {
+	@Autowired
+	ComputerServiceImpl computerService;
+	
 	private String commandIn;
 	private String[] optionList;
 	private enum Command{
@@ -34,9 +43,6 @@ public class CommandLine {
 		Default;	
 	}
 	private Command command;
-	private CompanieDao companieDao;
-	@Autowired
-	private ComputerDao computerDao;
 	private Page<Computer> computerPage;
 	private Page<Companie> compagniePage;
 	private List<Companie> companieL =  new LinkedList<Companie>();
@@ -45,18 +51,17 @@ public class CommandLine {
 	
 	
 	public CommandLine(ConnectDB con) throws SQLException {
-		this.companieDao = new CompanieDao();
 //		this.computerDao = new ComputerDao();
 		this.computerPage = new ComputerPage();
 		this.compagniePage = new CompaniePage();
 	}
 	
-	public void setCompanieL() {
-		this.companieL = this.companieDao.findAll();
-	}
+//	public void setCompanieL() {
+//		this.companieL = this.computerService.findAll();
+//	}
 	
 	public void setComputerL() {
-		this.computerL = this.computerDao.findAll();
+		this.computerL = computerService.getAllComputers();
 	}
 	
 	public String getCommandIn() {
@@ -234,7 +239,7 @@ public class CommandLine {
 	}
 	
 	public void listComputer() {
-		this.computerL = this.computerDao.findAll();
+		this.computerL = computerService.getAllComputers();
 		printListComputer(this.computerL);
 	}
 	
@@ -254,24 +259,26 @@ public class CommandLine {
 		printListCompanie(this.companieL);
 	}
 	
-	public void listCompanies() {
-		this.companieL = this.companieDao.findAll();
-		printListCompanie(this.companieL);
-	}
+//	public void listCompanies() {
+//		this.companieL = this.companieDao.findAll();
+//		printListCompanie(this.companieL);
+//	}
 	
 	public void detailComputer() {
 		int idComputer = Integer.parseInt(this.optionList[1]);
-		System.out.println(this.computerDao.find(idComputer));
+		System.out.println(Long.valueOf(idComputer));
+		Optional<Computer> computer = computerService.getComputer(Long.valueOf(idComputer));
+		System.out.println(computer.get());
 	}
 	
 	public void createComputer() {
 		System.out.println("creation de l'ordinateur");
-		this.computerDao.create(createComputerCli());
+		computerService.createComputer(createComputerCli());
 	}
 	
 	public void updateComputer() {
 		Computer computerUpdate = createComputerCli();
-		this.computerDao.update(computerUpdate);
+		computerService.updateComputer(computerUpdate);
 	}
 	
 	public void deleteComputer() {
@@ -279,15 +286,36 @@ public class CommandLine {
 		for(Computer elem:computerL) {
 			if(elem.getId() == idComputer) {
 				System.out.println("supression de l'ordinateur");
-				this.computerDao.delete(elem.getId());
+				computerService.deleteComputer(Long.valueOf(elem.getId()));
 				return;
 			}
 		}
 		System.out.println("Ordinateur absent de la BDD");
 	}
 	
-	public void deleteCompany() {
-		int idCompany = Integer.parseInt(this.optionList[1]);
-		this.companieDao.delete(idCompany);
+//	public void deleteCompany() {
+//		int idCompany = Integer.parseInt(this.optionList[1]);
+//		this.companieDao.delete(idCompany);
+//	}
+	
+	public static void main(String[] args) throws SQLException {
+		ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigurationContext.class);
+		CommandLine command = context.getBean(CommandLine.class);
+		
+		Scanner sc = new Scanner(System.in);
+		command.home();
+
+		while(true) {
+			System.out.println("Entrez une option : ");
+			command.setCommandIn(sc.nextLine());
+			command.setOptionList();
+			if(command.getCommandIn().equals("q")) {
+				break;
+			}
+			command.executeCommande();
+		}
+		
+		System.out.println("Fin du programme");
+		sc.close();
 	}
 }

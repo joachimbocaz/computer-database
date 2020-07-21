@@ -2,11 +2,33 @@ package excilys.formation.java.cbd.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "computer")
 public class Computer {
-	private int id, idCompany;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private int id;
+	private int idCompany;
+	@Column(name = "name")
 	private String name;
 	private Integer manufacturer = null;
-	private LocalDate dateIn, dateOut;
+	@Column(name = "introduced")
+	private LocalDate introduced;
+	@Column(name = "discontinued")
+	private LocalDate discontinued;
+	
+	@ManyToOne
+	@JoinColumn(name = "company_id")
 	private Companie companie;
 	
 	public Computer() {}
@@ -26,7 +48,7 @@ public class Computer {
 		this.id = id;
 		this.name = name;
 		this.manufacturer = manufacturer;
-		this.dateIn = dateIn;
+		this.introduced = dateIn;
 	}
 	
 	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
@@ -35,21 +57,21 @@ public class Computer {
 		this.manufacturer = manufacturer;
 		
 		if(dateIn == null) {
-			this.dateIn = null;
-			this.dateOut = dateOut;
+			this.introduced = null;
+			this.discontinued = dateOut;
 		}
 		else if(dateOut == null) {
-			this.dateIn = dateIn;
-			this.dateOut = null;
+			this.introduced = dateIn;
+			this.discontinued = null;
 		}
 		else {
 			if(dateIn.isBefore(dateOut)) {
-				this.dateIn = dateIn;
-				this.dateOut = dateOut;
+				this.introduced = dateIn;
+				this.discontinued = dateOut;
 			}
 			else {
-				this.dateIn = null;
-				this.dateOut = dateOut;
+				this.introduced = null;
+				this.discontinued = dateOut;
 			}
 		}
 	}
@@ -60,21 +82,21 @@ public class Computer {
 		this.manufacturer = manufacturer;
 		
 		if(dateIn == null) {
-			this.dateIn = null;
-			this.dateOut = dateOut;
+			this.introduced = null;
+			this.discontinued = dateOut;
 		}
 		else if(dateOut == null) {
-			this.dateIn = dateIn;
-			this.dateOut = null;
+			this.introduced = dateIn;
+			this.discontinued = null;
 		}
 		else {
 			if(dateIn.isBefore(dateOut)) {
-				this.dateIn = dateIn;
-				this.dateOut = dateOut;
+				this.introduced = dateIn;
+				this.discontinued = dateOut;
 			}
 			else {
-				this.dateIn = null;
-				this.dateOut = dateOut;
+				this.introduced = null;
+				this.discontinued = dateOut;
 			}
 		}
 		
@@ -98,34 +120,34 @@ public class Computer {
 	}
 	
 	public LocalDate getDateIn() {
-		return dateIn;
+		return introduced;
 	}
 
 	public void setDateIn(LocalDate dateIn) {
 		if(dateIn == null) {
-			this.dateIn = null;
+			this.introduced = null;
 		}
-		else if(this.dateOut == null) {
-			this.dateIn = dateIn;
+		else if(this.discontinued == null) {
+			this.introduced = dateIn;
 		}
-		else if(dateIn.isBefore(this.dateOut)) {
-			this.dateIn = dateIn;
+		else if(dateIn.isBefore(this.discontinued)) {
+			this.introduced = dateIn;
 		}
 	}
 
 	public LocalDate getDateOut() {
-		return dateOut;
+		return discontinued;
 	}
 
 	public void setDateOut(LocalDate dateOut) {
 		if(dateOut == null) {
-			this.dateOut = null;
+			this.discontinued = null;
 		}
-		else if(this.dateIn == null) {
-			this.dateOut = dateOut;
+		else if(this.introduced == null) {
+			this.discontinued = dateOut;
 		}
-		else if(dateOut.isAfter(this.dateIn)) {
-			this.dateOut = dateOut;
+		else if(dateOut.isAfter(this.introduced)) {
+			this.discontinued = dateOut;
 		}
 	}
 	
@@ -154,15 +176,15 @@ public class Computer {
 		if (getClass() != obj.getClass())
 			return false;
 		Computer other = (Computer) obj;
-		if (dateIn == null) {
-			if (other.dateIn != null)
+		if (introduced == null) {
+			if (other.introduced != null)
 				return false;
-		} else if (!dateIn.equals(other.dateIn))
+		} else if (!introduced.equals(other.introduced))
 			return false;
-		if (dateOut == null) {
-			if (other.dateOut != null)
+		if (discontinued == null) {
+			if (other.discontinued != null)
 				return false;
-		} else if (!dateOut.equals(other.dateOut))
+		} else if (!discontinued.equals(other.discontinued))
 			return false;
 		if (id != other.id)
 			return false;
@@ -186,8 +208,7 @@ public class Computer {
 		return "[Ordinateur] : " + this.name +
 				" [ID] : " + this.id +
 				" [Companie] : " + this.companie + 
-				" [Date in / Date out] : " + this.dateIn + "/" + this.dateOut;
+				" [Date in / Date out] : " + this.introduced + "/" + this.discontinued;
 	}
-
 
 }

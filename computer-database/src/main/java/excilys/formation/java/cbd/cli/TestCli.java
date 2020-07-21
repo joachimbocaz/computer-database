@@ -4,16 +4,20 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
-import excilys.formation.java.cbd.service.ConnectDB;
+import excilys.formation.java.cbd.configuration.SpringConfigurationContext;
 
+@Component
 public class TestCli {
-	@Autowired
-	private static ConnectDB connect;
 	
 	public static void main(String[] args) throws SQLException {
+		ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigurationContext.class);
+		CommandLine command = context.getBean(CommandLine.class);
+		
 		Scanner sc = new Scanner(System.in);
-		CommandLine command = new CommandLine(connect);
 		command.home();
 
 		while(true) {
