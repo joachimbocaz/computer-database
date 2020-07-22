@@ -8,30 +8,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.web.context.AbstractContextLoaderInitializer;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(basePackages="excilys.formation.java.cbd")
-public class SpringConfigurationContext extends AbstractContextLoaderInitializer{
+@EnableJpaRepositories(basePackages = "excilys.formation.java.cbd.dao")
+public class SpringConfigurationContext {
 
-	@Override
-	protected WebApplicationContext createRootApplicationContext() {
-		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(SpringConfigurationContext.class);
-		return rootContext;
-	}
-	
 	@Bean
 	public DataSource hikariDataSource() {
 		return new HikariDataSource(new HikariConfig("/datasource.properties"));
@@ -70,7 +64,7 @@ public class SpringConfigurationContext extends AbstractContextLoaderInitializer
 	    Properties properties = new Properties();
 //	    properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 	    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		properties.setProperty("hibernate.show_sql", "false");
+//		properties.setProperty("hibernate.show_sql", "false");
 	       
 	    return properties;
 	}

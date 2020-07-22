@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
+import excilys.formation.java.cbd.service.ComputerService;
 
 public class ComputerPage extends Page<Computer>{
 	
 	@Autowired
-	ComputerServiceImpl computerService;
+	ComputerService computerService;
 	
 	public ComputerPage() {
 	}

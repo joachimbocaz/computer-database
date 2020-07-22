@@ -18,10 +18,8 @@ public class Computer {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int id;
-	private int idCompany;
 	@Column(name = "name")
 	private String name;
-	private Integer manufacturer = null;
 	@Column(name = "introduced")
 	private LocalDate introduced;
 	@Column(name = "discontinued")
@@ -38,23 +36,15 @@ public class Computer {
 		this.name = name;
 	}
 	
-	public Computer(int id, String name, Integer manufacturer) {
+	public Computer(int id, String name, LocalDate dateIn) {
 		this.id = id;
 		this.name = name;
-		this.manufacturer = manufacturer;
-	}
-	
-	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn) {
-		this.id = id;
-		this.name = name;
-		this.manufacturer = manufacturer;
 		this.introduced = dateIn;
 	}
 	
-	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut) {
+	public Computer(int id, String name, LocalDate dateIn, LocalDate dateOut) {
 		this.id = id;
 		this.name = name;
-		this.manufacturer = manufacturer;
 		
 		if(dateIn == null) {
 			this.introduced = null;
@@ -76,10 +66,9 @@ public class Computer {
 		}
 	}
 		
-	public Computer(int id, String name, Integer manufacturer, LocalDate dateIn, LocalDate dateOut, Companie companie) {
+	public Computer(int id, String name, LocalDate dateIn, LocalDate dateOut, Companie companie) {
 		this.id = id;
 		this.name = name;
-		this.manufacturer = manufacturer;
 		
 		if(dateIn == null) {
 			this.introduced = null;
@@ -110,15 +99,7 @@ public class Computer {
 	public String getName() {
 		return name;
 	}
-	
-	public Integer getManufacturer() {
-		return manufacturer;
-	}
-
-	public void setManufacturer(Integer manufacturer) {
-		this.manufacturer = manufacturer;
-	}
-	
+		
 	public LocalDate getDateIn() {
 		return introduced;
 	}
@@ -151,14 +132,6 @@ public class Computer {
 		}
 	}
 	
-	public int getIdCompany() {
-		return idCompany;
-	}
-
-	public void setIdCompany(int idCompany) {
-		this.idCompany = idCompany;
-	}
-
 	public Companie getCompanie() {
 		return companie;
 	}
@@ -187,13 +160,6 @@ public class Computer {
 		} else if (!discontinued.equals(other.discontinued))
 			return false;
 		if (id != other.id)
-			return false;
-		if (idCompany != other.idCompany)
-			return false;
-		if (manufacturer == null) {
-			if (other.manufacturer != null)
-				return false;
-		} else if (!manufacturer.equals(other.manufacturer))
 			return false;
 		if (name == null) {
 			if (other.name != null)

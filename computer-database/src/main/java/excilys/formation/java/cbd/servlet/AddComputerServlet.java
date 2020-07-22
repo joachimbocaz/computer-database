@@ -3,6 +3,7 @@ package excilys.formation.java.cbd.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.CompanieDto;
 import excilys.formation.java.cbd.dto.ComputerDto;
+import excilys.formation.java.cbd.mapper.CompanieDtoMapper;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
+import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.Computer;
-import excilys.formation.java.cbd.service.AddComputerService;
+import excilys.formation.java.cbd.service.implemented.CompanieServiceImpl;
 import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 import excilys.formation.java.cbd.validator.Validator;
 
@@ -31,13 +33,10 @@ public class AddComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	private AddComputerService addComputerService;
-	
-	@Autowired
-	private ComputerDao computerDao;
-	
-	@Autowired
 	private ComputerServiceImpl computerService;
+	
+	@Autowired
+	private CompanieServiceImpl companieService;
 	
     @Override
 	public void init(ServletConfig config) throws ServletException {
@@ -56,7 +55,9 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
+		List<CompanieDto> companieDtoCollection;
+		List<Companie> listCompanie = companieService.getAllCompanie();
+		companieDtoCollection = listCompanie.stream().map(companie -> CompanieDtoMapper.companieToDto(companie)).collect(Collectors.toList());
 
 		request.setAttribute("companieDtoCollection", companieDtoCollection);
 		request.getRequestDispatcher("/WEB-INF/addComputer.jsp").forward(request, response);   

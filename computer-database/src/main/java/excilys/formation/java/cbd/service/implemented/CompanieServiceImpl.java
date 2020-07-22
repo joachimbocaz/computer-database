@@ -5,16 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import excilys.formation.java.cbd.dao.CompanieDao;
 import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.CompaniePage;
 import excilys.formation.java.cbd.service.CompanieService;
 
+@Service
 public class CompanieServiceImpl implements CompanieService {
 
-	@Autowired
 	private CompanieDao companieDao;
+	
+	@Autowired
+	public CompanieServiceImpl(CompanieDao companieDao) {
+		this.companieDao = companieDao;
+	}
 	
 	@Override
 	public List<Companie> getAllCompanie() {

@@ -1,9 +1,9 @@
 package excilys.formation.java.cbd.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import excilys.formation.java.cbd.dao.ComputerDao;
 import excilys.formation.java.cbd.dto.CompanieDto;
 import excilys.formation.java.cbd.dto.ComputerDto;
+import excilys.formation.java.cbd.mapper.CompanieDtoMapper;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
+import excilys.formation.java.cbd.model.Companie;
 import excilys.formation.java.cbd.model.Computer;
-import excilys.formation.java.cbd.service.AddComputerService;
+import excilys.formation.java.cbd.service.implemented.CompanieServiceImpl;
 import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
 import excilys.formation.java.cbd.validator.Validator;
 
@@ -30,15 +31,13 @@ import excilys.formation.java.cbd.validator.Validator;
 @WebServlet(name = "EditComputerServlet", urlPatterns = "/oldEditComputer")
 public class EditComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	@Autowired
-	private ComputerDao computerDao;
 	
 	@Autowired
-	private AddComputerService addComputerService;
+	private CompanieServiceImpl companieService;
 	
 	@Autowired
 	private ComputerServiceImpl computerService;
+	
     @Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -72,8 +71,10 @@ public class EditComputerServlet extends HttpServlet {
 		computer = computerService.getComputer(Long.valueOf(idComputer));
 		computerDto = ComputerDtoMapper.computerToDto(computer.get());
 		
-		List<CompanieDto> companieDtoCollection = addComputerService.listCompanieToDto();
-		
+		List<CompanieDto> companieDtoCollection;
+		List<Companie> listCompanie = companieService.getAllCompanie();
+		companieDtoCollection = listCompanie.stream().map(companie -> CompanieDtoMapper.companieToDto(companie)).collect(Collectors.toList());
+				
 		request.setAttribute("companieDtoCollection", companieDtoCollection);
 		request.setAttribute("computer", computerDto);
 		request.setAttribute("idComputer", idComputer);

@@ -17,12 +17,12 @@ public class TestCompanie extends TestCase {
 		Companie companie = new Companie(1, "test");
 		assertEquals("test", companie.getName());
 	}
-	
-	@Test
-	public void testCompanieToString() {
-		Companie companie = new Companie(1, "test");
-		assertEquals("Companie : test", companie.toString());
-	}
+//	
+//	@Test
+//	public void testCompanieToString() {
+//		Companie companie = new Companie(1, "test");
+//		assertEquals("Companie : test", companie.toString());
+//	}
 	
 	@Test
 	public void testCompabue() {

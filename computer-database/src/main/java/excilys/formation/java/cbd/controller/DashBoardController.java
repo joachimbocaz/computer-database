@@ -17,7 +17,7 @@ import excilys.formation.java.cbd.dto.ComputerDto;
 import excilys.formation.java.cbd.mapper.ComputerDtoMapper;
 import excilys.formation.java.cbd.model.Computer;
 import excilys.formation.java.cbd.model.ComputerPage;
-import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
+import excilys.formation.java.cbd.service.ComputerService;
 
 @Controller
 @RequestMapping({ "/","/dashboard"})
@@ -28,7 +28,7 @@ public class DashBoardController {
 
 	
 	@Autowired
-	ComputerServiceImpl computerService;
+	private ComputerService computerService;
 	
     @GetMapping
     public String showDashboard(@RequestParam(required=false, name="orderBy") String orderBy, 

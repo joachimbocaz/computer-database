@@ -26,12 +26,6 @@ public class ComputerMapper{
 		else {
 			computer.setDateOut(result.getDate("discontinued").toLocalDate());
 		}
-		if(result.getInt("company_id") != 0){
-			computer.setManufacturer(result.getInt("company_id"));
-		}
-		else {
-			computer.setManufacturer(result.getInt("company_id"));
-		}
 		if(result.getString("Cname") == null){
 			computer.setCompanie(new Companie());
 		}
