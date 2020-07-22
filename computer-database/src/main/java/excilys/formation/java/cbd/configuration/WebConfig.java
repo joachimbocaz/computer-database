@@ -1,48 +1,24 @@
 package excilys.formation.java.cbd.configuration;
 
-import java.util.Locale;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
-@EnableWebMvc
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
- 
-   @Override
-   public void addViewControllers(ViewControllerRegistry registry) {
-      registry.addViewController("/").setViewName("index");
-   }
- 
-   @Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-      registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+public class WebConfig implements WebApplicationInitializer {
+
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+		webContext.register(MvcConfig.class, WebConfig.class, SpringConfigurationContext.class);
+
+		webContext.setServletContext(servletContext);
+		
+		ServletRegistration.Dynamic servlet=servletContext.addServlet("dynamicServlet",new DispatcherServlet(webContext));
+        servlet.setLoadOnStartup(1);
+        servlet.addMapping("/");
 	}
-   
-   
-	@Bean
-	public LocaleResolver localeResolver() {
-	    SessionLocaleResolver slr = new SessionLocaleResolver();
-	    slr.setDefaultLocale(Locale.ENGLISH);
-	    return slr;
-	}
-	 
-   @Bean
-   public ViewResolver viewResolver() {
-      InternalResourceViewResolver bean = new InternalResourceViewResolver();
-      bean.setViewClass(JstlView.class);
-      bean.setPrefix("/WEB-INF/");
-      bean.setSuffix(".jsp");
- 
-      return bean;
-   }
 }
