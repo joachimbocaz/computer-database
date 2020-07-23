@@ -45,14 +45,13 @@ public class DashBoardController {
 		computerPage.setNbElementByPage(10);
 		computerPage.setNumPage(1);
 		computerPage.setOffset();
-		
 		if(orderBy != null && !orderBy.equals("")) {
-			ArrayList<String> styleOrder = computerService.splitOrder(orderBy);
+			ArrayList<String> styleOrder = (ArrayList<String>) computerService.splitOrder(orderBy);
 			column = styleOrder.get(0);
 			order = styleOrder.get(1);
 		}
 		else {
-			column = "computer.id";
+			column = "id";
 			order = "ASC";
 		}
 		
@@ -83,8 +82,8 @@ public class DashBoardController {
 			nbPage = computerPage.getNbPages(nbComputer);
 		}
 		else {
-			//computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));
-			for(Computer computer:computerService.getAllComputers()) {//computerPage.getEntity()) {
+			computerPage.setEntity(computerService.getComputersByPage(computerPage, column, order));
+			for(Computer computer:computerPage.getEntity()) {//computerPage.getEntity()) {
 				computerDtoCollection.add(ComputerDtoMapper.computerToDto(computer));
 			}
 			nbComputer = computerService.getNbComputers();
@@ -106,7 +105,7 @@ public class DashBoardController {
 			String[] computerIds = selection.split(",");
 			for(String c: computerIds) {
 				try {
-					computerService.deleteComputer(Long.valueOf(c));
+					computerService.deleteComputer(Integer.valueOf(c));
 				} catch (IllegalArgumentException e) {
 					logger.error("Illegal arguments");
 					logger.error("computer update not allowed",e);

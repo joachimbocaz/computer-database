@@ -1,10 +1,11 @@
 package excilys.formation.java.cbd.service.implemented;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import excilys.formation.java.cbd.dao.ComputerDao;
@@ -29,8 +30,7 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 
 	@Override
-	public Optional<Computer> getComputer(Long id) {
-		System.out.println("tototototototo");
+	public Optional<Computer> getComputer(int id) {
 		return computerDao.findById(id);
 	}
 
@@ -45,20 +45,23 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 
 	@Override
-	public void deleteComputer(Long id) {
+	public void deleteComputer(int id) {
 		computerDao.deleteById(id);
 	}
 
 	@Override
 	public List<Computer> getComputersByPage(ComputerPage page, String column, String order) {
 //		return computerDao.findAllLimite(page, column, order);
-		return null;
+		//return computerDao.findAll();
+		if("ASC".equals(order)) {
+			return computerDao.findAll(PageRequest.of(page.getNumPage() - 1, page.getNbElementByPage(), Sort.by(column).ascending())).getContent();
+		}
+		return computerDao.findAll(PageRequest.of(page.getNumPage() - 1, page.getNbElementByPage(), Sort.by(column).descending())).getContent();
 	}
 
 	@Override
 	public Integer getComputersNbPages(ComputerPage page) {
-//		return page.getNbPages(computerDao.findNbElem());
-		return null;
+		return page.getNbPages((int) computerDao.count());
 	}
 
 	@Override
@@ -69,19 +72,22 @@ public class ComputerServiceImpl implements ComputerService{
 	@Override
 	public Integer getNbComputersPagesSearch(ComputerPage page, String column, String order, String search) {
 //		return computerDao.findNbSearchComputer(page, column, order, search);
-		return null;
+		return 5;
 	}
 
 	@Override
 	public List<Computer> getComputersByPagesSearch(String search, ComputerPage page, String column, String order) {
-//		return computerDao.searchComputer(search, page, column, order);
-		return null;
+//		return computerDao.findByNameContaining(search, );
+		if("ASC".equals(order)) {
+			return computerDao.findByNameContaining(search, PageRequest.of(page.getOffSet(), page.getNbElementByPage() , Sort.by(column).ascending()));
+		}
+		
+		return computerDao.findByNameContaining(search, PageRequest.of(page.getOffSet(), page.getNbElementByPage(), Sort.by(column).descending()));
 	}
 
 	@Override
-	public ArrayList<String> splitOrder(String order) {
-//		return computerDao.splitOrder(order);
-		return null;
+	public List<String> splitOrder(String order) {
+		return computerDao.splitOrder(order);
 	}
 	
 	public Integer getNbSearchPages(ComputerPage page, String column, String order, String search) {

@@ -36,12 +36,12 @@ public class EditComputerController {
 							Model model) {
 		
 		System.out.println(idComputerParam);
-		int idComputer = Integer.valueOf(idComputerParam);
+		Integer idComputer = Integer.valueOf(idComputerParam);
 		Computer computer = new Computer();
 		ComputerDto computerDto;
 		
 		computerDto = new ComputerDto();
-		computer = computerService.getComputer(Long.valueOf(idComputer)).get();
+		computer = computerService.getComputer(idComputer).get();
 		computerDto = ComputerDtoMapper.computerToDto(computer);
 		
 		List<CompanieDto> companieDtoCollection;

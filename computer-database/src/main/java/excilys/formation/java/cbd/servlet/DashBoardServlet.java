@@ -62,7 +62,7 @@ public class DashBoardServlet extends HttpServlet {
 		computerPage.setOffset();
 		
 		if(request.getParameter("orderBy") != null && !request.getParameter("orderBy").equals("")) {
-			ArrayList<String> styleOrder = computerService.splitOrder(request.getParameter("orderBy"));
+			ArrayList<String> styleOrder = (ArrayList<String>) computerService.splitOrder(request.getParameter("orderBy"));
 			column = styleOrder.get(0);
 			order = styleOrder.get(1);
 		}

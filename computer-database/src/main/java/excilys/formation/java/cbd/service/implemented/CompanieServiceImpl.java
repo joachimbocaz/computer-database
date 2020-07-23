@@ -13,14 +13,10 @@ import excilys.formation.java.cbd.model.CompaniePage;
 import excilys.formation.java.cbd.service.CompanieService;
 
 @Service
-public class CompanieServiceImpl implements CompanieService {
+public class CompanieServiceImpl implements CompanieService  {
 
-	private CompanieDao companieDao;
-	
 	@Autowired
-	public CompanieServiceImpl(CompanieDao companieDao) {
-		this.companieDao = companieDao;
-	}
+	private CompanieDao companieDao;
 	
 	@Override
 	public List<Companie> getAllCompanie() {
