@@ -1,4 +1,4 @@
-package excilys.formation.java.cbd.cli;
+package com.excilys.formation.java.cdb.cli;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -14,14 +14,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
-import excilys.formation.java.cbd.configuration.SpringConfigurationContext;
-import excilys.formation.java.cbd.model.Companie;
-import excilys.formation.java.cbd.model.CompaniePage;
-import excilys.formation.java.cbd.model.Computer;
-import excilys.formation.java.cbd.model.ComputerPage;
-import excilys.formation.java.cbd.model.Page;
-import excilys.formation.java.cbd.service.ConnectDB;
-import excilys.formation.java.cbd.service.implemented.ComputerServiceImpl;
+import com.excilys.formation.java.cdb.configuration.SpringConfigurationContext;
+import com.excilys.formation.java.cdb.model.Companie;
+import com.excilys.formation.java.cdb.model.CompaniePage;
+import com.excilys.formation.java.cdb.model.Computer;
+import com.excilys.formation.java.cdb.model.ComputerPage;
+import com.excilys.formation.java.cdb.model.Page;
+import com.excilys.formation.java.cdb.service.ConnectDB;
+import com.excilys.formation.java.cdb.service.implemented.ComputerServiceImpl;
 
 //@Component
 public class CommandLine {
