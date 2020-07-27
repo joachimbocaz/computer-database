@@ -111,14 +111,14 @@
             <ul class="pagination">
                 <li>
                 	<c:if test="${page.getNumPage() > 1}">
-                    	<a href="/computer-database/dashboard?page=${page.getNumPage() - 1}&search=${ search }nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
+                    	<a href="/webapp/dashboard?page=${page.getNumPage() - 1}&search=${ search }nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
                       		<span aria-hidden="true">&laquo;</span>
                   		</a>
                 	</c:if>
               	</li>
               	<c:forEach var="i" begin="1" end="2">
               		<c:if test="${page.getNumPage() - (3 - i) >= 1}">
-              			<li><a href="/computer-database/dashboard?page=${page.getNumPage() - (3 - i)}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() - (3 - i)}"/></a></li>
+              			<li><a href="/webapp/dashboard?page=${page.getNumPage() - (3 - i)}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() - (3 - i)}"/></a></li>
               		</c:if>
               	</c:forEach>
               	<c:forEach var="i" begin="0" end="2">
@@ -127,12 +127,12 @@
                         <c:if test = "${page.getNumPage() + i ==  page.getNumPage()}">
                           <c:set var="active" value="active"/>
                          </c:if>
-              			<li class="${active}"><a href="/computer-database/dashboard?page=${page.getNumPage() + i}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() + i}"/></a></li>
+              			<li class="${active}"><a href="/webapp/dashboard?page=${page.getNumPage() + i}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }"><c:out value="${page.getNumPage() + i}"/></a></li>
               		</c:if>
               	</c:forEach>
               	<li>
               		<c:if test="${page.getNumPage() < nbPagesMax}">
-                		<a href="/computer-database/dashboard?page=${page.getNumPage() + 1}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Next">
+                		<a href="/webapp/dashboard?page=${page.getNumPage() + 1}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Next">
                     		<span aria-hidden="true">&raquo;</span>
                 		</a>
                 	</c:if>
@@ -143,17 +143,17 @@
 	            <c:if test = "${page.getNbElementByPage() == 10}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">10</button></a>
+	            <a href="/webapp/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">10</button></a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 50}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">50</button></a>
+	            <a href="/webapp/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">50</button></a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 100}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/computer-database/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">100</button></a>
+	            <a href="/webapp/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">100</button></a>
         	</div>
 		</div>
     	</footer>
