@@ -14,6 +14,8 @@ public interface ComputerDao extends JpaRepository<Computer, Integer>{
 
 	List<Computer> findByNameContaining(String search, Pageable pageable);
 	
+	Integer countByNameContaining(String search);
+	
 	public default List<String> splitOrder(String order) {
 		String column = order.substring(0, 2);
 		String orderColumn = order.substring(2, 5);
@@ -40,5 +42,7 @@ public interface ComputerDao extends JpaRepository<Computer, Integer>{
 		
 		return styleOrder;
 	}
+
+	
 	
 }

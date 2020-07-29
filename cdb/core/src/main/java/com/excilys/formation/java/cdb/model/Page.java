@@ -34,8 +34,8 @@ public abstract class Page <T>{
 	
 	public Integer getNbPages(int nbElem) {
 		Integer nbEntries = nbElem;
-		Integer nbPages = nbEntries/NB_ELEMENTS_BY_PAGE;
-		return nbEntries % NB_ELEMENTS_BY_PAGE == 0?nbPages:nbPages+1;
+		Integer nbPages = nbEntries / NB_ELEMENTS_BY_PAGE;
+		return nbEntries % NB_ELEMENTS_BY_PAGE == 0 ? nbPages : nbPages + 1;
 	}
 	
 	public List<T> getEntity(){

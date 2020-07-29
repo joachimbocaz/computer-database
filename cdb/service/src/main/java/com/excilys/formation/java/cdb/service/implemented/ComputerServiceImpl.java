@@ -71,8 +71,7 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public Integer getNbComputersPagesSearch(ComputerPage page, String column, String order, String search) {
-//		return computerDao.findNbSearchComputer(page, column, order, search);
-		return 5;
+		return computerDao.countByNameContaining(search);
 	}
 
 	@Override

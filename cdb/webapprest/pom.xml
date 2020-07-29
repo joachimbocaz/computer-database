@@ -7,10 +7,10 @@
     <version>${cdb.project.version}</version>
   </parent>
 
-  <artifactId>webapp</artifactId>
+  <artifactId>webapprest</artifactId>
   <packaging>war</packaging>
 
-  <name>webapp Maven Webapp</name>
+  <name>webapprest Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -21,22 +21,30 @@
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>com.excilys.formation.java.cdb</groupId>
       <artifactId>service</artifactId>
       <version>${cdb.project.version}</version>
     </dependency>
 
-	    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-core</artifactId>
 	    <version>5.3.3.RELEASE</version>
 	</dependency>
-
+	
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.11.1</version>
+	</dependency>
+	
   </dependencies>
 
   <build>
-    <finalName>webapp</finalName>
+    <finalName>webapprest</finalName>
   </build>
 </project>
