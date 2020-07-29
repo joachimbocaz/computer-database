@@ -1,18 +1,18 @@
 # ignore build
-computer-database/target/
+cdb/target/
 
 # ignore .project
-computer-database/.project
+cdb/.project
 
 # ignore settings
-computer-database/.settings/
+cdb/.settings/
 
 #ignore classpath
-computer-database/.classpath
+cdb/.classpath
 
 #ignore jdbc properties
-computer-database/src/main/resources/jdbc.properties
-computer-database/src/test/resources/jdbc.properties
+cdb/src/main/resources/jdbc.properties
+cdb/src/test/resources/jdbc.properties
 
 #ignore metadata
 .metadata/
