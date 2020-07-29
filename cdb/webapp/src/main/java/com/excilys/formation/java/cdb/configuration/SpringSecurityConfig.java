@@ -18,7 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 //	@Qualifier("customUserDetailsService")
@@ -30,7 +29,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 	    
 		http.authorizeRequests().antMatchers("/login").permitAll()
-		.antMatchers(HttpMethod.GET,"/","/dashboard").hasAnyRole("user","ADMIN")
+		.antMatchers(HttpMethod.GET,"/","/dashboard").hasAnyRole("USER","ADMIN")
 		.antMatchers(HttpMethod.POST,"/","/dashboard").hasRole("ADMIN")
 		.antMatchers("/addComputer").hasRole("ADMIN")
 		.antMatchers("/editComputer").hasRole("ADMIN")
@@ -38,11 +37,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.formLogin()
 		.and()
 		.logout();
-		
-//		http.authorizeRequests().antMatchers("/login", "/resources/**").permitAll()
-//		.and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/dashboard").permitAll()
-//		.and().logout().logoutUrl("/logout").clearAuthentication(true)
-//		.and().authorizeRequests().anyRequest().authenticated();
 	}
 	
 	@Override
@@ -57,9 +51,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+
 }
