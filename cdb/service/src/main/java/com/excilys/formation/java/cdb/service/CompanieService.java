@@ -1,6 +1,5 @@
 package com.excilys.formation.java.cdb.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public interface CompanieService {
 	
 	void deleteCompanie(Integer id);
 	
-	List<Companie> getCompaniesByPage(CompaniePage page, String order, String ascending);
+	List<Companie> getCompaniesByPage(CompaniePage page, String column, String order);
 	
 	Integer getCompaniesNbPages(CompaniePage page);
 	
@@ -27,7 +26,7 @@ public interface CompanieService {
 	
 	Integer getNbCompaniesPagesSearch(CompaniePage page, String column, String order, String search);
 	
-	List<Companie> getCompaniesByPagesSearch(String search, CompaniePage page, String order, String ascending);
+	List<Companie> getCompaniesByPagesSearch(String search, CompaniePage page, String column, String order);
 	
-	ArrayList<String> splitOrder(String order);
+	List<String> splitOrder(String order);
 }

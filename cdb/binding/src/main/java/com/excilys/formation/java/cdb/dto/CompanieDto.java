@@ -3,6 +3,9 @@ package com.excilys.formation.java.cdb.dto;
 public class CompanieDto {
 	private String id, name;
 	
+	public CompanieDto() {
+	}
+	
 	public CompanieDto(String id, String name) {
 		this.id = id;
 		this.name = name;

@@ -28,20 +28,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	    
-		http.authorizeRequests().antMatchers("/login").permitAll()
-		.antMatchers(HttpMethod.GET,"/","/dashboard").hasAnyRole("USER","ADMIN")
-		.antMatchers(HttpMethod.POST,"/","/dashboard").hasRole("ADMIN")
-		.antMatchers("/addComputer").hasRole("ADMIN")
-		.antMatchers("/editComputer").hasRole("ADMIN")
-		.and()
-		.formLogin()
-		.and()
-		.logout();
+//		http.authorizeRequests().antMatchers("/login").permitAll()
+//		.antMatchers(HttpMethod.GET,"/","/dashboard").hasAnyRole("USER","ADMIN")
+//		.antMatchers(HttpMethod.POST,"/","/dashboard").hasRole("ADMIN")
+//		.antMatchers(HttpMethod.POST,"/","/computer").hasRole("ADMIN")
+//		.antMatchers(HttpMethod.POST,"/","/computer/add").hasRole("ADMIN")
+//		.antMatchers("/addComputer").hasRole("ADMIN")
+//		.antMatchers("/editComputer").hasRole("ADMIN")
+//		.antMatchers("/computer").hasRole("ADMIN")
+//		.antMatchers("/computer/add").hasRole("ADMIN")
+//		.and()
+//		.formLogin()
+//		.and()
+//		.logout();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
-		authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//		authManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean

@@ -16,24 +16,26 @@ import com.excilys.formation.java.cdb.service.ComputerService;
 @RestController	
 public class ComputerRestController {
 	@Autowired
-	private static ComputerService computerService;
+	private ComputerService computerService;
 
-	@RequestMapping(value = {"/","/computer", "/computer/{id}"})
-	public ResponseEntity<Object> getComputer(@PathVariable(required = false, name="id") Integer id) {
-		if(id != null) {
-			return getComputerById(id);
-		}
-		return new ResponseEntity<Object>(computerService.getAllComputers(), HttpStatus.OK);
-		
+	@RequestMapping(value = "/computer")
+	public ResponseEntity<List<Computer>> getComputer() {
+		return new ResponseEntity<List<Computer>>(computerService.getAllComputers(), HttpStatus.OK);
 	}
 	
-	private final static ResponseEntity<Object> getComputerById(Integer id) {
+	@RequestMapping(value = "/nbComputer")
+	public ResponseEntity<Integer> getNbComputer() {
+		return new ResponseEntity<Integer>(computerService.getNbComputers(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/computerById/{id}")
+	public ResponseEntity<Computer> getComputerById(@PathVariable(name="id") Integer id) {
 		System.out.println(id);
 		if(id < 1 || id > computerService.getNbComputers()) {
-			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Computer>(HttpStatus.NOT_FOUND);
 		}
 		Computer computer = computerService.getComputer(id).get();
-		return new ResponseEntity<Object>(computer, HttpStatus.OK);
+		return new ResponseEntity<Computer>(computer, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/computerSearch/{search}/{nbElem}/{numPage}/{column}/{order}")

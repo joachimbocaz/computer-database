@@ -1,10 +1,11 @@
 package com.excilys.formation.java.cdb.service.implemented;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.excilys.formation.java.cdb.dao.CompanieDao;
@@ -44,13 +45,17 @@ public class CompanieServiceImpl implements CompanieService  {
 	}
 
 	@Override
-	public List<Companie> getCompaniesByPage(CompaniePage page, String order, String ascending) {
-		return null;
+	public List<Companie> getCompaniesByPage(CompaniePage page, String column, String order) {
+		if("ASC".equals(order)) {
+			return companieDao.findAll(PageRequest.of(page.getNumPage() - 1, page.getNbElementByPage(), Sort.by(column).ascending())).getContent();
+		}
+		return companieDao.findAll(PageRequest.of(page.getNumPage() - 1, page.getNbElementByPage(), Sort.by(column).descending())).getContent();
+
 	}
 
 	@Override
 	public Integer getCompaniesNbPages(CompaniePage page) {
-		return null;
+		return page.getNbPages((int) companieDao.count());
 	}
 
 	@Override
@@ -60,16 +65,21 @@ public class CompanieServiceImpl implements CompanieService  {
 
 	@Override
 	public Integer getNbCompaniesPagesSearch(CompaniePage page, String column, String order, String search) {
-		return null;
+		return companieDao.countByNameContaining(search);
 	}
 
 	@Override
-	public List<Companie> getCompaniesByPagesSearch(String search, CompaniePage page, String order, String ascending) {
-		return null;
+	public List<Companie> getCompaniesByPagesSearch(String search, CompaniePage page, String column, String order) {
+		if("ASC".equals(order)) {
+			return companieDao.findByNameContaining(search, PageRequest.of(page.getOffSet(), page.getNbElementByPage() , Sort.by(column).ascending()));
+		}
+		
+		return companieDao.findByNameContaining(search, PageRequest.of(page.getOffSet(), page.getNbElementByPage(), Sort.by(column).descending()));
+
 	}
 
 	@Override
-	public ArrayList<String> splitOrder(String order) {
+	public List<String> splitOrder(String order) {
 		return null;
 	}
 

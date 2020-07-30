@@ -8,6 +8,7 @@ public class ComputerDto{
 	private String discontinued;
 	private String idCompanie;
 	private String nameCompany;
+	private CompanieDto companieDto;
 	
 	public ComputerDto() {
 	}
@@ -34,9 +35,8 @@ public class ComputerDto{
 			this.idCompanie = idCompanie;
 		}
 	}
-
-	public ComputerDto (String id, String name, String idCompanie, String introduced, String discontinued, String nameCompany) {
-		this.id = id;
+	
+	public ComputerDto (String name, String idCompanie, String introduced, String discontinued) {
 		this.name = name;
 		if(introduced.equals("null")) {
 			this.introduced = "";
@@ -55,7 +55,29 @@ public class ComputerDto{
 		}
 		else {
 			this.idCompanie = idCompanie;
-			this.nameCompany = nameCompany;
+		}
+	}
+
+	public ComputerDto (String id, String name, String introduced, String discontinued, CompanieDto companieDto) {
+		this.id = id;
+		this.name = name;
+		if(introduced.equals("null")) {
+			this.introduced = "";
+		}
+		else {
+			this.introduced = introduced;
+		}
+		if(discontinued.equals("null")) {
+			this.discontinued = "";
+		}
+		else {
+			this.discontinued = discontinued;
+		}
+		if(companieDto == null) {
+			this.companieDto = null;
+		}
+		else {
+			this.companieDto = companieDto;
 		}
 	}
 	
@@ -121,6 +143,14 @@ public class ComputerDto{
 	public void setNameCompany(String nameCompany) {
 		this.nameCompany = nameCompany;
 	}
+	
+	public CompanieDto getCompanieDto() {
+		return companieDto;
+	}
+
+	public void setCompanieDto(CompanieDto companieDto) {
+		this.companieDto = companieDto;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -162,7 +192,7 @@ public class ComputerDto{
 	@Override
 	public String toString() {
 		return "ComputerDto [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
-				+ discontinued + ", idCompanie=" + idCompanie + "]";
+				+ discontinued + ", "+ companieDto + "]";
 	}
 
 

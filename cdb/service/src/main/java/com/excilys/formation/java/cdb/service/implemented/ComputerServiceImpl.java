@@ -76,7 +76,6 @@ public class ComputerServiceImpl implements ComputerService{
 
 	@Override
 	public List<Computer> getComputersByPagesSearch(String search, ComputerPage page, String column, String order) {
-//		return computerDao.findByNameContaining(search, );
 		if("ASC".equals(order)) {
 			return computerDao.findByNameContaining(search, PageRequest.of(page.getOffSet(), page.getNbElementByPage() , Sort.by(column).ascending()));
 		}

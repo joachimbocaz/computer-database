@@ -12,9 +12,11 @@ import com.excilys.formation.java.cdb.model.Computer;
 @Repository
 public interface ComputerDao extends JpaRepository<Computer, Integer>{
 
+	Integer countByNameContaining(String search);
+	
 	List<Computer> findByNameContaining(String search, Pageable pageable);
 	
-	Integer countByNameContaining(String search);
+	
 	
 	public default List<String> splitOrder(String order) {
 		String column = order.substring(0, 2);
