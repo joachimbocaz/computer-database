@@ -60,7 +60,7 @@
 	                        <th class="editMode" style="width: 60px; height: 22px;">
 	                            <input type="checkbox" id="selectall" /> 
 	                            <span style="vertical-align: top;">
-	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
+	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();" aria-label="Delete selected computers" title="Delete selected computers">
 	                                        <i class="fa fa-trash-o fa-lg"></i>
 	                                    </a>
 	                            </span>
