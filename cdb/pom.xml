@@ -17,28 +17,31 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <cdb.project.version>1.5.0-SNAPSHOT</cdb.project.version>
-  	<org.springframework.version>5.2.7.RELEASE</org.springframework.version>
-    <javax.jstl.version>1.2</javax.jstl.version>
-  	<javax.version>7.0</javax.version>
-    <org.mockito.version>3.3.3</org.mockito.version>
-  	<junit.version>4.12</junit.version>
-    <org.slf4j.version>1.7.30</org.slf4j.version>
-    <com.h2database.version>1.4.194</com.h2database.version>
+    <org.springframework.version>5.3.31</org.springframework.version>
+    <org.springframework.security.version>5.8.11</org.springframework.security.version>
+    <org.springframework.data.jpa.version>2.7.18</org.springframework.data.jpa.version>
+    <hibernate.version>5.6.15.Final</hibernate.version>
+    <org.slf4j.version>1.7.36</org.slf4j.version>
+    <mysql.connector.version>8.0.33</mysql.connector.version>
+    <org.mockito.version>4.11.0</org.mockito.version>
+    <com.h2database.version>2.1.214</com.h2database.version>
     <com.zaxxer.hikari.version>3.4.5</com.zaxxer.hikari.version>
-  	<mysql.connector.version>8.0.20</mysql.connector.version>
+    <junit.version>4.13.2</junit.version>
+    <javax.servlet.version>4.0.1</javax.servlet.version>
+    <javax.jstl.version>1.2</javax.jstl.version>
   </properties>
 
   <dependencies>
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${javax.jstl.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -46,28 +49,28 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.30</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.20</version>
+			<version>${mysql.connector.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.3.3</version>
+			<version>${org.mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -75,7 +78,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.200</version>
+			<version>${com.h2database.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -83,53 +86,53 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
+			<version>${javax.servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
 	        <groupId>com.zaxxer</groupId>
 	        <artifactId>HikariCP</artifactId>
-	        <version>3.4.5</version>
+	        <version>${com.zaxxer.hikari.version}</version>
    		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-web</artifactId>
-		    <version>5.2.7.RELEASE</version>
+		    <version>${org.springframework.version}</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
-		    <version>5.2.7.RELEASE</version>
+		    <version>${org.springframework.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>
-		    <version>5.2.7.RELEASE</version>
+		    <version>${org.springframework.version}</version>
 		</dependency>
 	
 		<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.2.7.RELEASE</version>
+            <version>${org.springframework.version}</version>
         </dependency>   
     
 		<dependency>
 	    	<groupId>org.hibernate</groupId>
 	    	<artifactId>hibernate-entitymanager</artifactId>
-	    	<version>5.4.18.Final</version>
+		<version>${hibernate.version}</version>
 		</dependency>
 		
 		<dependency>
 	    	<groupId>org.springframework.data</groupId>
 	    	<artifactId>spring-data-jpa</artifactId>
-	    	<version>2.3.1.RELEASE</version>
+		<version>${org.springframework.data.jpa.version}</version>
 		</dependency>
   </dependencies>
 
@@ -139,40 +142,44 @@
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
+          <version>3.21.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.8.0</version>
         </plugin>
         <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.13.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>3.5.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.4.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>3.1.3</version>
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
+          <version>3.1.3</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
