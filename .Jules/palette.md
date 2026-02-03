@@ -1,0 +1,3 @@
+## 2026-02-03 - [Accessibility and Visual Affordance on Dashboard]
+**Learning:** In legacy JSP/Bootstrap applications, micro-UX wins can be achieved by fixing invalid HTML (like nested buttons in links), adding visually hidden labels with `.sr-only`, and providing visual feedback with `cursor: pointer` on interactive table headers. Using JSP EL ternary operators (${... ? ... : ...}) significantly cleans up the code compared to multiple `<c:if>` tags.
+**Action:** Always check for nested interactive elements and replace them with properly styled single elements. Proactively add `sr-only` labels to icon-only buttons and search inputs.
