@@ -33,7 +33,7 @@
 	            <div id="actions" class="form-horizontal">
 	                <div class="pull-left">
 	                    <form id="searchForm" action="#" method="GET" class="form-inline">
-	
+	                        <label class="sr-only" for="searchbox">Search name</label>
 	                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
 	                        <input type="submit" id="searchsubmit" value="Filter by name"
 	                        class="btn btn-primary" />
@@ -58,31 +58,31 @@
 	                        <!-- Table header for Computer Name -->
 	
 	                        <th class="editMode" style="width: 60px; height: 22px;">
-	                            <input type="checkbox" id="selectall" /> 
+	                            <input type="checkbox" id="selectall" aria-label="Select all computers" />
 	                            <span style="vertical-align: top;">
-	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
+	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();" aria-label="Delete selected computers">
 	                                        <i class="fa fa-trash-o fa-lg"></i>
 	                                    </a>
 	                            </span>
 	                        </th>
-						<th onclick="window.location.href='?orderBy=${orderBy=='cnASC'?'cnDSC': 'cnASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Computer name 
+						<th style="cursor: pointer;" onclick="window.location.href='?orderBy=${orderBy=='cnASC'?'cnDSC': 'cnASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Computer name
 						<c:if test="${orderBy == 'cnASC'}"><span class="pull-right">⬆</span></c:if>
 						<c:if test="${orderBy == 'cnDSC'}"><span class="pull-right">⬇</span></c:if>
 						<c:if test="${orderBy != 'cnASC'&& orderBy != 'cnDSC'}"><span class="pull-right">⬆⬇</span></c:if>
 						</th>
-						<th onclick="window.location.href='?orderBy=${orderBy=='diASC'?'diDSC': 'diASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Introduced date 
+						<th style="cursor: pointer;" onclick="window.location.href='?orderBy=${orderBy=='diASC'?'diDSC': 'diASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Introduced date
 						<c:if test="${orderBy == 'diASC'}"><span class="pull-right">⬆</span></c:if>
 						<c:if test="${orderBy == 'diDSC'}"><span class="pull-right">⬇</span></c:if>
 						<c:if test="${orderBy != 'diASC'&& orderBy != 'diDSC'}"><span class="pull-right">⬆⬇</span></c:if>
 						</th>
 						<!-- Table header for Discontinued Date -->
-						<th  onclick="window.location.href='?orderBy=${orderBy=='ddASC'?'ddDSC': 'ddASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Discontinued date 
+						<th style="cursor: pointer;" onclick="window.location.href='?orderBy=${orderBy=='ddASC'?'ddDSC': 'ddASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Discontinued date
 						<c:if test="${orderBy == 'ddASC'}"><span class="pull-right">⬆</span></c:if>
 						<c:if test="${orderBy == 'ddDSC'}"><span class="pull-right">⬇</span></c:if>
 						<c:if test="${orderBy != 'ddASC'&& orderBy != 'ddDSC'}"><span class="pull-right">⬆⬇</span></c:if>
 						</th>
 						<!-- Table header for Company -->
-						<th  onclick="window.location.href='?orderBy=${orderBy=='ciASC'?'ciDSC': 'ciASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Company
+						<th style="cursor: pointer;" onclick="window.location.href='?orderBy=${orderBy=='ciASC'?'ciDSC': 'ciASC'}&search=${ search }&nbByPage=${page.getNbElementByPage()}'">Company
 						<c:if test="${orderBy == 'ciASC'}"><span class="pull-right">⬆</span></c:if>
 						<c:if test="${orderBy == 'ciDSC'}"><span class="pull-right">⬇</span></c:if>
 						<c:if test="${orderBy != 'ciASC'&& orderBy != 'ciDSC'}"><span class="pull-right">⬆⬇</span></c:if>
@@ -95,7 +95,7 @@
 	                    <c:forEach items="${computerDtoCollection}" var="computerDtoCollection" >
 							<tr>
 								<td class="editMode"><input type="checkbox" name="cb"
-									class="cb" value=${ computerDtoCollection.id }></td>
+									class="cb" value=${ computerDtoCollection.id } aria-label="Select computer <c:out value='${computerDtoCollection.name}'/>"></td>
 								<td><a href="editComputer?idComputer=${ computerDtoCollection.id }" onclick="">${ computerDtoCollection.name }</a></td>
 								<td><c:out value="${computerDtoCollection.introduced}"/></td>
 								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
@@ -114,7 +114,7 @@
             <ul class="pagination">
                 <li>
                 	<c:if test="${page.getNumPage() > 1}">
-                    	<a href="/webapp/dashboard?page=${page.getNumPage() - 1}&search=${ search }nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
+				<a href="/webapp/dashboard?page=${page.getNumPage() - 1}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
                       		<span aria-hidden="true">&laquo;</span>
                   		</a>
                 	</c:if>
@@ -146,17 +146,17 @@
 	            <c:if test = "${page.getNbElementByPage() == 10}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">10</button></a>
+	            <a href="/webapp/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">10</a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 50}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">50</button></a>
+	            <a href="/webapp/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">50</a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 100}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">100</button></a>
+	            <a href="/webapp/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">100</a>
         	</div>
 		</div>
     	</footer>
