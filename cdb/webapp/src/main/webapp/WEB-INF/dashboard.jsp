@@ -34,6 +34,7 @@
 	                <div class="pull-left">
 	                    <form id="searchForm" action="#" method="GET" class="form-inline">
 	
+	                        <label for="searchbox" class="sr-only">Search name</label>
 	                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
 	                        <input type="submit" id="searchsubmit" value="Filter by name"
 	                        class="btn btn-primary" />
@@ -58,10 +59,10 @@
 	                        <!-- Table header for Computer Name -->
 	
 	                        <th class="editMode" style="width: 60px; height: 22px;">
-	                            <input type="checkbox" id="selectall" /> 
+	                            <input type="checkbox" id="selectall" aria-label="Select all computers" />
 	                            <span style="vertical-align: top;">
-	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
-	                                        <i class="fa fa-trash-o fa-lg"></i>
+	                                 -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();" aria-label="Delete selected computers">
+	                                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
 	                                    </a>
 	                            </span>
 	                        </th>
@@ -95,7 +96,7 @@
 	                    <c:forEach items="${computerDtoCollection}" var="computerDtoCollection" >
 							<tr>
 								<td class="editMode"><input type="checkbox" name="cb"
-									class="cb" value=${ computerDtoCollection.id }></td>
+									class="cb" value="${ computerDtoCollection.id }" aria-label="Select computer <c:out value='${computerDtoCollection.name}'/>"></td>
 								<td><a href="editComputer?idComputer=${ computerDtoCollection.id }" onclick="">${ computerDtoCollection.name }</a></td>
 								<td><c:out value="${computerDtoCollection.introduced}"/></td>
 								<td><c:out value="${computerDtoCollection.discontinued}"/></td>
@@ -114,7 +115,7 @@
             <ul class="pagination">
                 <li>
                 	<c:if test="${page.getNumPage() > 1}">
-                    	<a href="/webapp/dashboard?page=${page.getNumPage() - 1}&search=${ search }nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
+			<a href="/webapp/dashboard?page=${page.getNumPage() - 1}&search=${ search }&nbByPage=${page.getNbElementByPage()}&orderBy=${ orderBy }" aria-label="Previous">
                       		<span aria-hidden="true">&laquo;</span>
                   		</a>
                 	</c:if>
@@ -146,17 +147,17 @@
 	            <c:if test = "${page.getNbElementByPage() == 10}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">10</button></a>
+	            <a href="/webapp/dashboard?nbByPage=10&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">10</a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 50}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">50</button></a>
+	            <a href="/webapp/dashboard?nbByPage=50&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">50</a>
 	            <c:set var="active" value=""/>
 	            <c:if test = "${page.getNbElementByPage() == 100}">
 	               <c:set var="active" value="active"/>
 	            </c:if>
-	            <a href="/webapp/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }"><button type="button" class="btn btn-default ${active}">100</button></a>
+	            <a href="/webapp/dashboard?nbByPage=100&search=${ search }&orderBy=${ orderBy }" class="btn btn-default ${active}">100</a>
         	</div>
 		</div>
     	</footer>
